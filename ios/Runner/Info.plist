@@ -2,19 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-	    <key>LSApplicationQueriesSchemes</key>
-        <array>
-        <string>googlechromes</string>
-        <string>comgooglemaps</string>
-        </array>
-        <key>NSLocationAlwaysUsageDescription</key>
-        <string>Your location is required</string>
-	    <key>NSSpeechRecognitionUsageDescription</key>
-        <string>recognize speech</string>
-    	<key>NSLocationWhenInUseUsageDescription</key>
-        <string>Needs Location when in use</string>
-    	<key>GADApplicationIdentifier</key>
-        <string>ca-app-pub-3940256099942544~1458002511</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>googlechromes</string>
+			<string>comgooglemaps</string>
+		</array>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Your location is required</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>recognize speech</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Needs Location when in use</string>
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-3940256099942544~1458002511</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -60,11 +60,11 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
-		 <key>NSPhotoLibraryUsageDescription</key>
-          <string>Please grant photo gallery access</string>
-          <key>NSCameraUsageDescription</key>
-          <string>Please grant camera access</string>
-          <key>NSMicrophoneUsageDescription</key>
-          <string>Please grant microphone access</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Please grant photo gallery access</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Please grant camera access</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Please grant microphone access</string>
 	</dict>
 </plist>

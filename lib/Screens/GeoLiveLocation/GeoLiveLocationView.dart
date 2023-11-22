@@ -102,6 +102,28 @@ class GeoLiveLocationView extends StatelessWidget {
               // Open the drawer here
             },
           ),
+          actions: [
+
+            IconButton(
+              icon:const Icon(Icons.share,color: Colors.white,)
+              ,
+
+              onPressed: () async {
+                final bytes = await viewModel.controller.capture();
+
+                viewModel.bytes = bytes;
+                File file=File.fromRawPath(bytes!);
+                print('path is heree:'+ File.fromRawPath(bytes!).toString());
+
+                final tempDir = await getTemporaryDirectory();
+                File file1 = await File('${tempDir.path}/image.png').create();
+                file1.writeAsBytesSync(bytes);
+                // store unit8list image here ;
+                // String s = new String.fromCharCodes(bytes!);
+                await Share.shareFiles([file1.path]);
+              },
+            )],
+
 
         ),
         body: Column(
@@ -162,7 +184,7 @@ class GeoLiveLocationView extends StatelessWidget {
                                 SizedBox(height: 10),
 
                                 // SizedBox(height: 5),
-                                Container(
+                               /* Container(
                                   margin: EdgeInsets.all(25),
                                   child: MaterialButton(
                                     child: Text('Share', style: TextStyle(fontSize: 20.0),),
@@ -190,7 +212,7 @@ class GeoLiveLocationView extends StatelessWidget {
                                     },
                                   ),
 
-                                ),
+                                ),*/
 
                               ],
                             ),

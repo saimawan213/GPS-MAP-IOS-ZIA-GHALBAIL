@@ -34,7 +34,9 @@ class CompassScreenViewModel extends GetxController {
         print('direction 123 first:'+sanitizeHeading(event.heading).toString());
         compassDirection.value = _getCompassDirection(sanitizeHeading(event.heading));
         compassvalue.value=sanitizeHeading(event.heading).toString();
-        /*if(!a){
+
+      });
+    /*if(!a){
        // String s = "Hello World!";
         print('direction 123 first:'+sanitizeHeading(event.heading).toString());
         print(event.heading.toString().substring(1));
@@ -45,9 +47,7 @@ class CompassScreenViewModel extends GetxController {
         compassDirection = _getCompassDirection(double.parse(event.heading.toString()));
       }*/
 
-        //   compassDirection = _getCompassDirection(event.heading.toString());
-      });
-
+    //   compassDirection = _getCompassDirection(event.heading.toString());
     super.onReady();
   }
   @override

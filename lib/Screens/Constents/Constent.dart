@@ -7,7 +7,9 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 class Constent {
-
+  static double Splashcurrentlath=0.0;
+  static double Splashcurrentlog=0.0;
+  static String splashcurrentAddress = '';
   String location; //location name for the UI
   String? time; // the time in that location
   String? flag; // URL to an asset flag icon

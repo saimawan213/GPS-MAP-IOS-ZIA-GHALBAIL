@@ -50,6 +50,23 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+            implementation platform('com.google.firebase:firebase-bom:32.1.1')
+            implementation 'com.google.firebase:firebase-analytics-ktx'
+            implementation 'com.google.android.gms:play-services-ads:22.4.0'
+            implementation 'com.google.firebase:firebase-crashlytics:18.4.3'
+
+
+        constraints {
+            implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+                because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+            }
+            implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+                because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+            }
+        }
+    }
 }
 
 flutter {

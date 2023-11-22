@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
@@ -10,13 +13,15 @@ class SplashViewModel extends GetxController {
   RxDouble progressValue = 0.0.obs;
   late AppLifecycleReactor appLifecycleReactor;
   Admob_Helper admob_helper = Admob_Helper();
+   late Position splashcurrentPosition;
+
   RxBool showProgressBar = true.obs;
 
 
   @override
   Future<void> onInit() async {
     print('**** onInit *****');
-
+    getCurrentLocation();
     // FlutterNativeSplash.remove();
     super.onInit();
   }
@@ -117,6 +122,45 @@ class SplashViewModel extends GetxController {
       }
     });
   }
+  getCurrentLocation() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      // setState(() {
+      splashcurrentPosition = position;
+      print('CURRENT POS: $splashcurrentPosition');
+      Constent.Splashcurrentlath=position.latitude;
+      Constent.Splashcurrentlog=position.longitude;
+     /*   mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(position.latitude, position.longitude),
+              zoom: 18.0,
+            ),
+          ),
+        );*/
+        // });
+        await getAddress();
 
 
+    }).catchError((e) {
+      print(e);
+    });
+  }
+  getAddress() async {
+    try {
+      List<Placemark> p = await placemarkFromCoordinates(
+          splashcurrentPosition.latitude, splashcurrentPosition.longitude);
+
+      Placemark place = p[0];
+
+      //  setState(() {
+      Constent.splashcurrentAddress =
+      "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+    /*  startAddressController.text = currentAddress;
+      startAddress.value = currentAddress;*/
+      //  });
+    } catch (e) {
+      print(e);
+    }
+  }
 }

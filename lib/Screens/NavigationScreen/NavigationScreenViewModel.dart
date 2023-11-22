@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io' as plat;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
@@ -9,6 +9,7 @@ import 'dart:math' show cos, sqrt, asin;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' as lotti;
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
@@ -129,16 +130,35 @@ int valuecheck=-1;
         currentPosition = position;
         print('CURRENT POS: $currentPosition');
         if(sourcepath == '') {
-          mapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: LatLng(position.latitude, position.longitude),
-                zoom: 18.0,
+          if(Constent.splashcurrentAddress!=""){
+           // Constent.Splashcurrentlath=position.latitude;
+            //Constent.Splashcurrentlog=position.longitude;
+            mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(Constent.Splashcurrentlath, Constent.Splashcurrentlog),
+                  zoom: 18.0,
+                ),
               ),
-            ),
-          );
-          // });
-          await getAddress();
+            );
+            currentAddress=Constent.splashcurrentAddress;
+            startAddressController.text =Constent.splashcurrentAddress;;
+            startAddress.value = Constent.splashcurrentAddress;;
+
+          }
+          else{
+            mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(position.latitude, position.longitude),
+                  zoom: 18.0,
+                ),
+              ),
+            );
+            // });
+            await getAddress();
+          }
+
         }
         else{
           mapController.animateCamera(
@@ -418,7 +438,7 @@ int valuecheck=-1;
     return 12742 * asin(sqrt(a));
   }
 
-    openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
+   /* openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
       String current=startLatitude1.toString()+","+startLongitude1.toString();
       String seach=destinationLatituate1.toString()+","+destinationLongitude1.toString();
       String googleUrl='';
@@ -433,9 +453,9 @@ int valuecheck=-1;
     else if(selectedValue.value==3){
       modevalue="walking";
     }
-   /* else if(selectedValue.value==4){
+   *//* else if(selectedValue.value==4){
       modevalue="Transit";
-    }*/
+    }*//*
     print("model String value is:"+modevalue);
     // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
@@ -507,7 +527,159 @@ int valuecheck=-1;
 
     }
 
+  }*/
+
+
+  openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
+    String current=startLatitude1.toString()+","+startLongitude1.toString();
+    String seach=destinationLatituate1.toString()+","+destinationLongitude1.toString();
+    String googleUrl='';
+    print("model value is:"+selectedValue.value.toString());
+    String modevalue='';
+    if(selectedValue.value==1){
+      modevalue="driving";
+    }
+    else if(selectedValue.value==2){
+      modevalue="Bicycling";
+    }
+    else if(selectedValue.value==3){
+      modevalue="walking";
+    }
+    /* else if(selectedValue.value==4){
+      modevalue="Transit";
+    }*/
+    print("model String value is:"+modevalue);
+    // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
+    if(startAddressController.text !="" && destinationAddressController.text!=""){
+      if(startLatitude == 0.0 && startLongitude == 0.0 && destinationLatitude == 0.0 && destinationLongitude == 0.0){
+        performSearch('');
+        Future.delayed(const Duration(milliseconds: 2000), () async {
+          //viewModel.openMap(viewModel.startLatitude1,viewModel.startLongitude1,viewModel.destinationLatituate1, viewModel.destinationLongitude1),
+
+          //String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude1,$startLongitude1&destination=$destinationLatituate1,$destinationLongitude1&travelmode=driving';
+
+          if(modevalue=="driving"){
+            if(plat.Platform.isIOS){
+              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
+
+              //googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=driving";
+              //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
+              // googleUrl=  Uri.parse("google.navigation:q=$startLatitude1,$destinationLongitude1&mode=d").toString();
+            }
+            if(plat.Platform.isAndroid){
+              googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=d";
+            }
+
+          }
+          else if(modevalue=="Bicycling"){
+            if(plat.Platform.isIOS){
+              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
+
+              // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=bicycling";
+            }
+            if(plat.Platform.isAndroid){
+              googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=b";
+            }
+          }
+          else if(modevalue=="walking"){
+            if(plat.Platform.isIOS){
+              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
+
+              // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=walking";
+              //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
+              // googleUrl=  Uri.parse("google.navigation:q=$startLatitude1,$destinationLongitude1&mode=d").toString();
+            }
+            if(plat.Platform.isAndroid) {
+              googleUrl =
+                  "http://maps.google.com/maps?saddr=" + current + " &daddr=" +
+                      seach + "&dirflg=w";
+            }
+          }
+          //String googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=b";
+          //String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude1,$startLongitude1&destination=$destinationLatituate1,$destinationLongitude1&travelmode='+modevalue;
+          if (await canLaunch(googleUrl)) {
+            await launch(googleUrl);
+          } else {
+            throw 'Could not open the map.';
+          }
+// Here you can write your code
+
+
+
+        });
+
+      }
+
+      else{
+        // String googleUrl='';
+        if(  modevalue=="driving"){
+          if(plat.Platform.isIOS){
+            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
+
+            //  googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=driving";
+
+            //  googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
+
+            //   googleUrl=  Uri.parse("google.navigation:q=$startLatitude1,$destinationLongitude1&mode=d").toString();
+          }
+          if(plat.Platform.isAndroid){
+            googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=d";
+          }
+        }
+        else if(  modevalue=="Bicycling"){
+          if(plat.Platform.isIOS){
+            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
+
+            // googleUrl= "http://maps.apple.com/maps?daddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
+
+//   googleUrl = "http://maps.apple.com/maps?daddr=\(destinationLocation.latitude),\(destinationLocation.longitude)&dirflg=d"''
+            //googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=bicycling";
+          }
+          if(plat.Platform.isAndroid){
+            googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=b";
+          }}
+        else if(modevalue=="walking"){
+          if(plat.Platform.isIOS){
+            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
+
+            //googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=walking";
+            //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
+            // googleUrl=  Uri.parse("google.navigation:q=$startLatitude1,$destinationLongitude1&mode=d").toString();
+          }
+          if(plat.Platform.isAndroid) {
+            googleUrl =
+                "http://maps.google.com/maps?saddr=" + current + " &daddr=" +
+                    seach + "&dirflg=w";
+          }
+        }
+        // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
+        // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode='+modevalue;
+        if (await canLaunch(googleUrl)) {
+          await launch(googleUrl);
+        } else {
+          throw 'Could not open the map.';
+        }
+      }
+    }
+    else{
+      if(startAddressController.text ==""){
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Current location Cannot be Empty")));
+      }
+      else if(destinationAddressController.text ==""){
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Destination Location Cannot be Empty ")));
+      }
+      else{
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Source and Destination Location Cannot be Empty ")));
+      }
+
+    }
+
   }
+
   // Create the polylines for showing the route between two places
 
   _createPolylines(

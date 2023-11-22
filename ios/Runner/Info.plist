@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+	    <key>LSApplicationQueriesSchemes</key>
+        <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+        </array>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>Your location is required</string>
+	    <key>NSSpeechRecognitionUsageDescription</key>
+        <string>recognize speech</string>
+    	<key>NSLocationWhenInUseUsageDescription</key>
+        <string>Needs Location when in use</string>
+    	<key>GADApplicationIdentifier</key>
+        <string>ca-app-pub-3940256099942544~1458002511</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

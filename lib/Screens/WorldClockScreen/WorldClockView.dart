@@ -30,7 +30,7 @@ class WorldClockView extends StatelessWidget {
       body:Center(
         child: Obx(
                 () =>(viewModel.data.value.isEmpty)?CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor), // Set color here
+        valueColor: AlwaysStoppedAnimation<Color>(AppColor.yellowColor), // Set color here
     ):
 
 
@@ -54,7 +54,7 @@ class WorldClockView extends StatelessWidget {
       child: Container(
           margin:
               EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(5.0),
           decoration: BoxDecoration(
             border: Border.all(
               color: AppColor.primaryColor,
@@ -93,7 +93,7 @@ class WorldClockView extends StatelessWidget {
       child: Container(
         margin:
             EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           border: Border.all(
             color: AppColor.primaryColor,
@@ -124,8 +124,8 @@ class WorldClockView extends StatelessWidget {
                     Column(
                       children: [
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/sunrise.png"), // Replace with the correct asset path
                             )
@@ -141,8 +141,8 @@ class WorldClockView extends StatelessWidget {
                     Column(
                       children: [
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/sunset.png"), // Replace with the correct asset path
                             )
@@ -156,8 +156,8 @@ class WorldClockView extends StatelessWidget {
                       children: [
 
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/windspeed.png"), // Replace with the correct asset path
                             )
@@ -170,7 +170,7 @@ class WorldClockView extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 4),
               Expanded(
                 flex: 5,
                 child: Row(
@@ -179,8 +179,8 @@ class WorldClockView extends StatelessWidget {
                     Column(
                       children: [
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/pressure.png"), // Replace with the correct asset path
                             )
@@ -194,8 +194,8 @@ class WorldClockView extends StatelessWidget {
                       children: [
 
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/humidity.png"), // Replace with the correct asset path
                             )
@@ -209,8 +209,8 @@ class WorldClockView extends StatelessWidget {
                       children: [
 
                         Container(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: Image(
                               image: AssetImage("assets/images/clouds.png"), // Replace with the correct asset path
                             )
@@ -310,7 +310,7 @@ class WorldClockView extends StatelessWidget {
   AppBar appBar() {
     return AppBar(
       title: const Text('World Clock', style: TextStyle(color: Colors.white)),
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColor.yellowColor,
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         color: Colors.white, // or MenuOutlined
@@ -342,25 +342,25 @@ class WorldClockView extends StatelessWidget {
             // image: DecorationImage(
             //     image: AssetImage('assets/$bgImage'), fit: BoxFit.cover)),
             child: Column(children: <Widget>[
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(viewModel.data["location"],
                       style: TextStyle(
-                          fontSize: 28, letterSpacing: 2, color: Colors.black)),
+                          fontSize: 26, letterSpacing: 2, color: Colors.black)),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Text(
                 viewModel.data['time'],
                 style: TextStyle(fontSize: 35, color: Colors.black),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Text(
                   "${viewModel.data['weatherData'] != null ? (viewModel.data["weatherData"]['main']['temp'].round()) : ''}° ${viewModel.data['weatherData'] != null ? viewModel.data["weatherData"]['weather'][0]['description'] : ''}",
                   style: TextStyle(
-                      fontSize: 20, letterSpacing: 2, color: Colors.black))
+                      fontSize: 18, letterSpacing: 2, color: Colors.black))
               // WeatherWidget(
               //   weatherData: viewModel.data["weatherData"],
               // ),

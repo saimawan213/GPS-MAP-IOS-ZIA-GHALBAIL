@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../Constents/Constent.dart';
+
 class MyLocationViewModel extends GetxController {
 
 
@@ -101,6 +103,34 @@ class MyLocationViewModel extends GetxController {
     super.onClose();
   }
   getCurrentLocation() async {
+    if(Constent.splashcurrentAddress!="") {
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(
+                Constent.Splashcurrentlath, Constent.Splashcurrentlog),
+            zoom: 18.0,
+          ),
+        ),
+      );
+      currentAddress = Constent.splashcurrentAddress;
+      startAddressController.text = Constent.splashcurrentAddress;
+      startAddress.value = Constent.splashcurrentAddress;
+      currentPosition=Constent.splashcurrentPosition;
+
+
+      /* Set<Marker>.from(markers);
+      initialCameraPosition:
+      initialLocation;
+      currentAddress = sourcepath!;
+      startAddressController.text = currentAddress;
+      startAddress.value = currentAddress;
+      destinationAddress.value = destinationpath!;
+      destinationAddressController.text = destinationpath!;
+      performSearch('');*/
+      // performSearch('');
+    }
+    else{
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       // setState(() {
@@ -139,7 +169,7 @@ class MyLocationViewModel extends GetxController {
     }).catchError((e) {
       print(e);
     });
-  }
+  }}
 /*  getCurrentLocation() async {
     print('call heeee');
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)

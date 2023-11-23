@@ -9,28 +9,25 @@ import 'dart:math' show cos, sqrt, asin;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' as lotti;
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
-
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
+import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NavigationScreenViewModel extends GetxController {
-
-
-
+class RouteScreenViewModel extends GetxController {
   CameraPosition initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
-
-  late GoogleMapController mapController;
-   double startLatitude1=0.0;
-       double startLongitude1=0.0;
-   double destinationLatituate1=0.0;
-late BuildContext context;
-  RxInt selectedValue=1.obs;
-   double destinationLongitude1=0.0;
+  Admob_Helper admob_helper = Admob_Helper();
+  double startLatitude1 = 0.0;
+  double startLongitude1 = 0.0;
+  double destinationLatituate1 = 0.0;
+  late BuildContext context;
+  RxInt selectedValue = 1.obs;
+  double destinationLongitude1 = 0.0;
   late Position currentPosition;
   String currentAddress = '';
 
@@ -42,44 +39,38 @@ late BuildContext context;
 
   RxString startAddress = ''.obs;
   RxString destinationAddress = ''.obs;
-  RxString placeDistance=''.obs;
+  RxString placeDistance = ''.obs;
   RxSet<Marker> markers = <Marker>{}.obs;
+
   //Set<Marker> markers = {};
-int valuecheck=-1;
+  int valuecheck = -1;
+
   // late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
-   String? sourcepath,destinationpath;
-  double? sourcelath,sourcelog,destinationlath,destinationlog;
-  HistoryViewModel  userController = Get.put(HistoryViewModel());
+
+  HistoryViewModel userController = Get.put(HistoryViewModel());
   bool speechRecognitionAvailable = false;
   String transcription = '';
-  RxBool ptts11=true.obs;
-  RxBool ptts12=true.obs;
-  var  speech = SpeechToText();
+  RxBool ptts11 = true.obs;
+  RxBool ptts12 = true.obs;
+  var speech = SpeechToText();
   Timer? debounce;
   bool isListening = false;
   bool ptts1 = true;
   bool ptts2 = true;
 
-
   @override
   Future<void> onInit() async {
     print('**** onInit *****');
-    sourcelath=Get.arguments['Sourcelath'];
-    sourcelog=Get.arguments['Sourcelog'];
-    destinationlath=Get.arguments['destinationlath'];
-    destinationlog=Get.arguments['destinationlog'];
-    sourcepath = Get.arguments['source'];
-    destinationpath = Get.arguments['destination'];
 
-   /* if(sourcepath == ''){
+    /* if(sourcepath == ''){
 
       print("i am in current location");
       getCurrentLocation();
     }
     else{
-     *//* Future.delayed(Duration(seconds: 2), (){
+     */ /* Future.delayed(Duration(seconds: 2), (){
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -87,7 +78,7 @@ int valuecheck=-1;
               zoom: 18.0,
             ),
           ),
-        );*//*
+        );*/ /*
         //  final double souclog=sourcelog!;
 
         markers: Set<Marker>.from(markers);
@@ -111,58 +102,29 @@ int valuecheck=-1;
   void onReady() {
     print('**** onReady *****');
     activateSpeechRecognizer();
+    getCurrentLocation();
+    admob_helper.loadInterstitalAd();
+    admob_helper.loadsmallBannerAd();
+
     ///Load Ads Here
-
-
 
     super.onReady();
   }
+
   @override
   void onClose() {
-
     // TODO: implement onClose
     super.onClose();
   }
-  getCurrentLocation() async {
-     if(sourcepath != '') {
-       sourcepath=='';
-    mapController.animateCamera(
-    CameraUpdate.newCameraPosition(
-    CameraPosition(
-    target: LatLng(sourcelath!, sourcelog!),
-    zoom: 18.0,
-    ),
-    ),
-    );
-    markers:
-    Set<Marker>.from(markers);
-    initialCameraPosition:
-    initialLocation;
-    currentAddress = sourcepath!;
-    startAddressController.text = currentAddress;
-    startAddress.value = currentAddress;
-    destinationAddress.value = destinationpath!;
-    destinationAddressController.text = destinationpath!;
-    performSearch('');
 
-    }
-   else if(Constent.splashcurrentAddress!="") {
-      mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(
-                Constent.Splashcurrentlath, Constent.Splashcurrentlog),
-            zoom: 18.0,
-          ),
-        ),
-      );
+  getCurrentLocation() async {
+    if (Constent.splashcurrentAddress != "") {
       currentAddress = Constent.splashcurrentAddress;
       startAddressController.text = Constent.splashcurrentAddress;
       startAddress.value = Constent.splashcurrentAddress;
-      currentPosition=Constent.splashcurrentPosition;
+      currentPosition = Constent.splashcurrentPosition;
 
-
-     /* Set<Marker>.from(markers);
+      /* Set<Marker>.from(markers);
       initialCameraPosition:
       initialLocation;
       currentAddress = sourcepath!;
@@ -171,18 +133,17 @@ int valuecheck=-1;
       destinationAddress.value = destinationpath!;
       destinationAddressController.text = destinationpath!;
       performSearch('');*/
-     // performSearch('');
-    }
-
-    else {
+      // performSearch('');
+    } else {
       await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high)
+              desiredAccuracy: LocationAccuracy.high)
           .then((Position position) async {
         // setState(() {
         currentPosition = position;
+        Constent.splashcurrentPosition = currentPosition;
         print('CURRENT POS: $currentPosition');
-      //  if (sourcepath == '') {
-          /*if (Constent.splashcurrentAddress != "") {
+        //  if (sourcepath == '') {
+        /*if (Constent.splashcurrentAddress != "") {
             // Constent.Splashcurrentlath=position.latitude;
             //Constent.Splashcurrentlog=position.longitude;
             mapController.animateCamera(
@@ -201,17 +162,10 @@ int valuecheck=-1;
             ;
           }
           else {*/
-            mapController.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: LatLng(position.latitude, position.longitude),
-                  zoom: 18.0,
-                ),
-              ),
-            );
-            // });
-            await getAddress();
-          /*}
+
+        // });
+        await getAddress();
+        /*}
        // }
         else {
           mapController.animateCamera(
@@ -238,6 +192,7 @@ int valuecheck=-1;
       });
     }
   }
+
 /*  getCurrentLocation() async {
     print('call heeee');
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
@@ -278,7 +233,7 @@ int valuecheck=-1;
       // setState(() {
       currentPosition = position;
       print('CURRENT POS: $currentPosition');
-   /*   mapController.animateCamera(
+      /*   mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(position.latitude, position.longitude),
@@ -292,6 +247,7 @@ int valuecheck=-1;
       print(e);
     });
   }
+
   getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
@@ -299,19 +255,20 @@ int valuecheck=-1;
 
       Placemark place = p[0];
 
-    //  setState(() {
-        currentAddress =
-        "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
-        startAddressController.text = currentAddress;
-        startAddress.value = currentAddress;
-    //  });
+      //  setState(() {
+      currentAddress =
+          "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+      currentAddress = currentAddress.replaceAll(RegExp(r'^,+,'), '');
+      startAddressController.text = currentAddress;
+      startAddress.value = currentAddress;
+      //  });
     } catch (e) {
       print(e);
     }
   }
 
   // Method for calculating the distance between two places
-  Future<bool> calculateDistance() async {
+  /*Future<bool> calculateDistance() async {
     try {
       print("inside local hereeee");
       double startLatitude=0.0, startLongitude=0.0,destinationLatitude=0.0,destinationLongitude=0.0;
@@ -325,16 +282,16 @@ int valuecheck=-1;
         // Use the retrieved coordinates of the current position,
         // instead of the address if the start position is user's
         // current position, as it results in better accuracy.
-         startLatitude = startAddress == currentAddress
+        startLatitude = startAddress == currentAddress
             ? currentPosition.latitude
             : startPlacemark[0].latitude;
 
-         startLongitude = startAddress == currentAddress
+        startLongitude = startAddress == currentAddress
             ? currentPosition.longitude
             : startPlacemark[0].longitude;
 
-         destinationLatitude = destinationPlacemark[0].latitude;
-         destinationLongitude = destinationPlacemark[0].longitude;
+        destinationLatitude = destinationPlacemark[0].latitude;
+        destinationLongitude = destinationPlacemark[0].longitude;
       }
       else{
 
@@ -344,7 +301,7 @@ int valuecheck=-1;
         destinationLongitude= destinationlog!;
         sourcelath=0.0;
         sourcelog=0.0;
-      destinationlath=0.0;
+        destinationlath=0.0;
         destinationlog=0.0;
         sourcepath='';
         destinationpath='';
@@ -430,21 +387,21 @@ int valuecheck=-1;
 
       // Accommodate the two locations within the
       // camera view of the map
-   //   if(sourcepath=='') {
-      /*mapController.animateCamera(
+      //   if(sourcepath=='') {
+      */ /*mapController.animateCamera(
       CameraUpdate.newLatLngZoom(
           LatLng(northEastLatitude+0.999,
             northEastLongitude-0.999,),
-          5));*/
-        mapController.animateCamera(
-          CameraUpdate.newLatLngBounds(
-            LatLngBounds(
-              northeast: LatLng(northEastLatitude, northEastLongitude),
-              southwest: LatLng(southWestLatitude, southWestLongitude),
-            ),
-            150.0,
+          5));*/ /*
+      mapController.animateCamera(
+        CameraUpdate.newLatLngBounds(
+          LatLngBounds(
+            northeast: LatLng(northEastLatitude, northEastLongitude),
+            southwest: LatLng(southWestLatitude, southWestLongitude),
           ),
-        );
+          150.0,
+        ),
+      );
 
       // Calculating the distance between the start and the end positions
       // with a straight path, without considering any route
@@ -471,17 +428,17 @@ int valuecheck=-1;
         );
       }
 
-   //   setState(() {
-        placeDistance.value = totalDistance.toStringAsFixed(2);
-        print('DISTANCE: $placeDistance km');
-    //  });
+      //   setState(() {
+      placeDistance.value = totalDistance.toStringAsFixed(2);
+      print('DISTANCE: $placeDistance km');
+      //  });
 
       return true;
     } catch (e) {
       print(e);
     }
     return false;
-  }
+  }*/
 
   // Formula for calculating distance between two coordinates
   // https://stackoverflow.com/a/54138876/11910277
@@ -494,7 +451,7 @@ int valuecheck=-1;
     return 12742 * asin(sqrt(a));
   }
 
-   /* openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
+  /* openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
       String current=startLatitude1.toString()+","+startLongitude1.toString();
       String seach=destinationLatituate1.toString()+","+destinationLongitude1.toString();
       String googleUrl='';
@@ -509,9 +466,9 @@ int valuecheck=-1;
     else if(selectedValue.value==3){
       modevalue="walking";
     }
-   *//* else if(selectedValue.value==4){
+   */ /* else if(selectedValue.value==4){
       modevalue="Transit";
-    }*//*
+    }*/ /*
     print("model String value is:"+modevalue);
     // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
@@ -585,8 +542,7 @@ int valuecheck=-1;
 
   }*/
 
-
-  openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
+/*  openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
     String current=startLatitude1.toString()+","+startLongitude1.toString();
     String seach=destinationLatituate1.toString()+","+destinationLongitude1.toString();
     String googleUrl='';
@@ -601,9 +557,9 @@ int valuecheck=-1;
     else if(selectedValue.value==3){
       modevalue="walking";
     }
-    /* else if(selectedValue.value==4){
+    */ /* else if(selectedValue.value==4){
       modevalue="Transit";
-    }*/
+    }*/ /*
     print("model String value is:"+modevalue);
     // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
@@ -734,16 +690,16 @@ int valuecheck=-1;
 
     }
 
-  }
+  }*/
 
   // Create the polylines for showing the route between two places
 
   _createPolylines(
-      double startLatitude,
-      double startLongitude,
-      double destinationLatitude,
-      double destinationLongitude,
-      ) async {
+    double startLatitude,
+    double startLongitude,
+    double destinationLatitude,
+    double destinationLongitude,
+  ) async {
     //  polylinePoints = PolylinePoints();
     /*   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Secrets.API_KEY, // Google Maps API Key
@@ -771,23 +727,26 @@ int valuecheck=-1;
     );
     polylines[id] = polyline;
   }
+
   performSearch(query) async {
-    if(startAddress==''){
+    if (startAddress == '') {
       getCurrentLocation1();
       startAddressController.text = currentAddress;
-      startAddress.value =currentAddress;
+      startAddress.value = currentAddress;
     }
-    print("show start address:"+startAddressController.text);
-    print("show dest address:"+destinationAddressController.text);
-    if(startAddressController.text !="" && destinationAddressController.text!=""){
+    print("show start address:" + startAddressController.text);
+    print("show dest address:" + destinationAddressController.text);
+    if (startAddressController.text != "" &&
+        destinationAddressController.text != "") {
       markers.clear();
       polylines.clear();
       polylineCoordinates.clear();
       placeDistance.value = '';
 
+      calculateDistance();
 
-      calculateDistance().then((isCalculated) {
-        /*   if (isCalculated) {
+      // .then((isCalculated) {
+      /*   if (isCalculated) {
         ScaffoldMessenger.of(context)
             .showSnackBar(
           SnackBar(
@@ -804,154 +763,356 @@ int valuecheck=-1;
           ),
         );
       }*/
-      });
+      // });
+    } else {
+      if (startAddressController.text == "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Current location Cannot be Empty")));
+      } else if (destinationAddressController.text == "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Destination Location Cannot be Empty ")));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Source and Destination Location Cannot be Empty ")));
+      }
     }
-    else{
-      if(startAddressController.text ==""){
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Current location Cannot be Empty")));
-      }
-      else if(destinationAddressController.text ==""){
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Destination Location Cannot be Empty ")));
-      }
-      else{
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Source and Destination Location Cannot be Empty ")));
-      }
-
-    }
-
-
 
 //    FocusScope.of(context).requestFocus(FocusNode());
-
   }
+
+  calculateDistance() async {
+    try {
+      print("inside local hereeee");
+      double startLatitude = 0.0,
+          startLongitude = 0.0,
+          destinationLatitude = 0.0,
+          destinationLongitude = 0.0;
+      // Retrieving placemarks from addresses
+
+      // if(sourcepath==''){
+      List<Location> startPlacemark =
+          await locationFromAddress(startAddress.value);
+      List<Location> destinationPlacemark =
+          await locationFromAddress(destinationAddress.value);
+      print("inside local hereee123e");
+      // Use the retrieved coordinates of the current position,
+      // instead of the address if the start position is user's
+      // current position, as it results in better accuracy.
+      startLatitude = startAddress == currentAddress
+          ? currentPosition.latitude
+          : startPlacemark[0].latitude;
+
+      startLongitude = startAddress == currentAddress
+          ? currentPosition.longitude
+          : startPlacemark[0].longitude;
+
+      destinationLatitude = destinationPlacemark[0].latitude;
+      destinationLongitude = destinationPlacemark[0].longitude;
+
+      admob_helper.showInterstitialAd(callback: () {
+        Get.to(() => NavigationScreenView(), arguments: {
+          "source": startAddressController.text,
+          "destination": destinationAddressController.text,
+          "Sourcelath": startLatitude,
+          "Sourcelog": startLongitude,
+          "destinationlath": destinationLatitude,
+          "destinationlog": destinationLongitude
+        });
+      });
+
+      // }
+      /* else{
+
+        startLatitude= sourcelath!;
+        startLongitude=sourcelog!;
+        destinationLatitude=  destinationlath!;
+        destinationLongitude= destinationlog!;
+        sourcelath=0.0;
+        sourcelog=0.0;
+        destinationlath=0.0;
+        destinationlog=0.0;
+        sourcepath='';
+        destinationpath='';
+
+      }*/
+      /*startLatitude1=startLatitude;
+      startLongitude1=startLongitude;
+      destinationLatituate1=destinationLatitude;
+      destinationLongitude1=destinationLongitude;
+      if(startAddress!='' && destinationAddress!=''){
+        await userController.addUser(
+          startAddress.value,
+          destinationAddress.value,
+          startLongitude1,
+          startLatitude1,
+          destinationLongitude1,
+          destinationLatituate1,
+
+
+
+
+
+        );
+      }
+//openMap(startLatitude,startLongitude,destinationLatitude, destinationLongitude);
+      String startCoordinatesString = '($startLatitude, $startLongitude)';
+      String destinationCoordinatesString =
+          '($destinationLatitude, $destinationLongitude)';
+
+      // Start Location Marker
+      Marker startMarker = Marker(
+        markerId: MarkerId(startCoordinatesString),
+        position: LatLng(startLatitude, startLongitude),
+        infoWindow: InfoWindow(
+          title: 'Start $startCoordinatesString',
+          snippet: startAddress.value,
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      );
+
+      // Destination Location Marker
+      Marker destinationMarker = Marker(
+        markerId: MarkerId(destinationCoordinatesString),
+        position: LatLng(destinationLatitude, destinationLongitude),
+        infoWindow: InfoWindow(
+          title: 'Destination $destinationCoordinatesString',
+          snippet: destinationAddress.value,
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      );
+
+      // Adding the markers to the list
+      markers.add(startMarker);
+      markers.add(destinationMarker);
+
+      print(
+        'START COORDINATES: ($startLatitude, $startLongitude)',
+      );
+      print(
+        'DESTINATION COORDINATES: ($destinationLatitude, $destinationLongitude)',
+      );
+
+      // Calculating to check that the position relative
+      // to the frame, and pan & zoom the camera accordingly.
+      double miny = (startLatitude <= destinationLatitude)
+          ? startLatitude
+          : destinationLatitude;
+      double minx = (startLongitude <= destinationLongitude)
+          ? startLongitude
+          : destinationLongitude;
+      double maxy = (startLatitude <= destinationLatitude)
+          ? destinationLatitude
+          : startLatitude;
+      double maxx = (startLongitude <= destinationLongitude)
+          ? destinationLongitude
+          : startLongitude;
+
+      double southWestLatitude = miny;
+      double southWestLongitude = minx;
+
+      double northEastLatitude = maxy;
+      double northEastLongitude = maxx;*/
+
+      // Accommodate the two locations within the
+      // camera view of the map
+      //   if(sourcepath=='') {
+      /*mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(
+          LatLng(northEastLatitude+0.999,
+            northEastLongitude-0.999,),
+          5));*/
+      /*     mapController.animateCamera(
+        CameraUpdate.newLatLngBounds(
+          LatLngBounds(
+            northeast: LatLng(northEastLatitude, northEastLongitude),
+            southwest: LatLng(southWestLatitude, southWestLongitude),
+          ),
+          150.0,
+        ),
+      );*/
+
+      // Calculating the distance between the start and the end positions
+      // with a straight path, without considering any route
+      // double distanceInMeters = await Geolocator.bearingBetween(
+      //   startLatitude,
+      //   startLongitude,
+      //   destinationLatitude,
+      //   destinationLongitude,
+      // );
+
+      /*  await _createPolylines(startLatitude, startLongitude, destinationLatitude,
+          destinationLongitude);
+
+      double totalDistance = 0.0;
+
+      // Calculating the total distance by adding the distance
+      // between small segments
+      for (int i = 0; i < polylineCoordinates.length - 1; i++) {
+        totalDistance += coordinateDistance(
+          polylineCoordinates[i].latitude,
+          polylineCoordinates[i].longitude,
+          polylineCoordinates[i + 1].latitude,
+          polylineCoordinates[i + 1].longitude,
+        );
+      }
+
+      //   setState(() {
+      placeDistance.value = totalDistance.toStringAsFixed(2);
+      print('DISTANCE: $placeDistance km');*/
+      //  });
+
+      // return true;
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("No address found for given location")));
+      print(e);
+    }
+    // return false;
+  }
+
   Future<void> activateSpeechRecognizer() async {
     debugPrint('_MyAppState.activateSpeechRecognizer... ');
     speech = SpeechToText();
 
     speechRecognitionAvailable = await speech.initialize(
         onError: errorHandler, onStatus: onSpeechAvailability);
-
   }
+
   void onSpeechAvailability(String status) {
     //setState(() {
     speechRecognitionAvailable = speech.isAvailable;
     isListening = speech.isListening;
     // }
-
   }
+
   void onRecognitionResult(SpeechRecognitionResult result) {
     //  setState(() =>
 
-
-    if(result.recognizedWords.isNotEmpty){
+    if (result.recognizedWords.isNotEmpty) {
       print("Search:" + result.recognizedWords);
       transcription = result.recognizedWords;
-      if(valuecheck==1){
+      if (valuecheck == 1) {
         startAddressController.text = transcription;
-        startAddress.value =transcription;
-      }
-      else if(valuecheck==2){
+        startAddress.value = transcription;
+      } else if (valuecheck == 2) {
         destinationAddressController.text = transcription;
-        destinationAddress.value =transcription;
+        destinationAddress.value = transcription;
       }
 
-      print("show start address13:"+startAddressController.text);
-      print("show dest address123:"+destinationAddressController.text);
+      print("show start address13:" + startAddressController.text);
+      print("show dest address123:" + destinationAddressController.text);
       print("Search1:" + transcription);
 
-      if (debounce?.isActive ?? false) debounce?.cancel();
+      /*  if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 1000), () {
         print("call hereee1234 inside");
         performSearch('');
-      });
+      });*/
     }
-
-
     //filterSearchResults(editingController.text);
     // if(editingController.text)
-
   }
+
   //   );
 
   // void onRecognitionComplete() => setState(() => _isListening = false);
 
-  void errorHandler(SpeechRecognitionError error){
-    print("i am herrreeee124:"+ptts11.value.toString());
+  void errorHandler(SpeechRecognitionError error) {
+    print("i am herrreeee124:" + ptts11.value.toString());
     //ptts11.value=true;
     offMic();
 
     debugPrint(error.errorMsg);
-
   }
 
   void start() {
-    print("start function call:"+ptts11.value.toString());
-    speech.listen(
-        onResult: onRecognitionResult, localeId: 'en');
+    print("start function call:" + ptts11.value.toString());
+    speech.listen(onResult: onRecognitionResult, localeId: 'en');
   }
 
-  void offMic(){
-    ptts11.value=true;
+  void destinationsreach() {
+    if (ptts2) {
+      print("call mic heree" + speechRecognitionAvailable.toString());
+      print("call mic heree1" + isListening.toString());
+      if (speechRecognitionAvailable && !isListening) {
+        //viewModel.ptts11.value=false,
+        onMic2();
+        print("value of false 1234:" + ptts12.value.toString());
+        ptts2 = false;
+        start();
+      }
+    } else {
+      //viewModel.ptts11.value=true,
+      offMic2();
+      ptts2 = true;
+      speech.cancel();
+      speech.stop();
+    }
+    ;
   }
-  void onMic(){
-    ptts11.value=false;
+
+  void offMic() {
+    ptts11.value = true;
   }
-  void offMic2(){
-    ptts12.value=true;
+
+  void onMic() {
+    ptts11.value = false;
   }
-  void onMic2(){
-    ptts12.value=false;
+
+  void offMic2() {
+    ptts12.value = true;
   }
+
+  void onMic2() {
+    ptts12.value = false;
+  }
+
   micpopup(BuildContext context) async {
     return await showDialog<bool>(
       barrierDismissible: false,
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            backgroundColor: Colors.white,
-            title: Column(
-              children: [
-                lotti.Lottie.asset(
-                  height: 200.0,
-                  'assets/micnew.json',
-                  repeat: true,
-                  reverse: true,
-                  animate: true,
-                ),
-                Text("Speak Now",
-                  style: TextStyle(color: Colors.black), textAlign: TextAlign.center,),
-
-              ],
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Column(
+          children: [
+            lotti.Lottie.asset(
+              height: 200.0,
+              'assets/micnew.json',
+              repeat: true,
+              reverse: true,
+              animate: true,
             ),
+            Text(
+              "Speak Now",
+              style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
 
-            /*actions: [
+        /*actions: [
               Text("Speak Now",
                   style: TextStyle(color: Colors.black), textAlign: TextAlign.left,),
-              *//*ElevatedButton(
+              */ /*ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blue),
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text("No",style: TextStyle(
                     color: Colors.white,
                   ),)
-              ),*//*
+              ),*/ /*
             ],*/
-          ),
-
+      ),
     );
-
   }
-  void startTimer(BuildContext context) {
-   micpopup(context);
 
+  void startTimer(BuildContext context) {
+    micpopup(context);
 
     Future.delayed(Duration(seconds: 5), () {
       //  print("Show progress bar value");
 
       Navigator.of(context).pop(false);
-     /*if (ptts1) {
+      /*if (ptts1) {
         print("call mic heree"+speechRecognitionAvailable.toString());
         print("call mic heree1"+isListening.toString());
         if(speechRecognitionAvailable && !isListening)
@@ -965,26 +1126,25 @@ int valuecheck=-1;
      }
      else
       {*/
-        //viewModel.ptts11.value=true,
-        offMic();
-        ptts1=true;
-        speech.cancel();
-        speech.stop();
-    //  };
+      //viewModel.ptts11.value=true,
+      offMic();
+      ptts1 = true;
+      speech.cancel();
+      speech.stop();
+      //  };
     });
   }
 
   void startTimer1(BuildContext context) {
     micpopup(context);
 
-
     Future.delayed(Duration(seconds: 5), () {
       //  print("Show progress bar value");
 
       Navigator.of(context).pop(false);
 
-     offMic2();
-      ptts2=true;
+      offMic2();
+      ptts2 = true;
       speech.cancel();
       speech.stop();
       //  };

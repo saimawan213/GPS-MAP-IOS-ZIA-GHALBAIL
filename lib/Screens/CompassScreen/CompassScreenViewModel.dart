@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class CompassScreenViewModel extends GetxController {
   RxString compassDirection = "N".obs;
-  RxString compassvalue=''.obs;
+  RxDouble compassvalue= (0.0).obs;
   RxBool hasPermissions = false.obs;
   CompassEvent? lastRead;
   Admob_Helper admob_helper = Admob_Helper();
@@ -33,7 +33,7 @@ class CompassScreenViewModel extends GetxController {
         //  bool a= isNumeric(event.heading.toString());
         print('direction 123 first:'+sanitizeHeading(event.heading).toString());
         compassDirection.value = _getCompassDirection(sanitizeHeading(event.heading));
-        compassvalue.value=sanitizeHeading(event.heading).toString();
+        compassvalue.value=sanitizeHeading(event.heading);
 
       });
     /*if(!a){

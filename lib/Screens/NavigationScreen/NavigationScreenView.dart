@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -118,9 +119,9 @@ class NavigationScreenView extends StatelessWidget {
             // Show zoom buttons
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
+                padding: const EdgeInsets.only(left: 10.0,bottom: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     ClipOval(
                       child: Material(
@@ -560,8 +561,8 @@ class NavigationScreenView extends StatelessWidget {
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: LatLng(
-                                  viewModel.currentPosition.latitude,
-                                  viewModel.currentPosition.longitude,
+                                  Constent.splashcurrentPosition.latitude,
+                                  Constent.splashcurrentPosition.longitude,
                                 ),
                                 zoom: 18.0,
                               ),

@@ -31,7 +31,7 @@ class _ChooseLocationState extends State<SelectlcoationView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.yellowColor,
           title: Text("Choose a location", style: TextStyle(color: Colors.white)),
           centerTitle: true,
           elevation: 0,  leading: IconButton(

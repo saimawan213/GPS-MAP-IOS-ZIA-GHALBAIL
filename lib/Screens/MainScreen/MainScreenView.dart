@@ -15,6 +15,7 @@ import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewModel.
 import 'package:mapsandnavigationflutter/Screens/MyLocation/MyLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/NearbyLocation/NearbyLocationView.dart';
+import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightView.dart';
 
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockView.dart';
@@ -35,7 +36,7 @@ class MainScreen_View extends StatelessWidget {
         key: _scaffoldKey,
         appBar: AppBar(
           title: const Text("Maps and Navigation",style: TextStyle(color: Colors.white)),
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.yellowColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
@@ -70,237 +71,240 @@ class MainScreen_View extends StatelessWidget {
 
               ),*/
               Expanded(
+
                 flex: 4,
                 child:
 
-                Column(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                Container(
+                  color: AppColor.yellowColor,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Container(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => NavigationScreenView(),
-                                            arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});
+                                    child: GestureDetector(
 
-                                      });
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => RouteScreenView());
+                                         /* Get.to(() => NavigationScreenView(),
+                                              arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});
+                                      */  });
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/navigate.png', // Replace with your image URL
-                                        labelText: 'Navigation',
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 8.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/navigate.png', // Replace with your image URL
+                                          labelText: 'Navigation',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
 
-                          SizedBox(width: 8.0), // Add spacing between cards
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                            //SizedBox(width: 8.0), // Add spacing between cards
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => NearbyLocationView());
-                                      });
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => NearbyLocationView());
+                                        });
 
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/nearbylocation.png', // Replace with your image URL
-                                        labelText: 'NearByLocation',
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/nearbylocation.png', // Replace with your image URL
+                                          labelText: 'NearBy',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
-                          SizedBox(width: 8.0), // Add spacing between cards
+                                    ))),
+                          //  SizedBox(width: 8.0), // Add spacing between cards
 
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => MyLocationView());
-                                      });
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => MyLocationView());
+                                        });
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/mylocation.png', // Replace with your image URL
-                                        labelText: 'My Location',
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 8.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/mylocation.png', // Replace with your image URL
+                                          labelText: 'My Location',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                      Expanded(
+                        flex: 5,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => WorldClockView());
-                                      });
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => WorldClockView());
+                                        });
 
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/worldclock.png', // Replace with your image URL
-                                        labelText: 'World Clock',
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 8.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/worldclock.png', // Replace with your image URL
+                                          labelText: 'World Clock',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
 
-                          SizedBox(width: 8.0), // Add spacing between cards
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                          //  SizedBox(width: 8.0), // Add spacing between cards
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => TrafficLightView());
-                                      });
-
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => TrafficLightView());
+                                        });
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/trafficlight.png', // Replace with your image URL
-                                        labelText: 'Traffic Light',
+
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/trafficlight.png', // Replace with your image URL
+                                          labelText: 'Traffic Light',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
-                          SizedBox(width: 8.0), // Add spacing between cards
+                                    ))),
+                            //SizedBox(width: 8.0), // Add spacing between cards
 
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => HistoryView());
-                                      });
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => HistoryView());
+                                        });
 
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/history.png', // Replace with your image URL
-                                        labelText: 'History',
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 8.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/history.png', // Replace with your image URL
+                                          labelText: 'History',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                      Expanded(
+                        flex: 5,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => CompassScreenView());
-                                      });
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => CompassScreenView());
+                                        });
 
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/compass.png', // Replace with your image URL
-                                        labelText: 'Compass',
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 8.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/compass.png', // Replace with your image URL
+                                          labelText: 'Compass',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
 
-                          SizedBox(width: 8.0), // Add spacing between cards
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                           // SizedBox(width: 8.0), // Add spacing between cards
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                        Get.to(() => GeoLiveLocationView());
-                                      });
-
-
+                                      onTap: () {
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          Get.to(() => GeoLiveLocationView());
+                                        });
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/geolivelocation.png', // Replace with your image URL
-                                        labelText: 'Geolive Location',
+
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 1.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/geolivelocation.png', // Replace with your image URL
+                                          labelText: 'Geolive',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
-                          SizedBox(width: 8.0), // Add spacing between cards
+                                    ))),
+                            //SizedBox(width: 8.0), // Add spacing between cards
 
-                          Expanded(
-                              child: Container(
-                                  child: GestureDetector(
+                            Expanded(
+                                child: Container(
+                                    child: GestureDetector(
 
-                                    onTap: () {
-                                      viewModel.admob_helper.showInterstitialAd(callback: (){
-                                      });
-
-                                      //Get.to(() => HistoryView());
+                                      onTap: () {
+                                        viewModel.shareApp();
+                                        //Get.to(() => HistoryView());
 
 
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
-                                        imageUrl: 'assets/images/share.png', // Replace with your image URL
-                                        labelText: 'Share',
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 1.0,right: 8.0),
+                                        child: CardView(
+                                          imageUrl: 'assets/images/share.png', // Replace with your image URL
+                                          labelText: 'Share',
+                                        ),
                                       ),
-                                    ),
-                                  ))),
+                                    ))),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           Expanded(
@@ -894,6 +898,7 @@ class MainScreen_View extends StatelessWidget {
                 leading: const Icon(Icons.share),
                 title: const Text(' Share App '),
                 onTap: () {
+                  viewModel.shareApp();
                   Navigator.pop(context);
               /*    viewModel.admob_helper.showInterstitialAd(nextScreen: 'no',  callback: (){
                     // write code here
@@ -907,6 +912,7 @@ class MainScreen_View extends StatelessWidget {
                 leading: const Icon(Icons.star),
                 title: const Text(' Rate Us '),
                 onTap: () {
+                  viewModel.openPlayStore();
                   Navigator.pop(context);
                /*   viewModel.admob_helper.showInterstitialAd(nextScreen:'/ImagesShowView',callback: (){
                     // write code here

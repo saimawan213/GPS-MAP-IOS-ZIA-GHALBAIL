@@ -26,7 +26,7 @@ class CompassScreenView extends StatelessWidget {
 
         appBar: AppBar(
           title: const Text('Compass'),
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.yellowColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             color: Colors.white,// or MenuOutlined
@@ -74,7 +74,7 @@ class CompassScreenView extends StatelessWidget {
                             style: TextStyle(fontSize: 18),
                           ),
                     Obx(() =>   Text(
-                      viewModel.compassDirection.value +"\t\t\t" +viewModel.compassvalue.value.substring(0,viewModel.compassvalue.value.indexOf('.'))+ "\u00B0",
+                      viewModel.compassDirection.value +"\t\t\t" +viewModel.compassvalue.value.toStringAsFixed(0)+ "\u00B0",
                       style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
 
                     ),),

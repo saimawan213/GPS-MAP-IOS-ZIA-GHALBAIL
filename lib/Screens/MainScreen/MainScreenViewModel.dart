@@ -2,10 +2,14 @@
 
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainScreenViewModel extends GetxController {
 
@@ -66,7 +70,39 @@ class MainScreenViewModel extends GetxController {
     ) ?? false;
   }
 
+  void openPlayStore() async {
+   /* packageInfo = await PackageInfo.fromPlatform();
+    String packageName = packageInfo.packageName;
+    if(Platform.isAndroid){
+      Uri playStoreUrl = Uri.parse('https://play.google.com/store/apps/details?id='+packageName);
+      if (await canLaunchUrl(playStoreUrl)) {
+        await launchUrl(playStoreUrl);
+      } else {
+        throw 'Could not launch $playStoreUrl';
+      }
+    }*/
+     if(Platform.isIOS){
+      Uri playStoreUrl = Uri.parse('https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238');
+      if (await canLaunchUrl(playStoreUrl)) {
+        await launchUrl(playStoreUrl);
+      } else {
+        throw 'Could not launch $playStoreUrl';
+      }
+    }
 
+  }
+  Future<void> shareApp() async {
+    /*packageInfo = await PackageInfo.fromPlatform();
+    String packageName = packageInfo.packageName;*/
+    // Set the app link and the message to be shared
+    final String ioslink='https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238';
+   // final String appLink = 'https://play.google.com/store/apps/details?id='+packageName;
+    final String message = 'Check out my new app '+ioslink ;
+
+    // Share the app link and message using the share dialog
+    //await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
+    await FlutterShare.share(title: 'Share App', text: message);
+  }
   Future<bool> showExitPopup(context) async{
     return await showDialog(
       context: context,

@@ -24,6 +24,7 @@ class HistoryViewModel extends GetxController {
 
   Future<void> fetchUsers() async {
     users.value = await _service.getUsers();
+    showProgressBar.value = false;
   }
 
   void startTimer() {

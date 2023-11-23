@@ -31,7 +31,7 @@ class HistoryView extends StatelessWidget {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor:AppColor.primaryColor,
+        backgroundColor:AppColor.yellowColor,
         title: Text(
           " History",
           style: TextStyle(
@@ -84,7 +84,7 @@ class HistoryView extends StatelessWidget {
               child:Obx(()=> viewModel.showProgressBar.value
                   ? Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor), // Set color here
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColor.yellowColor), // Set color here
                 ),
               ): Obx(() =>(viewModel.users.isEmpty) ? Lottie.asset(
                 'assets/nodatafound.json',

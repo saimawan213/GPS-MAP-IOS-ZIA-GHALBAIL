@@ -51,52 +51,35 @@ class SplashView extends StatelessWidget {
           Expanded(
             flex: 2,
             child:Column(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-
-                    ),
-                  ),
-                  Expanded(
-                    flex:8,
-                    child:
-                    Column(
-                      children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child:const Text(
-                        "Welcome To \n Maps and Navigation",
-                        style:
-                        TextStyle(fontSize: 22.0, color: AppColor.primaryColor),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                        Container(
-                          alignment: Alignment.center,
-                          child:const Text(
-                            "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
-                            style:
-                            TextStyle(fontSize: 13.0, color: AppColor.primaryColor),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-    ]),
-                  ),
-                 /* Expanded(
-                    flex:3,
-                    child:  Container(
-                      alignment: Alignment.center,
-                      child:const Text(
-                        "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
-                        style:
-                        TextStyle(fontSize: 13.0, color: Colors.black),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),*/
-                ]
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child:Obx(()=>Text(
+                  viewModel.currentlocation.value,
+                  style:
+                  TextStyle(fontSize: 20.0, color: AppColor.primaryColor),
+              textAlign: TextAlign.center,
+            )),
+                ),
+            Container(
+              alignment: Alignment.center,
+              child:const Text(
+                "Welcome To \n Maps and Navigation",
+                style:
+                TextStyle(fontSize: 18.0, color: AppColor.primaryColor),
+                textAlign: TextAlign.center,
+              ),
             ),
+                Container(
+                  alignment: Alignment.center,
+                  child:const Text(
+                    "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
+                    style:
+                    TextStyle(fontSize: 13.0, color: AppColor.primaryColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+    ]),
 
           ),
           Expanded(
@@ -152,9 +135,9 @@ class SplashView extends StatelessWidget {
 
         // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
 
-                            viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
+                          //  viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
                               Get.off(() => MainScreen_View());
-                            });
+                           // });
 
                           },
                           child: Container(

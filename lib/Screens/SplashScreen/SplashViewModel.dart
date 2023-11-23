@@ -13,7 +13,7 @@ class SplashViewModel extends GetxController {
   RxDouble progressValue = 0.0.obs;
   late AppLifecycleReactor appLifecycleReactor;
   Admob_Helper admob_helper = Admob_Helper();
-   late Position splashcurrentPosition;
+RxString currentlocation=''.obs;
 
   RxBool showProgressBar = true.obs;
 
@@ -21,16 +21,19 @@ class SplashViewModel extends GetxController {
   @override
   Future<void> onInit() async {
     print('**** onInit *****');
-    getCurrentLocation();
+
     // FlutterNativeSplash.remove();
     super.onInit();
   }
 
   @override
-  void onReady() {
+  void onReady() async{
     print('**** onReady *****');
     ///Load Ads Here
-    checkPermission();
+    if(await checkPermission()){
+      getCurrentLocation();
+    }
+    //checkPermission();
     startLoading();
     Admob_Helper admob_helper1 = Admob_Helper()
       ..loadopenupad();
@@ -56,7 +59,7 @@ class SplashViewModel extends GetxController {
 
     });
   }
-  Future<bool?> checkPermission() async {
+  Future<bool> checkPermission() async {
     if (Platform.isAndroid) {
       Map<Permission, PermissionStatus> statues =
       await [Permission.camera, Permission.locationWhenInUse].request();
@@ -74,6 +77,7 @@ class SplashViewModel extends GetxController {
       if (isPermanentlyDenied) {
         return false;
       }
+      return false;
     } else {
       Map<Permission, PermissionStatus> statues = await [
         Permission.camera,
@@ -96,6 +100,7 @@ class SplashViewModel extends GetxController {
       if (isPermanentlyDenied) {
         return false;
       }
+      return false;
     }
   }
   void startLoading() {
@@ -126,8 +131,8 @@ class SplashViewModel extends GetxController {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       // setState(() {
-      splashcurrentPosition = position;
-      print('CURRENT POS: $splashcurrentPosition');
+      Constent.splashcurrentPosition = position;
+      print('CURRENT POS: $Constent.splashcurrentPosition');
       Constent.Splashcurrentlath=position.latitude;
       Constent.Splashcurrentlog=position.longitude;
      /*   mapController.animateCamera(
@@ -149,13 +154,16 @@ class SplashViewModel extends GetxController {
   getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
-          splashcurrentPosition.latitude, splashcurrentPosition.longitude);
+          Constent.splashcurrentPosition.latitude, Constent.splashcurrentPosition.longitude);
 
       Placemark place = p[0];
 
       //  setState(() {
       Constent.splashcurrentAddress =
       "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+      Constent.splashcurrentAddress= Constent.splashcurrentAddress.replaceAll(RegExp(r'^,+,'), '');
+      currentlocation.value=  Constent.splashcurrentAddress;
+      // currentlocation.value=Constent.splashcurrentAddress;
     /*  startAddressController.text = currentAddress;
       startAddress.value = currentAddress;*/
       //  });

@@ -86,7 +86,7 @@ class GeoLiveLocationView extends StatelessWidget {
         key: _scaffoldKey,
         appBar: AppBar(
           title: const Text("Geo live Location",style: TextStyle(color: Colors.white)),
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.yellowColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
@@ -140,7 +140,7 @@ class GeoLiveLocationView extends StatelessWidget {
                     Container(
 
                       child:  Obx(()=>
-                          Image.file(viewModel.imageFile.value),),
+                  (viewModel.imageFile.value.path.isNotEmpty)?Image.file(viewModel.imageFile.value):SizedBox(),),
                     ),
                     Positioned(
                       bottom: 100, // Align to the bottom of the Stack

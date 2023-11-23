@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -10,6 +11,7 @@ class Constent {
   static double Splashcurrentlath=0.0;
   static double Splashcurrentlog=0.0;
   static String splashcurrentAddress = '';
+  static late Position splashcurrentPosition;
   String location; //location name for the UI
   String? time; // the time in that location
   String? flag; // URL to an asset flag icon
@@ -193,7 +195,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/2934735716';
       }
       else{
-        return '';
+        return 'ca-app-pub-6941637095433882/5799117821';
       }
 
     }else{
@@ -219,7 +221,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/4411468910';
       }
       else{
-        return '';
+        return 'ca-app-pub-6941637095433882/6431147997';
       }
 
     }else{
@@ -242,7 +244,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/5662855259';
       }
       else{
-        return '';
+        return 'ca-app-pub-6941637095433882/7998618403';
       }
 
     }else{
@@ -265,7 +267,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/3986624511';
       }
       else{
-        return '';
+        return 'ca-app-pub-6941637095433882/2954476333';
       }
 
     }else{

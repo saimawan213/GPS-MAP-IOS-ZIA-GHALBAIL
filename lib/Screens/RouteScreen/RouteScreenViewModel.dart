@@ -135,15 +135,37 @@ class RouteScreenViewModel extends GetxController {
       performSearch('');*/
       // performSearch('');
     } else {
-      await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.high)
-          .then((Position position) async {
-        // setState(() {
-        currentPosition = position;
-        Constent.splashcurrentPosition = currentPosition;
-        print('CURRENT POS: $currentPosition');
-        //  if (sourcepath == '') {
-        /*if (Constent.splashcurrentAddress != "") {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Check if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        return;
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        return;
+      }
+     /* LocationPermission c=await Geolocator.checkPermission();
+      if(c==LocationPermission.always) {*/
+        await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+            .then((Position position) async {
+          // setState(() {
+          currentPosition = position;
+          Constent.splashcurrentPosition = currentPosition;
+          print('CURRENT POS: $currentPosition');
+          //  if (sourcepath == '') {
+          /*if (Constent.splashcurrentAddress != "") {
             // Constent.Splashcurrentlath=position.latitude;
             //Constent.Splashcurrentlog=position.longitude;
             mapController.animateCamera(
@@ -163,9 +185,9 @@ class RouteScreenViewModel extends GetxController {
           }
           else {*/
 
-        // });
-        await getAddress();
-        /*}
+          // });
+          await getAddress();
+          /*}
        // }
         else {
           mapController.animateCamera(
@@ -187,9 +209,71 @@ class RouteScreenViewModel extends GetxController {
           destinationAddressController.text = destinationpath!;
           performSearch('');
         }*/
+        }).catchError((e) {
+          print(e);
+        });
+   //   }
+    /*  else{
+
+    LocationPermission p=await Geolocator.requestPermission();
+    if(p==LocationPermission.always) {
+      await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) async {
+        // setState(() {
+        currentPosition = position;
+        Constent.splashcurrentPosition = currentPosition;
+        print('CURRENT POS: $currentPosition');
+        //  if (sourcepath == '') {
+        *//*if (Constent.splashcurrentAddress != "") {
+            // Constent.Splashcurrentlath=position.latitude;
+            //Constent.Splashcurrentlog=position.longitude;
+            mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(
+                      Constent.Splashcurrentlath, Constent.Splashcurrentlog),
+                  zoom: 18.0,
+                ),
+              ),
+            );
+            currentAddress = Constent.splashcurrentAddress;
+            startAddressController.text = Constent.splashcurrentAddress;
+            ;
+            startAddress.value = Constent.splashcurrentAddress;
+            ;
+          }
+          else {*//*
+
+        // });
+        await getAddress();
+        *//*}
+       // }
+        else {
+          mapController.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(sourcelath!, sourcelog!),
+                zoom: 18.0,
+              ),
+            ),
+          );
+          markers:
+          Set<Marker>.from(markers);
+          initialCameraPosition:
+          initialLocation;
+          currentAddress = sourcepath!;
+          startAddressController.text = currentAddress;
+          startAddress.value = currentAddress;
+          destinationAddress.value = destinationpath!;
+          destinationAddressController.text = destinationpath!;
+          performSearch('');
+        }*//*
       }).catchError((e) {
         print(e);
       });
+    }
+      }*/
     }
   }
 

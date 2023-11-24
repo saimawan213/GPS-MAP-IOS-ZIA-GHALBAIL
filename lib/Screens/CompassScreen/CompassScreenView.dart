@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
@@ -9,7 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/CompassScreen/CompassScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 
@@ -260,7 +259,7 @@ class CompassScreenView extends StatelessWidget {
       return "NW";
     }
   }
-  Widget _buildPermissionSheet() {
+/*  Widget _buildPermissionSheet() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -286,7 +285,7 @@ class CompassScreenView extends StatelessWidget {
         ],
       ),
     );
-  }
+  }*/
 
 /*  void _fetchPermissionStatus() {
     Permission.locationWhenInUse.status.then((status) {

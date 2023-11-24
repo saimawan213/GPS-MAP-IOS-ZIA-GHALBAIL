@@ -24,12 +24,12 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
+          'DefaultFirebaseOptions have not been configured for ios - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
-      case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -52,13 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAzPYOzOqnvPBeolYtFIPQ1UCDwYAbI3T0',
-    appId: '1:1006775741778:ios:2abee6a1f382f58e741e8b',
-    messagingSenderId: '1006775741778',
-    projectId: 'ios-maps-zia',
-    storageBucket: 'ios-maps-zia.appspot.com',
-    iosClientId: '1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj.apps.googleusercontent.com',
-    iosBundleId: 'com.pzapps.gpsmapsnavigation',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyD2zGOu7Px7KTHKfUxu9lbFDfcZ86IbEP8',
+    appId: '1:716658242443:android:778ec75ef253b5bdc8b58e',
+    messagingSenderId: '716658242443',
+    projectId: 'mapsandnavigationflutter',
+    storageBucket: 'mapsandnavigationflutter.appspot.com',
   );
 }

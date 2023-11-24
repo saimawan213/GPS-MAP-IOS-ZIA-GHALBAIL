@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 
 class SplashViewModel extends GetxController {
@@ -30,9 +28,9 @@ RxString currentlocation=''.obs;
   void onReady() async{
     print('**** onReady *****');
     ///Load Ads Here
-    if(await checkPermission()){
+ //   if(await checkPermission()){
       getCurrentLocation();
-    }
+   // }
     //checkPermission();
     startLoading();
     Admob_Helper admob_helper1 = Admob_Helper()
@@ -59,7 +57,7 @@ RxString currentlocation=''.obs;
 
     });
   }
-  Future<bool> checkPermission() async {
+/*  Future<bool> checkPermission() async {
     if (Platform.isAndroid) {
       Map<Permission, PermissionStatus> statues =
       await [Permission.camera, Permission.locationWhenInUse].request();
@@ -102,7 +100,7 @@ RxString currentlocation=''.obs;
       }
       return false;
     }
-  }
+  }*/
   void startLoading() {
     const totalDuration = Duration(seconds: 5); // Adjust the duration as needed
     const updateFrequency = Duration(milliseconds: 100);
@@ -127,33 +125,37 @@ RxString currentlocation=''.obs;
       }
     });
   }
-  getCurrentLocation() async {
+/*  getCurrentLocation() async {
 
 
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) async {
-      // setState(() {
-      Constent.splashcurrentPosition = position;
-      print('CURRENT POS: $Constent.splashcurrentPosition');
-      Constent.Splashcurrentlath=position.latitude;
-      Constent.Splashcurrentlog=position.longitude;
-     /*   mapController.animateCamera(
+
+LocationPermission p= await Geolocator.requestPermission();
+if(p==LocationPermission.always){
+  await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+      .then((Position position) async {
+    // setState(() {
+    Constent.splashcurrentPosition = position;
+    print('CURRENT POS: $Constent.splashcurrentPosition');
+    Constent.Splashcurrentlath=position.latitude;
+    Constent.Splashcurrentlog=position.longitude;
+    *//*   mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
               zoom: 18.0,
             ),
           ),
-        );*/
-        // });
-        await getAddress();
+        );*//*
+    // });
+    await getAddress();
 
 
-    }).catchError((e) {
-      print(e);
-    });
+  }).catchError((e) {
+    print(e);
+  });
+}
 
-  }
+  }*/
   getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
@@ -173,5 +175,50 @@ RxString currentlocation=''.obs;
     } catch (e) {
       print(e);
     }
+  }
+  getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return;
+    }
+
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      // setState(() {
+      Constent.splashcurrentPosition = position;
+      print('CURRENT POS: $Constent.splashcurrentPosition');
+      Constent.Splashcurrentlath=position.latitude;
+      Constent.Splashcurrentlog=position.longitude;
+      /*   mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(position.latitude, position.longitude),
+              zoom: 18.0,
+            ),
+          ),
+        );*/
+      // });
+      await getAddress();
+
+
+    }).catchError((e) {
+      print(e);
+    });
   }
 }

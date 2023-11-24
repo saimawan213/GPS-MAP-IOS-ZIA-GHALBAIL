@@ -1,8 +1,10 @@
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 
 class CompassScreenViewModel extends GetxController {
   RxString compassDirection = "N".obs;
@@ -56,7 +58,7 @@ class CompassScreenViewModel extends GetxController {
     // TODO: implement onClose
     super.onClose();
   }
-  void fetchPermissionStatus() {
+ /* void fetchPermissionStatus() {
     Permission.locationWhenInUse.status.then((status) {
      // if (mounted) {
      //   setState(() => _hasPermissions = status == PermissionStatus.granted); setState(() => _hasPermissions = status == PermissionStatus.granted);
@@ -65,11 +67,42 @@ class CompassScreenViewModel extends GetxController {
   hasPermissions.value = status == PermissionStatus.granted;
     });
 
-  }
-  void requestPermission(){
-    Permission.locationWhenInUse.request().then((ignored) {
+  }*/
+  Future<void> requestPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return;
+    }
+    hasPermissions.value=true;
+ /*   LocationPermission c=await Geolocator.checkPermission();
+    if(c==LocationPermission.always){
+      hasPermissions.value=true;
+    }
+    else {
+      LocationPermission p=await Geolocator.requestPermission();
+      if(p==LocationPermission.always){
+        hasPermissions.value=true;
+      }
+    }*/
+    /*Permission.locationWhenInUse.request().then((ignored) {
       fetchPermissionStatus();
-    });
+    });*/
   }
   double sanitizeHeading(double? hd) {
     if (hd == null) return 0;

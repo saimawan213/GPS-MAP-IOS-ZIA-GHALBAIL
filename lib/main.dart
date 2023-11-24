@@ -8,8 +8,6 @@ import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashView.dart';
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/SelectlcoationView.dart';
 import 'package:mapsandnavigationflutter/firebase_options.dart';
 
-
-
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();

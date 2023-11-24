@@ -1,3 +1,4 @@
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -7,13 +8,14 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:widgets_to_image/widgets_to_image.dart';
 
 
 class GeoLiveLocationViewModel extends GetxController {
 
   final picker = ImagePicker();
+
   Admob_Helper admob_helper = Admob_Helper();
    Rx<File> imageFile=File('').obs;
   RxString currentAddress = ''.obs;
@@ -58,7 +60,7 @@ String? imagepath;
     super.onClose();
   }
 
-  Future<bool?> checkPermission() async {
+/*  Future<bool?> checkPermission() async {
     if (Platform.isAndroid) {
       Map<Permission, PermissionStatus> statues =
       await [Permission.camera, Permission.locationWhenInUse].request();
@@ -99,8 +101,9 @@ String? imagepath;
         return false;
       }
     }
-  }
+  }*/
   imgFromCamera() async {
+
     print("Present  imgFromCamera");
     await picker
         .pickImage(source: ImageSource.camera, imageQuality: 50)
@@ -114,13 +117,35 @@ String? imagepath;
       }
     });
   }
+
   getCurrentLocation() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return;
+    }
+    await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       //  setState(() {
       currentPosition = position;
       print('CURRENT POS: $currentPosition');
-  /*    mapController.animateCamera(
+      /*    mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(position.latitude, position.longitude),
@@ -134,6 +159,54 @@ String? imagepath;
     }).catchError((e) {
       print(e);
     });
+  /*  LocationPermission  c=await Geolocator.checkPermission();
+    if(c==LocationPermission.always) {
+      await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) async {
+        //  setState(() {
+        currentPosition = position;
+        print('CURRENT POS: $currentPosition');
+        *//*    mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 18.0,
+          ),
+        ),
+      );*//*
+        //}
+        // );
+        await getAddress();
+      }).catchError((e) {
+        print(e);
+      });
+    }*/
+ /*   else {
+      LocationPermission p=await Geolocator.requestPermission();
+      if(p==LocationPermission.always){
+        await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+            .then((Position position) async {
+          //  setState(() {
+          currentPosition = position;
+          print('CURRENT POS: $currentPosition');
+          *//*    mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 18.0,
+          ),
+        ),
+      );*//*
+          //}
+          // );
+          await getAddress();
+        }).catchError((e) {
+          print(e);
+        });
+      }
+    }*/
   }
 
   // Method for retrieving the address

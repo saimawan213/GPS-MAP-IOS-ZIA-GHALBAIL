@@ -34,17 +34,33 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Please grant camera access</string>
+	<string>Please grant camera access to capture image</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location is required to get current address</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Needs Location to get current address</string>
+	<string>Needs Location access to get current address</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Please grant microphone access</string>
+	<string>Please grant microphone access to use mic</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please grant photo gallery access</string>
+	<string>Please grant photo gallery access to select images</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>recognize speech</string>
+	<string>Please Grant Recognize speech access to take input</string>
+
+    <key>NSCalendarsUsageDescription</key>
+	<string>Please grant permission to update calendar</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Please grant permission to update contacts</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Please grant permission to scan bluetooth devices</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Please grant permission to play music</string>
+    <key>NSMotionUsageDescription</key>
+    <string>Please grant permission to detect motion</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Please grant permission to access location</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Please grant permission to scan devices</string>
+
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

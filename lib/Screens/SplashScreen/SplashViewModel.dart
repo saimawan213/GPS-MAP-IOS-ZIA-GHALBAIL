@@ -128,6 +128,8 @@ RxString currentlocation=''.obs;
     });
   }
   getCurrentLocation() async {
+
+
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       // setState(() {
@@ -150,6 +152,7 @@ RxString currentlocation=''.obs;
     }).catchError((e) {
       print(e);
     });
+
   }
   getAddress() async {
     try {

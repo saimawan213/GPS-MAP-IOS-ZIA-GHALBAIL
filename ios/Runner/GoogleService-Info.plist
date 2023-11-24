@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAzPYOzOqnvPBeolYtFIPQ1UCDwYAbI3T0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1006775741778</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pzapps.gpsmapsnavigation</string>
+	<key>PROJECT_ID</key>
+	<string>ios-maps-zia</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ios-maps-zia.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1006775741778:ios:2abee6a1f382f58e741e8b</string>
+</dict>
+</plist>

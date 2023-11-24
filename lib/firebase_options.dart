@@ -53,11 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDF6AK2oQKam3m3VCH1v-m6z3Kq6hla0gM',
-    appId: '1:716658242443:ios:4112b6638f378772c8b58e',
-    messagingSenderId: '716658242443',
-    projectId: 'mapsandnavigationflutter',
-    storageBucket: 'mapsandnavigationflutter.appspot.com',
+    apiKey: 'AIzaSyAzPYOzOqnvPBeolYtFIPQ1UCDwYAbI3T0',
+    appId: '1:1006775741778:ios:2abee6a1f382f58e741e8b',
+    messagingSenderId: '1006775741778',
+    projectId: 'ios-maps-zia',
+    storageBucket: 'ios-maps-zia.appspot.com',
+    iosClientId: '1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj.apps.googleusercontent.com',
     iosBundleId: 'com.pzapps.gpsmapsnavigation',
   );
 }

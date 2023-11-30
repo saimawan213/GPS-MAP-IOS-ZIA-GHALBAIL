@@ -31,7 +31,7 @@ class HistoryView extends StatelessWidget {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor:AppColor.yellowColor,
+        backgroundColor:AppColor.primaryColor,
         title: Text(
           " History",
           style: TextStyle(
@@ -371,8 +371,8 @@ class HistoryView extends StatelessWidget {
             )),
             Expanded(
               flex: 1,
-              child:
-              Obx(()=>
+              child:Container()
+            /*  Obx(()=>
               (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !viewModel.users.isEmpty)?
               Align(
                 alignment: Alignment.bottomCenter,
@@ -395,7 +395,7 @@ class HistoryView extends StatelessWidget {
                     ),
                   )
               )
-              ),
+              ),*/
 
             ),
 /*Expanded(

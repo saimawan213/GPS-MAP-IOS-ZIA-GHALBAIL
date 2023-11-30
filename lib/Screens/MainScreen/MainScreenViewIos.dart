@@ -1,7 +1,5 @@
 
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -12,20 +10,20 @@ import 'package:mapsandnavigationflutter/Screens/CompassScreen/CompassScreenView
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/GeoLiveLocation/GeoLiveLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryView.dart';
-import 'package:mapsandnavigationflutter/Screens/InAppPurchase/InAppPurchaseViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/InAppPurchase/inAppPurchase.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/CardView.dart';
+import 'package:mapsandnavigationflutter/Screens/MainScreen/CardViewIos.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/MyLocation/MyLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/NearbyLocation/NearbyLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightView.dart';
+import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockIos.dart';
 
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockView.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MainScreen_View extends StatelessWidget {
+class MainScreen_ViewIos extends StatelessWidget {
   MainScreenViewModel  viewModel = Get.put(MainScreenViewModel());
 
   @override
@@ -56,26 +54,7 @@ class MainScreen_View extends StatelessWidget {
               // Open the drawer here
             },
           ),
-          actions: [
 
-            Obx(() =>(Constent.purchaseads.value==false)?
-            IconButton(
-              icon: Image.asset('assets/images/noads.png',height: 30,color: Colors.white,),
-
-              onPressed: () {
-                if(Platform.isAndroid){
-                  InAppPurchaseViewModel viewModel = Get.put(InAppPurchaseViewModel());
-                  viewModel.buyLifeTimeSubscription(context);
-              // Get.to(() => inAppPurchase());
-                }
-               /* else{
-                  Get.to(() => MyInApp());
-                }*/
-
-                // Handle your icon tap here
-              },
-            ):SizedBox()),
-          ],
         ),
 
         body: Center(
@@ -109,9 +88,9 @@ class MainScreen_View extends StatelessWidget {
 
                                     onTap: () {
                                       viewModel.admob_helper.showInterstitialAd(callback: (){
-                                     Get.to(() => RouteScreenView());
-                                      //}
-                                      /*  Get.to(() => NavigationScreenView(),
+                                        Get.to(() => RouteScreenView());
+                                        //}
+                                        /*  Get.to(() => NavigationScreenView(),
                                             arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/
 
                                       });
@@ -120,7 +99,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/navigate.png', // Replace with your image URL
                                         labelText: 'Navigation',
                                       ),
@@ -134,17 +113,16 @@ class MainScreen_View extends StatelessWidget {
                                   child: GestureDetector(
 
                                     onTap: () {
-                                      Get.to(() => NearbyLocationView());
-                                      /*viewModel.admob_helper.showInterstitialAd(callback: (){
-
-                                      });*/
+                                      viewModel.admob_helper.showInterstitialAd(callback: (){
+                                        Get.to(() => NearbyLocationView());
+                                      });
 
 
 
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/nearbylocation.png', // Replace with your image URL
                                         labelText: 'NearByLocation',
                                       ),
@@ -166,7 +144,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/mylocation.png', // Replace with your image URL
                                         labelText: 'My Location',
                                       ),
@@ -185,10 +163,9 @@ class MainScreen_View extends StatelessWidget {
                                   child: GestureDetector(
 
                                     onTap: () {
-                                      Get.to(() => WorldClockView());
-                                      /*viewModel.admob_helper.showInterstitialAd(callback: (){
-
-                                      });*/
+                                      viewModel.admob_helper.showInterstitialAd(callback: (){
+                                        Get.to(() => WorldClockViewIos());
+                                      });
 
 
 
@@ -196,7 +173,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/worldclock.png', // Replace with your image URL
                                         labelText: 'World Clock',
                                       ),
@@ -220,7 +197,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/trafficlight.png', // Replace with your image URL
                                         labelText: 'Traffic Light',
                                       ),
@@ -233,10 +210,9 @@ class MainScreen_View extends StatelessWidget {
                                   child: GestureDetector(
 
                                     onTap: () {
-                                      Get.to(() => HistoryView());
-                                     /* viewModel.admob_helper.showInterstitialAd(callback: (){
-
-                                      });*/
+                                      viewModel.admob_helper.showInterstitialAd(callback: (){
+                                        Get.to(() => HistoryView());
+                                      });
 
 
 
@@ -244,7 +220,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/history.png', // Replace with your image URL
                                         labelText: 'History',
                                       ),
@@ -263,18 +239,17 @@ class MainScreen_View extends StatelessWidget {
                                   child: GestureDetector(
 
                                     onTap: () {
-                                      Get.to(() => CompassScreenView());
-                                     /* viewModel.admob_helper.showInterstitialAd(callback: (){
-
+                                      viewModel.admob_helper.showInterstitialAd(callback: (){
+                                        Get.to(() => CompassScreenView());
                                       });
-*/
+
 
 
 
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/compass.png', // Replace with your image URL
                                         labelText: 'Compass',
                                       ),
@@ -288,10 +263,9 @@ class MainScreen_View extends StatelessWidget {
                                   child: GestureDetector(
 
                                     onTap: () {
-                                      Get.to(() => GeoLiveLocationView());
-                                      /*viewModel.admob_helper.showInterstitialAd(callback: (){
+                                      viewModel.admob_helper.showInterstitialAd(callback: (){
                                         Get.to(() => GeoLiveLocationView());
-                                      });*/
+                                      });
 
 
 
@@ -299,7 +273,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/geolivelocation.png', // Replace with your image URL
                                         labelText: 'Geolive Location',
                                       ),
@@ -322,7 +296,7 @@ class MainScreen_View extends StatelessWidget {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10.0,right: 10.0),
-                                      child: CardView(
+                                      child: CardViewIos(
                                         imageUrl: 'assets/images/share.png', // Replace with your image URL
                                         labelText: 'Share',
                                       ),
@@ -842,7 +816,7 @@ class MainScreen_View extends StatelessWidget {
             ),*/
               Expanded(
                 flex: 2,
-                child:Container()  /*Column(
+                child: Column(
                   children: [
                     Expanded(
                         flex: 3,
@@ -850,7 +824,7 @@ class MainScreen_View extends StatelessWidget {
                     Expanded(
                         flex: 7,
                         child:  Obx(()=>
-                        (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+                        (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: SafeArea(
@@ -861,9 +835,7 @@ class MainScreen_View extends StatelessWidget {
                             ),
                           ),
                         )
-                            :(!Constent.adspurchase)?
-
-                        SizedBox(
+                            :SizedBox(
                             width:double.infinity,
                             height: 30,
                             child: Shimmer.fromColors(
@@ -873,11 +845,9 @@ class MainScreen_View extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                             )
-                        ):SizedBox()
-
-                        )),
+                        ))),
                   ],
-                ),*/
+                ),
 
               ),
 

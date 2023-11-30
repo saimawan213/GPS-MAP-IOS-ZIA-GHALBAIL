@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "716658242443",
-    "project_id": "mapsandnavigationflutter",
-    "storage_bucket": "mapsandnavigationflutter.appspot.com"
+    "project_number": "251272898728",
+    "project_id": "gps-naviation-ghalbail",
+    "storage_bucket": "gps-naviation-ghalbail.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:716658242443:android:778ec75ef253b5bdc8b58e",
+        "mobilesdk_app_id": "1:251272898728:android:e581b2252111c9ae653a9d",
         "android_client_info": {
-          "package_name": "com.example.mapsandnavigationflutter"
+          "package_name": "com.guidedkeys.mapsnavigation"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "251272898728-fbie6jfqarp4dh0e1u2qefnc9ggqkd7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyD2zGOu7Px7KTHKfUxu9lbFDfcZ86IbEP8"
+          "current_key": "AIzaSyDfpXCWWpHLhBs8ZSOvIpwnLdf56JB7v8Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251272898728-fbie6jfqarp4dh0e1u2qefnc9ggqkd7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

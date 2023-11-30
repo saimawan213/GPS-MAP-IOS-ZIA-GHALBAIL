@@ -95,9 +95,10 @@ class RouteScreenView extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return  Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: const Text('Route Finder', style: TextStyle(color: Colors.white)),
-        backgroundColor: AppColor.yellowColor,
+        backgroundColor: AppColor.primaryColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white, // or MenuOutlined
@@ -116,6 +117,7 @@ class RouteScreenView extends StatelessWidget {
           height: height,
           width: width,
           child: Scaffold(
+            resizeToAvoidBottomInset : false,
             key: _scaffoldKey,
             body: Column(
               children: <Widget>[
@@ -496,7 +498,7 @@ class RouteScreenView extends StatelessWidget {
                                     left: 20.0, right: 20.0),
                                 //color: todo_controller.cardBackgroundColor,
                                 decoration: BoxDecoration(
-                                  color: AppColor.yellowColor,
+                                  color: AppColor.primaryColor,
                                  // borderRadius: BorderRadius.circular(15),
                                   // Adjust the radius as needed
                                   boxShadow: [
@@ -515,7 +517,7 @@ class RouteScreenView extends StatelessWidget {
                                   child: const Text(
                                     'Find Directions',
                                     style:
-                                    TextStyle(fontSize: 18.0, color: Colors.black),
+                                    TextStyle(fontSize: 18.0, color: Colors.white),
                                   ),
                                 ),
                               ),)),
@@ -641,7 +643,7 @@ class RouteScreenView extends StatelessWidget {
                 ),*/
                 Expanded(
                   flex: 2,
-                  child: Column(
+                  child:Container() /*Column(
                     children: [
                       Expanded(
                           flex: 3,
@@ -649,7 +651,7 @@ class RouteScreenView extends StatelessWidget {
                       Expanded(
                           flex: 7,
                           child:  Obx(()=>
-                          (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
+                          (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: SafeArea(
@@ -660,19 +662,10 @@ class RouteScreenView extends StatelessWidget {
                               ),
                             ),
                           )
-                              :SizedBox(
-                             // width:double.infinity,
-                             // height: 30,
-                            /*  child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  color: Colors.grey,
-                                ),
-                              )*/
-                          ))),
+                              :(!Constent.adspurchase)?SizedBox():SizedBox()
+                          )),
                     ],
-                  ),
+                  ),*/
 
                 ),
               ],

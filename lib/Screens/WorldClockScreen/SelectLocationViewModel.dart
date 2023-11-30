@@ -7,7 +7,7 @@ import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 class SelectLocationViewModel extends GetxController {
   TextEditingController editingController = TextEditingController();
   var future;
-  Admob_Helper admob_helper = Admob_Helper();
+ // Admob_Helper admob_helper = Admob_Helper();
   RxString searchString = "".obs;
   RxBool pcodeshowProgressBar = true.obs;
   @override
@@ -20,7 +20,7 @@ class SelectLocationViewModel extends GetxController {
 
   @override
   void onReady() {
-    admob_helper.loadsmall1BannerAd();
+   // admob_helper.loadsmall1BannerAd();
   //  future = Get.arguments['countrylist'];
   //  items=Get.arguments['countrylist'];
     //duplicateItems=Get.arguments['countrylist'];

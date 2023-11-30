@@ -1,4 +1,4 @@
-package com.example.mapsandnavigationflutter;
+package com.guidedkeys.mapsnavigation;
 
 import io.flutter.embedding.android.FlutterActivity;
 

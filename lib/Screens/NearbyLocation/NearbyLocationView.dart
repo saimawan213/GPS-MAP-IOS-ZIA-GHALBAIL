@@ -25,7 +25,7 @@ class NearbyLocationView extends StatelessWidget {
         //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        backgroundColor: AppColor.yellowColor,
+        backgroundColor: AppColor.primaryColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -174,11 +174,11 @@ class NearbyLocationView extends StatelessWidget {
 
 
             ),
-            Expanded(
+            /* Expanded(
               flex: 1,
-              child:
-              Obx(()=>
-              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
+              child:Container()
+             Obx(()=>
+              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SafeArea(
@@ -189,10 +189,10 @@ class NearbyLocationView extends StatelessWidget {
                   ),
                 ),
               )
-                  :SizedBox()
+                  :(!Constent.adspurchase)?SizedBox():SizedBox()
               ),
 
-            ),
+            ),*/
 
 
            /* Expanded(

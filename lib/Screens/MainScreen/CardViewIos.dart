@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 
-class CardView extends StatelessWidget {
+class CardViewIos extends StatelessWidget {
   final String imageUrl;
   final String labelText;
 
-  CardView({required this.imageUrl, required this.labelText});
+  CardViewIos({required this.imageUrl, required this.labelText});
 
   @override
   Widget build(BuildContext context) {

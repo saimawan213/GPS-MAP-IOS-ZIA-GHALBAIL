@@ -8,7 +8,7 @@ import 'package:mapsandnavigationflutter/Screens/HistoryScreen/locationService.d
 class HistoryViewModel extends GetxController {
   LocationService _service = LocationService();
   var users = <User>[].obs;
-  Admob_Helper admob_helper = Admob_Helper();
+ // Admob_Helper admob_helper = Admob_Helper();
   RxBool showProgressBar = true.obs;
 //  AdsManager admob_helper = AdsManager();
 
@@ -19,7 +19,7 @@ class HistoryViewModel extends GetxController {
     startTimer();
     fetchUsers();
 
-    admob_helper.loadsmall1BannerAd();
+   // admob_helper.loadsmall1BannerAd();
   }
 
   Future<void> fetchUsers() async {

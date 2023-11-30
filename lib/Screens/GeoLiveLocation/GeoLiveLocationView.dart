@@ -86,7 +86,7 @@ class GeoLiveLocationView extends StatelessWidget {
         key: _scaffoldKey,
         appBar: AppBar(
           title: const Text("Geo live Location",style: TextStyle(color: Colors.white)),
-          backgroundColor: AppColor.yellowColor,
+          backgroundColor: AppColor.primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
@@ -269,7 +269,7 @@ class GeoLiveLocationView extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: Column(
+              child: Container() /*Column(
                 children: [
                   Expanded(
                       flex: 3,
@@ -278,7 +278,7 @@ class GeoLiveLocationView extends StatelessWidget {
                       flex: 7,
                       child:  Obx(()=>
                            (viewModel.imageFile.value.path.isNotEmpty)?
-                      (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value )?
+                      (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: SafeArea(
@@ -289,7 +289,9 @@ class GeoLiveLocationView extends StatelessWidget {
                           ),
                         ),
                       )
-                          :SizedBox(
+                          :(!Constent.adspurchase)?
+
+                      SizedBox(
                           width:double.infinity,
                           height: 30,
                           child: Shimmer.fromColors(
@@ -299,9 +301,9 @@ class GeoLiveLocationView extends StatelessWidget {
                               color: Colors.grey,
                             ),
                           )
-                      ):SizedBox())),
+                      ):SizedBox():SizedBox())),
                 ],
-              ),
+              ),*/
 
             ),
 

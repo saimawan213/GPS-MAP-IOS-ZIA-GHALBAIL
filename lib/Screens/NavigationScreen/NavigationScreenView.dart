@@ -91,6 +91,7 @@ class NavigationScreenView extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return  Scaffold(
+      resizeToAvoidBottomInset : false,
       body:Container(
 
       height: height,
@@ -206,6 +207,7 @@ class NavigationScreenView extends StatelessWidget {
                             onPressed: () {
                               viewModel.startTimer(context);
                               viewModel.valuecheck=1;
+                              print("value isd heeeree:"+viewModel.ptts1.toString());
                               (viewModel.ptts1)? {
                                 print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
                                 print("call mic heree1"+viewModel.isListening.toString()),
@@ -291,7 +293,7 @@ class NavigationScreenView extends StatelessWidget {
                                 onPressed: () {
                                   viewModel.valuecheck=2;
                                   viewModel.startTimer1(context);
-
+                                  print("value isd heeeree:"+viewModel.ptts1.toString());
                                   (viewModel.ptts2)? {
                                     print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
                                     print("call mic heree1"+viewModel.isListening.toString()),

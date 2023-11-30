@@ -44,126 +44,126 @@ class Admob_Helper  {
 
   /// Loads a banner ad.
   void loadBannerAd() {
-
-    bannerAd = BannerAd(
-      adUnitId: Constent.bannerAdID,
-      request: const AdRequest(),
-      size: AdSize.mediumRectangle,
-      listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
-          // setState(() {
-          islargeBannerLoaded.value = true;
-          isBannerAdReady = true;
-          //  });
-        },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
-      ),
-    )
-      ..load();
-
+    if(!Constent.adspurchase) {
+      bannerAd = BannerAd(
+        adUnitId: Constent.bannerAdID,
+        request: const AdRequest(),
+        size: AdSize.mediumRectangle,
+        listener: BannerAdListener(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // setState(() {
+            islargeBannerLoaded.value = true;
+            isBannerAdReady = true;
+            //  });
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (ad, err) {
+            debugPrint('BannerAd failed to load: $err');
+            // Dispose the ad here to free resources.
+            ad.dispose();
+          },
+        ),
+      )
+        ..load();
+    }
   }
   void loadsmallBannerAd() {
-
-    bannerAd = BannerAd(
-      adUnitId: Constent.bannerAdID,
-      request: const AdRequest(),
-      size: AdSize.largeBanner,
-      listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
-          // setState(() {
-          issmallBannerLoaded.value = true;
-          isBannerAdReady = true;
-          //  });
-        },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
-      ),
-    )
-      ..load();
-
+    if(!Constent.adspurchase) {
+      bannerAd = BannerAd(
+        adUnitId: Constent.bannerAdID,
+        request: const AdRequest(),
+        size: AdSize.largeBanner,
+        listener: BannerAdListener(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // setState(() {
+            issmallBannerLoaded.value = true;
+            isBannerAdReady = true;
+            //  });
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (ad, err) {
+            debugPrint('BannerAd failed to load: $err');
+            // Dispose the ad here to free resources.
+            ad.dispose();
+          },
+        ),
+      )
+        ..load();
+    }
   }
   void loadsmall1BannerAd() {
-
-    bannerAd = BannerAd(
-      adUnitId: Constent.bannerAdID,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
-          // setState(() {
-          issmall1BannerLoaded.value = true;
-          isBannerAdReady = true;
-          //  });
-        },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
-      ),
-    )
-      ..load();
-
+    if(!Constent.adspurchase) {
+      bannerAd = BannerAd(
+        adUnitId: Constent.bannerAdID,
+        request: const AdRequest(),
+        size: AdSize.banner,
+        listener: BannerAdListener(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // setState(() {
+            issmall1BannerLoaded.value = true;
+            isBannerAdReady = true;
+            //  });
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (ad, err) {
+            debugPrint('BannerAd failed to load: $err');
+            // Dispose the ad here to free resources.
+            ad.dispose();
+          },
+        ),
+      )
+        ..load();
+    }
   }
   Future<void> adaptiveloadAd() async {
 
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
+    if(!Constent.adspurchase) {
+      final AnchoredAdaptiveBannerAdSize? size =
+      await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+          Get.width.truncate());
 
-    final AnchoredAdaptiveBannerAdSize? size =
-    await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-        Get.width.truncate());
+      if (size == null) {
+        print('Unable to get height of anchored banner.');
+        return;
+      }
 
-    if (size == null) {
-      print('Unable to get height of anchored banner.');
-      return;
+      anchoredAdaptiveAd = BannerAd(
+        // TODO: replace these test ad units with your own ad unit.
+        adUnitId: Constent.bannerAdID,
+        size: size,
+        request: AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (Ad ad) {
+            print("Banner loaded");
+            print('$ad loaded: ${ad.responseInfo}');
+            //setState(() {
+            // When the ad is loaded, get the ad size and use it to set
+            // the height of the ad container.
+            anchoredAdaptiveAd = ad as BannerAd;
+            print("Bannerr loadede file eee 12" +
+                isBannerLoaded.value.toString());
+            isBannerLoaded.value = true;
+            print(
+                "Bannerr loadede file eee " + isBannerLoaded.value.toString());
+            //  });
+          },
+          onAdFailedToLoad: (Ad ad, LoadAdError error) {
+            print('Anchored adaptive banner failedToLoad: $error');
+            anchoredAdaptiveAd = null;
+            ad.dispose();
+            adaptiveloadAd();
+          },
+        ),
+      );
+      return anchoredAdaptiveAd!.load();
     }
-
-    anchoredAdaptiveAd = BannerAd(
-      // TODO: replace these test ad units with your own ad unit.
-      adUnitId: Constent.bannerAdID,
-      size: size,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
-          print("Banner loaded");
-          print('$ad loaded: ${ad.responseInfo}');
-          //setState(() {
-          // When the ad is loaded, get the ad size and use it to set
-          // the height of the ad container.
-          anchoredAdaptiveAd = ad as BannerAd;
-          print("Bannerr loadede file eee 12" +
-              isBannerLoaded.value.toString());
-          isBannerLoaded.value = true;
-          print(
-              "Bannerr loadede file eee " + isBannerLoaded.value.toString());
-          //  });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Anchored adaptive banner failedToLoad: $error');
-          anchoredAdaptiveAd = null;
-          ad.dispose();
-          adaptiveloadAd();
-        },
-      ),
-    );
-    return anchoredAdaptiveAd!.load();
-
   }
   void deletebanner(){
     if(bannerAd!=null){
@@ -172,41 +172,42 @@ class Admob_Helper  {
   }
 
   void loadInterstitalAd() {
+    if (!Constent.adspurchase) {
+      if (interstitialAd == null) {
+        //if (AppConst.isAlternativeInterstitial) {
+        InterstitialAd.load(
+            adUnitId: Constent.interstialAdID,
+            request: const AdRequest(),
+            adLoadCallback: InterstitialAdLoadCallback(
+              // Called when an ad is successfully received.
+              onAdLoaded: (ad) {
+                print("Interstital loaded");
 
-    if (interstitialAd == null) {
-      //if (AppConst.isAlternativeInterstitial) {
-      InterstitialAd.load(
-          adUnitId: Constent.interstialAdID,
-          request: const AdRequest(),
-          adLoadCallback: InterstitialAdLoadCallback(
-            // Called when an ad is successfully received.
-            onAdLoaded: (ad) {
-              print("Interstital loaded");
 
+                debugPrint('$ad loaded.');
+                // Keep a reference to the ad so you can show it later.
+                interstitialAd = ad;
+              },
+              // Called when an ad request failed.
+              onAdFailedToLoad: (LoadAdError error) {
+                loadInterstitalAd();
+                debugPrint('InterstitialAd failed to load: $error');
+              },
+            ));
+      }
 
-
-              debugPrint('$ad loaded.');
-              // Keep a reference to the ad so you can show it later.
-              interstitialAd = ad;
-            },
-            // Called when an ad request failed.
-            onAdFailedToLoad: (LoadAdError error) {
-              loadInterstitalAd();
-              debugPrint('InterstitialAd failed to load: $error');
-            },
-          ));
-    }
-
-    /*else{
+      /*else{
         AppConst.isAlternativeInterstitial = true;
       }*/
-    /*}
+      /*}
     else{
       AppConst.isAlternativeInterstitial = true;
     }*/
+    }
   }
 
   void showInterstitialAd( {bool isSplash = false,Function? callback}) {
+    if(!Constent.adspurchase) {
     if(interstitialAd!=null) {
       print("show ads:"+interstitialAd.toString());
 //    if(AppConst.adspurchase){
@@ -237,6 +238,7 @@ class Admob_Helper  {
 
     }
 
+
     else if(isSplash){
       Get.off(() => MainScreen_View());
     }
@@ -258,6 +260,11 @@ class Admob_Helper  {
       loadInterstitalAd();
       //AppConst.isAlternativeInterstitial =true;
     }*/
+  }
+    else{
+      callback!();
+
+    }
   }
 
   void interstitialAdCallBack(Function? callback){

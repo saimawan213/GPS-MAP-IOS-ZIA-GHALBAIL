@@ -6,10 +6,11 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
+import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashViewModel.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SplashView extends StatelessWidget {
+class SplashViewIos extends StatelessWidget {
   final SplashViewModel viewModel = Get.put(SplashViewModel());
 
   @override
@@ -52,51 +53,34 @@ class SplashView extends StatelessWidget {
             flex: 2,
             child:Column(
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-
+                  Container(
+                    alignment: Alignment.center,
+                    child:Obx(()=>Text(
+                      viewModel.currentlocation.value,
+                      style:
+                      TextStyle(fontSize: 20.0, color: AppColor.primaryColor),
+                      textAlign: TextAlign.center,
+                    )),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child:const Text(
+                      "Welcome To \n Maps and Navigation",
+                      style:
+                      TextStyle(fontSize: 18.0, color: AppColor.primaryColor),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  Expanded(
-                    flex:8,
-                    child:
-                    Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child:const Text(
-                              "Welcome To \n Maps and Navigation",
-                              style:
-                              TextStyle(fontSize: 22.0, color: AppColor.primaryColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            child:const Text(
-                              "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
-                              style:
-                              TextStyle(fontSize: 13.0, color: AppColor.primaryColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ]),
-                  ),
-                  /* Expanded(
-                    flex:3,
-                    child:  Container(
-                      alignment: Alignment.center,
-                      child:const Text(
-                        "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
-                        style:
-                        TextStyle(fontSize: 13.0, color: Colors.black),
-                        textAlign: TextAlign.center,
-                      ),
+                  Container(
+                    alignment: Alignment.center,
+                    child:const Text(
+                      "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
+                      style:
+                      TextStyle(fontSize: 13.0, color: AppColor.primaryColor),
+                      textAlign: TextAlign.center,
                     ),
-                  ),*/
-                ]
-            ),
+                  ),
+                ]),
 
           ),
           Expanded(
@@ -151,10 +135,10 @@ class SplashView extends StatelessWidget {
                             }*/
 
                             // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
-                            Get.off(() => MainScreen_View());
-                           /* viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
 
-                            });*/
+                            //  viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
+                            Get.off(() => MainScreen_ViewIos());
+                            // });
 
                           },
                           child: Container(
@@ -197,9 +181,7 @@ class SplashView extends StatelessWidget {
 
           Expanded(
             flex: 2,
-            child: Container()
-
-            /*Column(
+            child:Container() /*Column(
               children: [
                 Expanded(
                     flex: 3,
@@ -207,7 +189,7 @@ class SplashView extends StatelessWidget {
                 Expanded(
                     flex: 7,
                     child:  Obx(()=>
-                    (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+                    (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: SafeArea(
@@ -218,9 +200,7 @@ class SplashView extends StatelessWidget {
                         ),
                       ),
                     )
-                        :(!Constent.adspurchase)?
-
-                    SizedBox(
+                        :SizedBox(
                         width:double.infinity,
                         height: 30,
                         child: Shimmer.fromColors(
@@ -230,8 +210,7 @@ class SplashView extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         )
-                    ):SizedBox()
-                    )),
+                    ))),
               ],
             ),*/
 

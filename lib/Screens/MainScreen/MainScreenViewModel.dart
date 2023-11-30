@@ -6,10 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainScreenViewModel extends GetxController {
-
+  late PackageInfo packageInfo;
   Admob_Helper  admob_helper = Admob_Helper();
 
   @override
@@ -25,7 +26,7 @@ class MainScreenViewModel extends GetxController {
 
     ///Load Ads Here
     admob_helper.loadInterstitalAd();
-    admob_helper.loadsmallBannerAd();
+    //admob_helper.loadsmallBannerAd();
 
     super.onReady();
   }
@@ -68,7 +69,7 @@ class MainScreenViewModel extends GetxController {
   }
 
   void openPlayStore() async {
-   /* packageInfo = await PackageInfo.fromPlatform();
+    packageInfo = await PackageInfo.fromPlatform();
     String packageName = packageInfo.packageName;
     if(Platform.isAndroid){
       Uri playStoreUrl = Uri.parse('https://play.google.com/store/apps/details?id='+packageName);
@@ -77,7 +78,7 @@ class MainScreenViewModel extends GetxController {
       } else {
         throw 'Could not launch $playStoreUrl';
       }
-    }*/
+    }
      if(Platform.isIOS){
       Uri playStoreUrl = Uri.parse('https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238');
       if (await canLaunchUrl(playStoreUrl)) {
@@ -89,16 +90,27 @@ class MainScreenViewModel extends GetxController {
 
   }
   Future<void> shareApp() async {
-    /*packageInfo = await PackageInfo.fromPlatform();
-    String packageName = packageInfo.packageName;*/
-    // Set the app link and the message to be shared
-    final String ioslink='https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238';
-   // final String appLink = 'https://play.google.com/store/apps/details?id='+packageName;
-    final String message = 'Check out my new app '+ioslink ;
+     String Link='';
+    if(Platform.isAndroid) {
+      packageInfo = await PackageInfo.fromPlatform();
+      String packageName = packageInfo.packageName;
+       Link = 'https://play.google.com/store/apps/details?id='+packageName;
+    }
+    if(Platform.isIOS){
+       Link='https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238';
+      // final String appLink = 'https://play.google.com/store/apps/details?id='+packageName;
+      //final String message = 'Check out my new app '+ioslink ;
+    }
+    final String message = 'Check out my new app '+Link ;
 
     // Share the app link and message using the share dialog
     //await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
     await FlutterShare.share(title: 'Share App', text: message);
+
+
+    // Share the app link and message using the share dialog
+    //await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
+   // await FlutterShare.share(title: 'Share App', text: message);
   }
   Future<bool> showExitPopup(context) async{
     return await showDialog(

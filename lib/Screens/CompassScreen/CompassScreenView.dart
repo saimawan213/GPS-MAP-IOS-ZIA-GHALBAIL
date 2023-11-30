@@ -25,7 +25,7 @@ class CompassScreenView extends StatelessWidget {
 
         appBar: AppBar(
           title: const Text('Compass'),
-          backgroundColor: AppColor.yellowColor,
+          backgroundColor: AppColor.primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             color: Colors.white,// or MenuOutlined
@@ -87,7 +87,7 @@ class CompassScreenView extends StatelessWidget {
                    ),
                       Expanded(
                         flex: 2,
-                        child: Column(
+                        child: Container() /*Column(
                           children: [
                             Expanded(
                                 flex: 3,
@@ -95,7 +95,7 @@ class CompassScreenView extends StatelessWidget {
                             Expanded(
                                 flex: 7,
                                 child:  Obx(()=>
-                                (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
+                                (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: SafeArea(
@@ -106,7 +106,9 @@ class CompassScreenView extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                                    :SizedBox(
+                                    :(!Constent.adspurchase)?
+
+                                SizedBox(
                                     width:double.infinity,
                                     height: 30,
                                     child: Shimmer.fromColors(
@@ -116,9 +118,11 @@ class CompassScreenView extends StatelessWidget {
                                         color: Colors.grey,
                                       ),
                                     )
-                                ))),
+                                ):SizedBox()
+
+                                )),
                           ],
-                        ),
+                        ),*/
 
                       ),
 

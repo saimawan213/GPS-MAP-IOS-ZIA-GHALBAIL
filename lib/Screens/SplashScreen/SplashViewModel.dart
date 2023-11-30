@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
@@ -28,18 +29,38 @@ RxString currentlocation=''.obs;
   void onReady() async{
     print('**** onReady *****');
     ///Load Ads Here
+    final box = GetStorage();
+    // box.write('ispurchase', false);
+    bool purchasevalue = box.read('ispurchase')??false;
+    print("check purchase value"+purchasevalue.toString());
  //   if(await checkPermission()){
       getCurrentLocation();
    // }
     //checkPermission();
     startLoading();
-    Admob_Helper admob_helper1 = Admob_Helper()
-      ..loadopenupad();
-    appLifecycleReactor =
-        AppLifecycleReactor(appOpenAdManager: admob_helper1);
-    appLifecycleReactor.listenToAppStateChanges();
-    admob_helper.loadInterstitalAd();
-    admob_helper.loadsmallBannerAd();
+    if(!purchasevalue) {
+      Constent.purchaseads.value=false;
+      Constent.adspurchase=false;
+      /*Admob_Helper admob_helper1 = Admob_Helper()
+        ..loadopenupad();
+      appLifecycleReactor =
+          AppLifecycleReactor(appOpenAdManager: admob_helper1);
+      appLifecycleReactor.listenToAppStateChanges();*/
+    }
+    else{
+      print("ads  purchase");
+
+      admob_helper.appOpenAd=null;
+      Constent.isOpenAppAdShowing.value=false;
+      Constent.isAlternativeInterstitial = true;
+      Constent.appopencheck=true;
+      admob_helper.bannerAd=null;
+      admob_helper.issmallBannerLoaded.value=false;
+      Constent.purchaseads.value=true;
+      Constent.adspurchase=true;
+    }
+   // admob_helper.loadInterstitalAd();
+    //admob_helper.loadsmallBannerAd();
   //  startTimer();
 
     super.onReady();

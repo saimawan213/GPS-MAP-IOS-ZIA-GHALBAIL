@@ -30,8 +30,9 @@ class _ChooseLocationState extends State<SelectlcoationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         appBar: AppBar(
-          backgroundColor: AppColor.yellowColor,
+          backgroundColor: AppColor.primaryColor,
           title: Text("Choose a location", style: TextStyle(color: Colors.white)),
           centerTitle: true,
           elevation: 0,  leading: IconButton(
@@ -202,11 +203,11 @@ class _ChooseLocationState extends State<SelectlcoationView> {
             )
     ],)),
 
-            Expanded(
+           /* Expanded(
               flex: 1,
               child:
               Obx(()=>
-              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value )?
+              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value  && !Constent.adspurchase)?
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SafeArea(
@@ -217,9 +218,11 @@ class _ChooseLocationState extends State<SelectlcoationView> {
                   ),
                 ),
               )
-                  :SizedBox(
+                  :(!Constent.adspurchase)?
+
+              SizedBox(
                   width:double.infinity,
-                  height: 0,
+                  height: 30,
                   child: Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.white,
@@ -227,10 +230,10 @@ class _ChooseLocationState extends State<SelectlcoationView> {
                       color: Colors.grey,
                     ),
                   )
-              )
+              ):SizedBox()
               ),
 
-            ),
+            ),*/
           ],
         ));
   }

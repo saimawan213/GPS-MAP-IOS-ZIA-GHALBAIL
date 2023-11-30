@@ -10,7 +10,7 @@ import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockViewModel.dart';
 import 'package:shimmer/shimmer.dart';
 
-class WorldClockView extends StatelessWidget {
+class WorldClockViewIos extends StatelessWidget {
   //final db = Localstore.instance;
   WorldClockViewModel viewModel = Get.put(WorldClockViewModel());
 
@@ -26,24 +26,24 @@ class WorldClockView extends StatelessWidget {
 */
     return Scaffold(
       appBar: appBar(),
-    //  bottomNavigationBar: bannerAd(),
+      //  bottomNavigationBar: bannerAd(),
       body:Center(
         child: Obx(
                 () =>(viewModel.data.value.isEmpty)?CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColor.yellowColor), // Set color here
-    ):
+              valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor), // Set color here
+            ):
 
 
-        Column(
-          children: [
-            locationBtn(context),
-            firstContainer(context),
-            secondContainer(),
-            bannerAd(),
-            SizedBox(height: 20),
-            // bannerAd(),
-          ],
-        )),
+            Column(
+              children: [
+                locationBtn(context),
+                firstContainer(context),
+                secondContainer(),
+                bannerAd(),
+                SizedBox(height: 20),
+                // bannerAd(),
+              ],
+            )),
       ),
     );
   }
@@ -86,6 +86,7 @@ class WorldClockView extends StatelessWidget {
           )),
     );
   }
+
   Expanded secondContainer() {
     return Expanded(
       flex: 4,
@@ -232,7 +233,7 @@ class WorldClockView extends StatelessWidget {
   Widget bannerAd() {
     return  Expanded(
       flex: 2,
-      child:Container()  /*Column(
+      child:Container() /*Column(
         children: [
           Expanded(
               flex: 3,
@@ -240,7 +241,7 @@ class WorldClockView extends StatelessWidget {
           Expanded(
               flex: 7,
               child:  Obx(()=>
-              (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+              (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SafeArea(
@@ -251,9 +252,7 @@ class WorldClockView extends StatelessWidget {
                   ),
                 ),
               )
-                  :(!Constent.adspurchase)?
-
-              SizedBox(
+                  :SizedBox(
                   width:double.infinity,
                   height: 30,
                   child: Shimmer.fromColors(
@@ -263,11 +262,10 @@ class WorldClockView extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   )
-              ):SizedBox()
-              )),
+              ))),
         ],
-      ),
-*/
+      ),*/
+
     );
   }
 
@@ -287,7 +285,7 @@ class WorldClockView extends StatelessWidget {
               print(result);
               viewModel.data.value = result;
               if (result['weatherData']['cod'] == 200) {
-               // viewModel.data.value = result;
+                // viewModel.data.value = result;
                 viewModel.setData(result['weatherData']);
               } else {
                 viewModel.data['weatherData'] = null;

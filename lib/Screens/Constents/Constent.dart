@@ -22,6 +22,8 @@ class Constent {
 
   static bool isAlternativeInterstitial = true;
   static bool appopencheck=true;
+  static RxBool purchaseads=false.obs;
+  static bool adspurchase=false;
  /* static  String location1 = '';
   static  String flag1 = '';
   static  String time1 = '';
@@ -187,7 +189,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/6300978111';
       }
       else{
-        return 'ca-app-pub-3940256099942544/6300978111';
+        return 'ca-app-pub-8011932915847069/1156033646';
       }
 
     }else if(Platform.isIOS){
@@ -213,7 +215,7 @@ class Constent {
       }
       else{
         print("call11565 interstialad");
-        return 'ca-app-pub-3940256099942544/1033173712';
+        return 'ca-app-pub-8011932915847069/9295405784';
       }
 
     }else if(Platform.isIOS){
@@ -236,7 +238,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/3419835294';
       }
       else{
-        return 'ca-app-pub-3940256099942544/3419835294';
+        return 'ca-app-pub-8011932915847069/3496452020';
       }
 
     }else if(Platform.isIOS){
@@ -259,7 +261,7 @@ class Constent {
         return 'ca-app-pub-3940256099942544/2247696110';
       }
       else{
-        return 'ca-app-pub-3940256099942544/2247696110';
+        return 'ca-app-pub-8011932915847069/3590625295';
       }
 
     }else if(Platform.isIOS){

@@ -11,17 +11,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' as lotti;
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class RouteScreenViewModel extends GetxController {
   CameraPosition initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
-  Admob_Helper admob_helper = Admob_Helper();
+ // Admob_Helper admob_helper = Admob_Helper();
   double startLatitude1 = 0.0;
   double startLongitude1 = 0.0;
   double destinationLatituate1 = 0.0;
@@ -103,8 +101,8 @@ class RouteScreenViewModel extends GetxController {
     print('**** onReady *****');
     activateSpeechRecognizer();
     getCurrentLocation();
-    admob_helper.loadInterstitalAd();
-    admob_helper.loadsmallBannerAd();
+   // admob_helper.loadInterstitalAd();
+    //admob_helper.loadsmallBannerAd();
 
     ///Load Ads Here
 
@@ -893,7 +891,7 @@ class RouteScreenViewModel extends GetxController {
       destinationLatitude = destinationPlacemark[0].latitude;
       destinationLongitude = destinationPlacemark[0].longitude;
 
-      admob_helper.showInterstitialAd(callback: () {
+     // admob_helper.showInterstitialAd(callback: () {
         Get.to(() => NavigationScreenView(), arguments: {
           "source": startAddressController.text,
           "destination": destinationAddressController.text,
@@ -901,8 +899,9 @@ class RouteScreenViewModel extends GetxController {
           "Sourcelog": startLongitude,
           "destinationlath": destinationLatitude,
           "destinationlog": destinationLongitude
-        });
-      });
+       // });
+      }
+      );
 
       // }
       /* else{

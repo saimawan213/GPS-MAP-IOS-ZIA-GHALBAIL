@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0453702C2B19BA8700937CEB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0453702B2B19BA8700937CEB /* StoreKit.framework */; };
+		04D48F1F2B42C100005EB194 /* ListTileNativeAdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D48F1E2B42C100005EB194 /* ListTileNativeAdFactory.swift */; };
+		04D85CD42B43D47600052EE7 /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D85CD32B43D47600052EE7 /* NativeAdView.xib */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -43,7 +46,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0453702B2B19BA8700937CEB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04B0A7A62B0F8C1400524877 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		04D48F1E2B42C100005EB194 /* ListTileNativeAdFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTileNativeAdFactory.swift; sourceTree = "<group>"; };
+		04D85CD32B43D47600052EE7 /* NativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeAdView.xib; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		275CA5C0B9F02E81E222E99F /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E43FDC1C69C7CFB3BA69B0A7 /* Pods_Runner.framework in Frameworks */,
+				0453702C2B19BA8700937CEB /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +100,7 @@
 		162616C1D5AAD001213AD884 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0453702B2B19BA8700937CEB /* StoreKit.framework */,
 				4207FF879284C6674A18B480 /* Pods_Runner.framework */,
 				6713C3AA16557621DB7AECD6 /* Pods_RunnerTests.framework */,
 			);
@@ -142,6 +150,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				04D85CD32B43D47600052EE7 /* NativeAdView.xib */,
+				04D48F1E2B42C100005EB194 /* ListTileNativeAdFactory.swift */,
 				53B3D40D8F969621D9D4DF4F /* GoogleService-Info.plist */,
 				04B0A7A62B0F8C1400524877 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
@@ -270,6 +280,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				04D85CD42B43D47600052EE7 /* NativeAdView.xib in Resources */,
 				CE373429F229ADCB8989959B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D48F1F2B42C100005EB194 /* ListTileNativeAdFactory.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
@@ -516,10 +528,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.9;
+				FLUTTER_BUILD_NAME = 7.0.10;
+				FLUTTER_BUILD_NUMBER = 28;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -527,7 +540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.9;
+				MARKETING_VERSION = 7.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -700,10 +713,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.9;
+				FLUTTER_BUILD_NAME = 7.0.10;
+				FLUTTER_BUILD_NUMBER = 28;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -711,7 +725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.9;
+				MARKETING_VERSION = 7.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -728,10 +742,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.9;
+				FLUTTER_BUILD_NAME = 7.0.10;
+				FLUTTER_BUILD_NUMBER = 28;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -739,7 +754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.9;
+				MARKETING_VERSION = 7.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

@@ -21,7 +21,7 @@ class WorldClockViewModel extends GetxController {
   RxString clouds = ''.obs;
 
 
- // Admob_Helper admob_helper = Admob_Helper();
+ Admob_Helper admob_helper = Admob_Helper();
 
   @override
   Future<void> onInit() async {
@@ -37,7 +37,7 @@ class WorldClockViewModel extends GetxController {
 
     ///Load Ads Here
 
-    //admob_helper.loadsmallBannerAd();
+    admob_helper.loadsmallBannerAd();
     super.onReady();
   }
 

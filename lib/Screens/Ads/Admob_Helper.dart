@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -6,6 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
+import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 
 class Admob_Helper  {
   NativeAd? nativeAd;
@@ -240,7 +243,12 @@ class Admob_Helper  {
 
 
     else if(isSplash){
-      Get.off(() => MainScreen_View());
+      if(Platform.isAndroid){
+        Get.off(() => MainScreen_View());
+      }
+      else{
+        Get.off(() => MainScreen_ViewIos());
+      }
     }
     else{
       callback!();
@@ -266,7 +274,40 @@ class Admob_Helper  {
 
     }
   }
+  Future<void> loadNativeAd(
+      {TemplateType type = TemplateType.medium,
+        String factoryId = 'listTileMedium2'}) async {
+    try {
+      if(!Constent.adspurchase) {
+        nativeAd =   NativeAd(
+          factoryId: factoryId,
+          adUnitId: Constent.nativeAdID,
+          listener: NativeAdListener(
+            onAdLoaded: (ad) {
+              debugPrint('$NativeAd loaded.');
+              nativeAd = null;
+              nativeAd = ad as NativeAd;
+              debugPrint('$NativeAd Native Ads  load: ');
+              Constent.isNativeAdLoaded.value = true;
+            },
+            onAdFailedToLoad: (ad, error) {
+              // Dispose the ad here to free resources.
+              debugPrint('$NativeAd failed to load: $error');
+              ad.dispose();
+            },
+          ),
+          request: const AdRequest(),
+        );
+        return nativeAd!.load();
 
+      }
+      else{
+        return null ;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
   void interstitialAdCallBack(Function? callback){
     interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
       // Called when the ad showed the full screen content.
@@ -374,6 +415,12 @@ class Admob_Helper  {
           interstitialAd?.dispose();
           interstitialAd = null;
           loadInterstitalAd();
+       /*   if(Platform.isAndroid){
+            Get.off(() => MainScreen_View());
+          }
+          else{
+            Get.off(() => MainScreen_ViewIos());
+          }*/
         },
         // Called when the ad dismissed full screen content.
         onAdDismissedFullScreenContent: (ad) {
@@ -388,8 +435,13 @@ class Admob_Helper  {
           //nativeAdIsLoaded.value=true;
           interstitialAd?.dispose();
           interstitialAd = null;
+          if(Platform.isAndroid){
+            Get.off(() => MainScreen_View());
+          }
+          else{
+            Get.off(() => MainScreen_ViewIos());
+          }
 
-          Get.off(() => MainScreen_View());
         },
         // Called when a click is recorded for an ad.
         onAdClicked: (ad) {});

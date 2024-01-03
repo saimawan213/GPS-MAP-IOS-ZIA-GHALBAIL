@@ -174,14 +174,34 @@ class NearbyLocationView extends StatelessWidget {
 
 
             ),
-            /* Expanded(
-              flex: 1,
-              child:Container()
-             Obx(()=>
+SizedBox(height: 10.0,),
+
+             Expanded(
+              flex: 2,
+              child:Container(
+
+    margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 15.0,right: 15.0),
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(12),
+    border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey.withOpacity(0.5),
+    spreadRadius: 2,
+    blurRadius: 5,
+    offset: Offset(0, 3),
+    ),
+    ],
+    ),
+           child:Container(
+               margin: EdgeInsets.only(bottom: 4.0),
+               child:Obx(()=>
               (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: SafeArea(
+
                   child: SizedBox(
                     width:viewModel.admob_helper.bannerAd!.size.width.toDouble(),
                     height:viewModel.admob_helper.bannerAd!.size.height.toDouble(),
@@ -189,10 +209,10 @@ class NearbyLocationView extends StatelessWidget {
                   ),
                 ),
               )
-                  :(!Constent.adspurchase)?SizedBox():SizedBox()
+                  :(!Constent.adspurchase)?SizedBox():SizedBox())),
               ),
 
-            ),*/
+            ),
 
 
            /* Expanded(

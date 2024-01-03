@@ -41,11 +41,11 @@ RxString currentlocation=''.obs;
     if(!purchasevalue) {
       Constent.purchaseads.value=false;
       Constent.adspurchase=false;
-      /*Admob_Helper admob_helper1 = Admob_Helper()
+      Admob_Helper admob_helper1 = Admob_Helper()
         ..loadopenupad();
       appLifecycleReactor =
           AppLifecycleReactor(appOpenAdManager: admob_helper1);
-      appLifecycleReactor.listenToAppStateChanges();*/
+      appLifecycleReactor.listenToAppStateChanges();
     }
     else{
       print("ads  purchase");
@@ -59,8 +59,8 @@ RxString currentlocation=''.obs;
       Constent.purchaseads.value=true;
       Constent.adspurchase=true;
     }
-   // admob_helper.loadInterstitalAd();
-    //admob_helper.loadsmallBannerAd();
+    admob_helper.loadInterstitalAd();
+    admob_helper.loadsmallBannerAd();
   //  startTimer();
 
     super.onReady();

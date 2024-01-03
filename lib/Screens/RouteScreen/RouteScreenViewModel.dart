@@ -19,7 +19,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 class RouteScreenViewModel extends GetxController {
   CameraPosition initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
- // Admob_Helper admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
   double startLatitude1 = 0.0;
   double startLongitude1 = 0.0;
   double destinationLatituate1 = 0.0;
@@ -101,6 +101,14 @@ class RouteScreenViewModel extends GetxController {
     print('**** onReady *****');
     activateSpeechRecognizer();
     getCurrentLocation();
+    admob_helper.loadNativeAd();
+    print("is native ad loaded:"+Constent.isNativeAdLoaded.value.toString());
+    print("is native ad loaded122:"+admob_helper.nativeAd.toString());
+    print("is open ad loaded122:"+Constent.isOpenAppAdShowing.value.toString());
+    print("is isInterstialAdShowing ad loaded122:"+Constent.isInterstialAdShowing.value.toString());
+
+
+
    // admob_helper.loadInterstitalAd();
     //admob_helper.loadsmallBannerAd();
 

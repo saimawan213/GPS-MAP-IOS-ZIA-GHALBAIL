@@ -26,7 +26,7 @@ class MainScreenViewModel extends GetxController {
 
     ///Load Ads Here
     admob_helper.loadInterstitalAd();
-    //admob_helper.loadsmallBannerAd();
+    admob_helper.loadsmallBannerAd();
 
     super.onReady();
   }
@@ -49,7 +49,7 @@ class MainScreenViewModel extends GetxController {
             actions: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.blue),
-                onPressed: () => SystemNavigator.pop(),
+                onPressed: () => exit(0),
                 //Navigator.of(context).pop(true),
                 child: Text("Yes",style: TextStyle(
                   color: Colors.white,

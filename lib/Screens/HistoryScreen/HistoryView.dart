@@ -369,10 +369,30 @@ class HistoryView extends StatelessWidget {
                 ),
               )),
             )),
+
+            SizedBox(height: 15,),
             Expanded(
-              flex: 1,
-              child:Container()
-            /*  Obx(()=>
+              flex: 2,
+              child:
+              Container(
+
+                margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 15.0,right: 15.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+             child:Container(
+                 margin: EdgeInsets.only(bottom: 10.0),
+                 child: Obx(()=>
               (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !viewModel.users.isEmpty)?
               Align(
                 alignment: Alignment.bottomCenter,
@@ -395,7 +415,7 @@ class HistoryView extends StatelessWidget {
                     ),
                   )
               )
-              ),*/
+              ))),
 
             ),
 /*Expanded(

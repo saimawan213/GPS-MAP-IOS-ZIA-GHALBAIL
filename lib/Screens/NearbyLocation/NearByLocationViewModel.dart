@@ -12,7 +12,7 @@ class NearByLocationViewModel extends GetxController {
   TextEditingController editingController = TextEditingController();
  RxList<String> duplicateItems = <String>[].obs;
   RxList<String> items = <String>[].obs;
-  //Admob_Helper admob_helper = Admob_Helper();
+ Admob_Helper admob_helper = Admob_Helper();
 
   @override
   Future<void> onInit() async {
@@ -26,7 +26,7 @@ class NearByLocationViewModel extends GetxController {
   Future<void> onReady() async {
     print('**** onReady *****');
     ///Load Ads Here
-  // admob_helper.loadsmall1BannerAd();
+   admob_helper.loadsmall1BannerAd();
 final String jsonString = await rootBundle.loadString('assets/categories.json');
                             final data = jsonDecode(jsonString);
                             print(data['pois']);

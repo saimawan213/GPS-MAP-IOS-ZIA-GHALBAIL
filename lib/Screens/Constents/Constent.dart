@@ -19,6 +19,7 @@ class Constent {
   bool? isDaytime;
   static RxBool isOpenAppAdShowing = false.obs;
   static RxBool isInterstialAdShowing = false.obs;
+  static RxBool isNativeAdLoaded = false.obs;
 
   static bool isAlternativeInterstitial = true;
   static bool appopencheck=true;

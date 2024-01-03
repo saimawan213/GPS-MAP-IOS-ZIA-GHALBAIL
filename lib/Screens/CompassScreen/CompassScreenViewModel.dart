@@ -11,7 +11,7 @@ class CompassScreenViewModel extends GetxController {
   RxDouble compassvalue= (0.0).obs;
   RxBool hasPermissions = false.obs;
   CompassEvent? lastRead;
- // Admob_Helper admob_helper = Admob_Helper();
+ Admob_Helper admob_helper = Admob_Helper();
   DateTime? lastReadAt;
 
   @override
@@ -26,7 +26,7 @@ class CompassScreenViewModel extends GetxController {
     print('**** onReady *****');
     ///Load Ads Here
     requestPermission();
-    //admob_helper.loadsmallBannerAd();
+    admob_helper.loadsmallBannerAd();
 
     FlutterCompass.events?.listen((CompassEvent event) {
 

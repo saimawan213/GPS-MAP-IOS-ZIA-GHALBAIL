@@ -269,16 +269,30 @@ class GeoLiveLocationView extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: Container() /*Column(
+              child: Column(
                 children: [
                   Expanded(
-                      flex: 3,
+                      flex: 1,
                       child:Container()),
                   Expanded(
-                      flex: 7,
-                      child:  Obx(()=>
-                           (viewModel.imageFile.value.path.isNotEmpty)?
-                      (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+                      flex: 10,
+                      child:Container(
+
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 10.0,right: 10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ), child: Obx(()=>
+                      (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: SafeArea(
@@ -289,9 +303,7 @@ class GeoLiveLocationView extends StatelessWidget {
                           ),
                         ),
                       )
-                          :(!Constent.adspurchase)?
-
-                      SizedBox(
+                          :SizedBox(
                           width:double.infinity,
                           height: 30,
                           child: Shimmer.fromColors(
@@ -301,9 +313,9 @@ class GeoLiveLocationView extends StatelessWidget {
                               color: Colors.grey,
                             ),
                           )
-                      ):SizedBox():SizedBox())),
+                      )))),
                 ],
-              ),*/
+              ),
 
             ),
 

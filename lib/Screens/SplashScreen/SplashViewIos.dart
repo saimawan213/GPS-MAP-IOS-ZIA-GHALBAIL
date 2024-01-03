@@ -22,17 +22,17 @@ class SplashViewIos extends StatelessWidget {
         children: [
           //      Center(
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
 
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child:
             Container(
-                width: 150.0,
-                height: 150.0,
+                width: 100.0,
+                height: 100.0,
                 child: Image(
                   image: AssetImage("assets/images/app_logo.png"), // Replace with the correct asset path
                 )
@@ -50,9 +50,21 @@ class SplashViewIos extends StatelessWidget {
             ),*/
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child:Column(
                 children: [
+                  Container(
+
+                    alignment: Alignment.center,
+                    child:IconButton(
+                      icon:Icon(Icons.location_on,size: 60,
+                      color: Colors.green,),
+                      onPressed: (){},
+
+
+                    ),
+                  ),
+
                   Container(
                     alignment: Alignment.center,
                     child:Obx(()=>Text(
@@ -67,7 +79,7 @@ class SplashViewIos extends StatelessWidget {
                     child:const Text(
                       "Welcome To \n Maps and Navigation",
                       style:
-                      TextStyle(fontSize: 18.0, color: AppColor.primaryColor),
+                      TextStyle(fontSize: 30.0, color: AppColor.primaryColor),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -136,9 +148,9 @@ class SplashViewIos extends StatelessWidget {
 
                             // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
 
-                            //  viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
+                              viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
                             Get.off(() => MainScreen_ViewIos());
-                            // });
+                             });
 
                           },
                           child: Container(
@@ -180,15 +192,24 @@ class SplashViewIos extends StatelessWidget {
           ),
 
           Expanded(
-            flex: 2,
-            child:Container() /*Column(
+            flex: 1,
+            child:Container(),
+
+          /*  Column(
               children: [
                 Expanded(
                     flex: 3,
                     child:Container()),
                 Expanded(
                     flex: 7,
-                    child:  Obx(()=>
+                    child:Container(
+
+                        margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
+
+                        ),
+                        child:Obx(()=>
                     (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -210,7 +231,7 @@ class SplashViewIos extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         )
-                    ))),
+                    )))),
               ],
             ),*/
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 
+import 'package:flutter/material.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
+
 class CardViewIos extends StatelessWidget {
   final String imageUrl;
   final String labelText;
@@ -10,10 +13,10 @@ class CardViewIos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: 1.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+        color: AppColor.greyColor,
+        // borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -29,7 +32,7 @@ class CardViewIos extends StatelessWidget {
         children: [
           SizedBox(),
           CircleAvatar(
-              backgroundColor:Colors.grey[200],
+              backgroundColor:AppColor.yellowColor,
               radius: 25.0, // Adjust the radius as needed
               child:
               Image(
@@ -63,7 +66,7 @@ class CardViewIos extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(6.0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColor.greyColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(12.0),  // Bottom-left corner
                 bottomRight: Radius.circular(12.0), // Bottom-right corner
@@ -83,7 +86,7 @@ class CardViewIos extends StatelessWidget {
               labelText,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black,
+                color: AppColor.yellowColor,
                 fontSize: 12.0,
               ),
             ),
@@ -138,7 +141,7 @@ class CardViewIos extends StatelessWidget {
                     bottomLeft: Radius.circular(12.0),  // Bottom-left corner
                     bottomRight: Radius.circular(12.0), // Bottom-right corner
                   ), // Adjust the radius as needed
-                *//*  boxShadow: [
+                //  boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,

@@ -232,14 +232,31 @@ class WorldClockView extends StatelessWidget {
   Widget bannerAd() {
     return  Expanded(
       flex: 2,
-      child:Container()  /*Column(
+      child:  Column(
         children: [
           Expanded(
               flex: 3,
               child:Container()),
           Expanded(
               flex: 7,
-              child:  Obx(()=>
+              child: Container(
+
+                  margin: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 10.0,right: 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),child:Container(
+                  margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  child: Obx(()=>
               (viewModel.admob_helper.issmallBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
               Align(
                 alignment: Alignment.bottomCenter,
@@ -264,10 +281,9 @@ class WorldClockView extends StatelessWidget {
                     ),
                   )
               ):SizedBox()
-              )),
+                  )))),
         ],
       ),
-*/
     );
   }
 

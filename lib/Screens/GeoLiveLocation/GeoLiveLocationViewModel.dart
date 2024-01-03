@@ -16,7 +16,7 @@ class GeoLiveLocationViewModel extends GetxController {
 
   final picker = ImagePicker();
 
-  //Admob_Helper admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
    Rx<File> imageFile=File('').obs;
   RxString currentAddress = ''.obs;
   WidgetsToImageController controller = WidgetsToImageController();
@@ -40,7 +40,7 @@ String? imagepath;
     print('**** onReady *****');
     ///Load Ads Here
    // checkPermission();
-   // admob_helper.loadsmallBannerAd();
+   admob_helper.loadsmallBannerAd();
     imgFromCamera();
     var now = DateTime.now();
     var formatterDate = DateFormat("EEEE, MM-dd-yyyy");

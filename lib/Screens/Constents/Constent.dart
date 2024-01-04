@@ -20,7 +20,8 @@ class Constent {
   static RxBool isOpenAppAdShowing = false.obs;
   static RxBool isInterstialAdShowing = false.obs;
   static RxBool isNativeAdLoaded = false.obs;
-
+  static bool isAlternativeInterstitialopen = true;
+  static bool isAlternativeopenInterstitial = true;
   static bool isAlternativeInterstitial = true;
   static bool appopencheck=true;
   static RxBool purchaseads=false.obs;

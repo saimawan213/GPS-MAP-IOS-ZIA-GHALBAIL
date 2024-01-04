@@ -212,12 +212,13 @@ class Admob_Helper  {
   void showInterstitialAd( {bool isSplash = false,Function? callback}) {
     if(!Constent.adspurchase) {
     if(interstitialAd!=null) {
-      print("show ads:"+interstitialAd.toString());
+      if (Constent.isAlternativeopenInterstitial){
+        print("show ads:" + interstitialAd.toString());
 //    if(AppConst.adspurchase){
       if (Constent.isAlternativeInterstitial) {
-        if(!isSplash){
+        if (!isSplash) {
           interstitialAdCallBack(callback);
-        }else{
+        } else {
           interstitialAdCallBack1();
         }
         interstitialAd?.show();
@@ -225,8 +226,8 @@ class Admob_Helper  {
         Constent.isAlternativeInterstitial = false;
       } else {
         loadInterstitalAd();
-        Constent.isAlternativeInterstitial =true;
-        if(!isSplash) {
+        Constent.isAlternativeInterstitial = true;
+        if (!isSplash) {
           callback!();
           /*if (nextScreen == 'no') {
             print('call function here');
@@ -238,7 +239,24 @@ class Admob_Helper  {
           }*/
         }
       }
+    }
+      else{
+        Constent.isAlternativeopenInterstitial=true;
+        Constent.isAlternativeInterstitial=true;
+        if (!isSplash) {
+          callback!();
+        }
+        else {
+          if(Platform.isAndroid){
+            Get.off(() => MainScreen_View());
+          }
+          else{
+            Get.off(() => MainScreen_ViewIos());
+          }
+        }
 
+
+      }
     }
 
 
@@ -320,6 +338,7 @@ class Admob_Helper  {
           Constent.appopencheck = false;
           Constent.isInterstialAdShowing.value=true;
 
+
           Constent.isAlternativeInterstitial = false;
 
           print("test Interstial Ads124 " +
@@ -334,7 +353,8 @@ class Admob_Helper  {
                         nativeAdIsLoaded.value = true;
                       }*/
           Constent.isAlternativeInterstitial = false;
-          Constent.isInterstialAdShowing.value=false;;
+          Constent.isInterstialAdShowing.value=false;
+
           /* if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = true;
                       }*/
@@ -391,8 +411,8 @@ class Admob_Helper  {
           print("test Interstial Ads " +
               Constent.appopencheck.toString());
           Constent.appopencheck = false;
-          Constent.isInterstialAdShowing.value=true;
           Constent.isAlternativeInterstitial = false;
+          Constent.isInterstialAdShowing.value=false;;
 
           print("test Interstial Ads124 " +
               Constent.appopencheck.toString());
@@ -430,6 +450,7 @@ class Admob_Helper  {
           /*if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = true;
                       }*/
+
           Constent.isInterstialAdShowing.value=false;
           Constent.appopencheck = true;
           //nativeAdIsLoaded.value=true;
@@ -506,6 +527,19 @@ class Admob_Helper  {
       loadopenupad();
       return;
     }
+
+    //print('Interstital alreay show 455565.'+Constent.isAlternativeInterstitialopen.toString());
+    /*if(!Constent.isAlternativeInterstitialopen) {
+
+      print('Interstital alreay show22222 .');
+      return;
+    }
+    else{
+      Constent.isAlternativeInterstitialopen=true;
+
+
+    }*/
+
     if (_isShowingAd) {
       print('Tried to show ad while already showing an ad.');
       return;
@@ -521,6 +555,8 @@ class Admob_Helper  {
       print('Interstital alreay show .');
       return;
     }
+
+
     /* if(Const.adspurchase){
       print("Ads purchase");
       return;
@@ -535,6 +571,7 @@ class Admob_Helper  {
         //if(anchoredAdaptiveAd!=null) {
         print("open up ads call hereee");
         Constent.isOpenAppAdShowing.value=true;
+        Constent.isAlternativeopenInterstitial=false;
         //  }
         print("open up ads call hereee12444"+isBannerLoaded.value.toString());
         //  if(nativeAd!=null){

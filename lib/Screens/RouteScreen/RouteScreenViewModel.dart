@@ -121,6 +121,7 @@ class RouteScreenViewModel extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+    Constent.isNativeAdLoaded.value=false;
   }
 
   getCurrentLocation() async {

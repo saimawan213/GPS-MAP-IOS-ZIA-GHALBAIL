@@ -376,10 +376,10 @@ class HistoryView extends StatelessWidget {
               child:
               Container(
 
-                margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 15.0,right: 15.0),
+                margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 5.0,right: 5.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(3),
                   border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
                   boxShadow: [
                     BoxShadow(

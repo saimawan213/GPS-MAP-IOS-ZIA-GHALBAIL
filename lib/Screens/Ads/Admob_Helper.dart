@@ -212,7 +212,7 @@ class Admob_Helper  {
   void showInterstitialAd( {bool isSplash = false,Function? callback}) {
     if(!Constent.adspurchase) {
     if(interstitialAd!=null) {
-      if (Constent.isAlternativeopenInterstitial){
+     /* if (Constent.isAlternativeopenInterstitial){*/
         print("show ads:" + interstitialAd.toString());
 //    if(AppConst.adspurchase){
       if (Constent.isAlternativeInterstitial) {
@@ -239,7 +239,7 @@ class Admob_Helper  {
           }*/
         }
       }
-    }
+/*    }
       else{
         Constent.isAlternativeopenInterstitial=true;
         Constent.isAlternativeInterstitial=true;
@@ -256,7 +256,7 @@ class Admob_Helper  {
         }
 
 
-      }
+      }*/
     }
 
 
@@ -522,11 +522,16 @@ class Admob_Helper  {
   /// If the previously cached ad has expired, this just loads and caches a
   /// new ad.
   void showAdIfAvailable() {
-    if (!isAdAvailable) {
-      print('Tried to show ad before available.');
-      loadopenupad();
-      return;
+    if(Constent.isAlternativeInterstitial) {
+      Constent.isAlternativeInterstitial = false;
+      if (!isAdAvailable) {
+        print('Tried to show ad before available.');
+        loadopenupad();
+        return;
+      }
     }
+
+
 
     //print('Interstital alreay show 455565.'+Constent.isAlternativeInterstitialopen.toString());
     /*if(!Constent.isAlternativeInterstitialopen) {
@@ -571,7 +576,7 @@ class Admob_Helper  {
         //if(anchoredAdaptiveAd!=null) {
         print("open up ads call hereee");
         Constent.isOpenAppAdShowing.value=true;
-        Constent.isAlternativeopenInterstitial=false;
+
         //  }
         print("open up ads call hereee12444"+isBannerLoaded.value.toString());
         //  if(nativeAd!=null){

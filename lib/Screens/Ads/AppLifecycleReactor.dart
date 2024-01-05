@@ -18,6 +18,9 @@ class AppLifecycleReactor {
     if (appState == AppState.foreground) {
       appOpenAdManager.showAdIfAvailable();
     }
+    if (appState == AppState.background) {
+      appOpenAdManager.showAdIfAvailable();
+    }
     // }
   }
 }

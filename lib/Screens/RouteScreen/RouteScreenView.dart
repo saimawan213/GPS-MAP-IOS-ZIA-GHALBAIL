@@ -498,8 +498,14 @@ class RouteScreenView extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () async {
 
+                              viewModel.admob_helper.showInterstitialAd(callback: (){
+                                viewModel.performSearch('');
+                                //}
+                                /*  Get.to(() => NavigationScreenView(),
+                                            arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/
 
-                              viewModel.performSearch('');
+                              });
+
 
                             },
                             child:

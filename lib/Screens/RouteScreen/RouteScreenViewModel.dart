@@ -101,6 +101,7 @@ class RouteScreenViewModel extends GetxController {
     print('**** onReady *****');
     activateSpeechRecognizer();
     getCurrentLocation();
+    admob_helper.loadInterstitalAd();
     admob_helper.loadNativeAd();
     print("is native ad loaded:"+Constent.isNativeAdLoaded.value.toString());
     print("is native ad loaded122:"+admob_helper.nativeAd.toString());

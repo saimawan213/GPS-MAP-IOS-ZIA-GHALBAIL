@@ -6,12 +6,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainScreenViewModel extends GetxController {
   late PackageInfo packageInfo;
   Admob_Helper  admob_helper = Admob_Helper();
+  late AppLifecycleReactor appLifecycleReactor;
 
   @override
   Future<void> onInit() async {
@@ -25,9 +28,16 @@ class MainScreenViewModel extends GetxController {
     print('**** onReady *****');
 
     ///Load Ads Here
-    admob_helper.loadInterstitalAd();
-    admob_helper.loadsmallBannerAd();
 
+    if(!Constent.adspurchase) {
+      Admob_Helper admob_helper1 = Admob_Helper()
+        ..loadopenupad();
+      appLifecycleReactor =
+          AppLifecycleReactor(appOpenAdManager: admob_helper1);
+      appLifecycleReactor.listenToAppStateChanges();
+      admob_helper.loadInterstitalAd();
+      admob_helper.loadsmallBannerAd();
+    }
     super.onReady();
   }
 

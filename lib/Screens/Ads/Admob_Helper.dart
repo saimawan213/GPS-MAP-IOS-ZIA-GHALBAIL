@@ -522,14 +522,12 @@ class Admob_Helper  {
   /// If the previously cached ad has expired, this just loads and caches a
   /// new ad.
   void showAdIfAvailable() {
-    if(Constent.isAlternativeInterstitial) {
-      Constent.isAlternativeInterstitial = false;
-      if (!isAdAvailable) {
-        print('Tried to show ad before available.');
-        loadopenupad();
-        return;
-      }
+    if (!isAdAvailable) {
+      print('Tried to show ad before available.');
+      loadopenupad();
+      return;
     }
+
 
 
 
@@ -558,6 +556,14 @@ class Admob_Helper  {
     }
     if(!Constent.appopencheck) {
       print('Interstital alreay show .');
+      return;
+    }
+    if(Constent.isAlternativeInterstitial) {
+      Constent.isAlternativeInterstitial = false;
+
+    }
+    else{
+      Constent.isAlternativeInterstitial = true;
       return;
     }
 

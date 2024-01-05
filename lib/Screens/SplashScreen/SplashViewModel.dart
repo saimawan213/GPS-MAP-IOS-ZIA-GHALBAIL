@@ -10,7 +10,7 @@ import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 class SplashViewModel extends GetxController {
   RxDouble progressValue = 0.0.obs;
-  late AppLifecycleReactor appLifecycleReactor;
+
   Admob_Helper admob_helper = Admob_Helper();
 RxString currentlocation=''.obs;
 
@@ -41,11 +41,7 @@ RxString currentlocation=''.obs;
     if(!purchasevalue) {
       Constent.purchaseads.value=false;
       Constent.adspurchase=false;
-      Admob_Helper admob_helper1 = Admob_Helper()
-        ..loadopenupad();
-      appLifecycleReactor =
-          AppLifecycleReactor(appOpenAdManager: admob_helper1);
-      appLifecycleReactor.listenToAppStateChanges();
+
     }
     else{
       print("ads  purchase");

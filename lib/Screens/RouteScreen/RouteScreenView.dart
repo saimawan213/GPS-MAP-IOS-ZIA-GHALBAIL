@@ -497,7 +497,9 @@ class RouteScreenView extends StatelessWidget {
                       Container(
                           child: GestureDetector(
                             onTap: () async {
-
+                              (viewModel.startAddressController.text == "") ?
+                              viewModel.callerrormassage():
+                              (viewModel.destinationAddressController.text == "")?viewModel.callerrormassage():
                               viewModel.admob_helper.showInterstitialAd(callback: (){
                                 viewModel.performSearch('');
                                 //}
@@ -505,6 +507,16 @@ class RouteScreenView extends StatelessWidget {
                                             arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/
 
                               });
+
+                              /*(viewModel.startAddressController.text != "" &&
+                                        viewModel.destinationAddressController.text != "") ?   viewModel.admob_helper.showInterstitialAd(callback: (){
+                                viewModel.performSearch('');
+                                //}
+                                *//*  Get.to(() => NavigationScreenView(),
+                                            arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*//*
+
+                              }): viewModel.callerrormassage();
+*/
 
 
                             },

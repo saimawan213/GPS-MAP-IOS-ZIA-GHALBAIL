@@ -71,7 +71,8 @@ final String jsonString = await rootBundle.loadString('assets/categories.json');
   Future<void> callgooglemap(String index) async {
     String googleUrl='https://www.google.com/maps/search/?api=1&query='+index;
     if (await canLaunch(googleUrl)) {
-    await launch(googleUrl);
+      await launch(googleUrl, forceWebView: false, forceSafariVC: false);
+//    await launch(googleUrl);
     } else {
     throw 'Could not open the map.';
     }

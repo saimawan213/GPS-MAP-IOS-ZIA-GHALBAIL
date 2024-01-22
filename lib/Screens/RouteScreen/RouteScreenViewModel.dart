@@ -872,6 +872,19 @@ class RouteScreenViewModel extends GetxController {
 //    FocusScope.of(context).requestFocus(FocusNode());
   }
 
+  void callerrormassage(){
+    if (startAddressController.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Current location Cannot be Empty")));
+    } else if (destinationAddressController.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Destination Location Cannot be Empty ")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Source and Destination Location Cannot be Empty ")));
+    }
+  }
+
   calculateDistance() async {
     try {
       print("inside local hereeee");

@@ -235,7 +235,7 @@ class Constent {
 
     if(Platform.isAndroid){
       if(kDebugMode){
-        return 'ca-app-pub-3940256099942544/3419835294';
+        return 'ca-app-pub-3940256099942544/9257395921';
       }
       else{
         return 'ca-app-pub-8011932915847069/3496452020';
@@ -243,7 +243,7 @@ class Constent {
 
     }else if(Platform.isIOS){
       if(kDebugMode){
-        return 'ca-app-pub-3940256099942544/5662855259';
+        return 'ca-app-pub-3940256099942544/5575463023';
       }
       else{
         return 'ca-app-pub-6941637095433882/7998618403';

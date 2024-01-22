@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041BA26F2B5139F3002BB431 /* Nativcall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041BA26E2B5139F3002BB431 /* Nativcall.xib */; };
 		0453702C2B19BA8700937CEB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0453702B2B19BA8700937CEB /* StoreKit.framework */; };
 		04D48F1F2B42C100005EB194 /* ListTileNativeAdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D48F1E2B42C100005EB194 /* ListTileNativeAdFactory.swift */; };
 		04D85CD42B43D47600052EE7 /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D85CD32B43D47600052EE7 /* NativeAdView.xib */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		041BA26E2B5139F3002BB431 /* Nativcall.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Nativcall.xib; sourceTree = "<group>"; };
 		0453702B2B19BA8700937CEB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04B0A7A62B0F8C1400524877 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		04D48F1E2B42C100005EB194 /* ListTileNativeAdFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTileNativeAdFactory.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				041BA26E2B5139F3002BB431 /* Nativcall.xib */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				04D85CD42B43D47600052EE7 /* NativeAdView.xib in Resources */,
+				041BA26F2B5139F3002BB431 /* Nativcall.xib in Resources */,
 				CE373429F229ADCB8989959B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,11 +532,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.10;
-				FLUTTER_BUILD_NUMBER = 28;
+				FLUTTER_BUILD_NAME = 7.1.2;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -540,7 +544,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.10;
+				MARKETING_VERSION = 7.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -713,11 +717,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.10;
-				FLUTTER_BUILD_NUMBER = 28;
+				FLUTTER_BUILD_NAME = 7.1.2;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -725,7 +729,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.10;
+				MARKETING_VERSION = 7.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -742,11 +746,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.0.10;
-				FLUTTER_BUILD_NUMBER = 28;
+				FLUTTER_BUILD_NAME = 7.1.2;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -754,7 +758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.10;
+				MARKETING_VERSION = 7.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

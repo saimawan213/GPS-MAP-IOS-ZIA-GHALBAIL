@@ -692,9 +692,9 @@ int valuecheck=-1;
     else if(selectedValue.value==3){
       modevalue="walking";
     }
-    /* else if(selectedValue.value==4){
+     else if(selectedValue.value==4){
       modevalue="Transit";
-    }*/
+    }
     print("model String value is:"+modevalue);
     // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
@@ -708,7 +708,11 @@ int valuecheck=-1;
 
           if(modevalue=="driving"){
             if(plat.Platform.isIOS){
-              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
+              googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                  '&origin=$startLatitude1,$startLongitude1'
+                  '&destination=$destinationLatituate1,$destinationLongitude1'
+                  '&travelmode=$modevalue';
+             // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
 
               //googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=driving";
               //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
@@ -721,7 +725,11 @@ int valuecheck=-1;
           }
           else if(modevalue=="Bicycling"){
             if(plat.Platform.isIOS){
-              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
+               googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                  '&origin=$startLatitude1,$startLongitude1'
+                  '&destination=$destinationLatituate1,$destinationLongitude1'
+                  '&travelmode=$modevalue';
+          //  googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
 
               // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=bicycling";
             }
@@ -731,7 +739,11 @@ int valuecheck=-1;
           }
           else if(modevalue=="walking"){
             if(plat.Platform.isIOS){
-              googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
+              googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                  '&origin=$startLatitude1,$startLongitude1'
+                  '&destination=$destinationLatituate1,$destinationLongitude1'
+                  '&travelmode=$modevalue';
+             // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
 
               // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=walking";
               //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
@@ -746,7 +758,8 @@ int valuecheck=-1;
           //String googleUrl=  "http://maps.google.com/maps?saddr="+current+" &daddr="+seach+ "&dirflg=b";
           //String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude1,$startLongitude1&destination=$destinationLatituate1,$destinationLongitude1&travelmode='+modevalue;
           if (await canLaunch(googleUrl)) {
-            await launch(googleUrl);
+            print("google url is here:"+googleUrl);
+            await launch(googleUrl, forceWebView: false, forceSafariVC: false);
           } else {
             throw 'Could not open the map.';
           }
@@ -762,7 +775,11 @@ int valuecheck=-1;
         // String googleUrl='';
         if(  modevalue=="driving"){
           if(plat.Platform.isIOS){
-            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
+            googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                '&origin=$startLatitude1,$startLongitude1'
+                '&destination=$destinationLatituate1,$destinationLongitude1'
+                '&travelmode=$modevalue';
+           // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=d";
 
             //  googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=driving";
 
@@ -776,7 +793,11 @@ int valuecheck=-1;
         }
         else if(  modevalue=="Bicycling"){
           if(plat.Platform.isIOS){
-            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
+            googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                '&origin=$startLatitude1,$startLongitude1'
+                '&destination=$destinationLatituate1,$destinationLongitude1'
+                '&travelmode=$modevalue';
+           // googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
 
             // googleUrl= "http://maps.apple.com/maps?daddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=b";
 
@@ -788,7 +809,11 @@ int valuecheck=-1;
           }}
         else if(modevalue=="walking"){
           if(plat.Platform.isIOS){
-            googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
+            googleUrl = 'https://www.google.com/maps/dir/?api=1'
+                '&origin=$startLatitude1,$startLongitude1'
+                '&destination=$destinationLatituate1,$destinationLongitude1'
+                '&travelmode=$modevalue';
+          //  googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&dirflg=w";
 
             //googleUrl= "https://www.google.co.in/maps/dir/?saddr="+startLatitude1.toString()+","+startLongitude1.toString()+","+"&daddr="+destinationLatituate1.toString()+","+destinationLongitude1.toString()+","+"&directionsmode=walking";
             //googleUrl = 'comgooglemaps://?saddr=&daddr=$destinationLatituate1,$destinationLongitude1&directionsmode=driving';
@@ -803,7 +828,9 @@ int valuecheck=-1;
         // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
         // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode='+modevalue;
         if (await canLaunch(googleUrl)) {
-          await launch(googleUrl);
+          print("google url is here:"+googleUrl);
+          await launch(googleUrl, forceWebView: false, forceSafariVC: false);
+        //  await launch(googleUrl);
         } else {
           throw 'Could not open the map.';
         }

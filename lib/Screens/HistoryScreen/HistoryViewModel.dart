@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/DatabaseHandler.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/locationService.dart';
 
@@ -76,8 +79,15 @@ class HistoryViewModel extends GetxController {
 
   @override
   void onReady() {
-    admob_helper.loadsmall1BannerAd();
+    admob_helper.adaptiveloadAd();
   //  admob_helper.loadInterstitalAd();
     super.onReady();
+  }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    admob_helper.isBannerLoaded.value=false;
+    admob_helper.anchoredAdaptiveAd=null;
   }
 }

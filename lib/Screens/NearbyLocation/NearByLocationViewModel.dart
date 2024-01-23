@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NearByLocationViewModel extends GetxController {
@@ -26,7 +27,7 @@ class NearByLocationViewModel extends GetxController {
   Future<void> onReady() async {
     print('**** onReady *****');
     ///Load Ads Here
-   admob_helper.loadsmall1BannerAd();
+   admob_helper.adaptiveloadAd();
 final String jsonString = await rootBundle.loadString('assets/categories.json');
                             final data = jsonDecode(jsonString);
                             print(data['pois']);
@@ -50,11 +51,11 @@ final String jsonString = await rootBundle.loadString('assets/categories.json');
   }
   @override
   void onClose() {
-
     // TODO: implement onClose
     super.onClose();
+    admob_helper.isBannerLoaded.value=false;
+    admob_helper.anchoredAdaptiveAd=null;
   }
-
   void filterSearchResults(String query) {
 
 

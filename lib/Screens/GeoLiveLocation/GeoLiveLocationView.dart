@@ -267,7 +267,7 @@ class GeoLiveLocationView extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
+           /* Expanded(
               flex: 2,
               child: Column(
                 children: [
@@ -278,7 +278,7 @@ class GeoLiveLocationView extends StatelessWidget {
                       flex: 10,
                       child:Container(
 
-                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 5.0,right: 5.0),
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(3),
@@ -317,8 +317,62 @@ class GeoLiveLocationView extends StatelessWidget {
                 ],
               ),
 
-            ),
+            ),*/
+            Expanded(
+              flex: 2,
+              child:  Column(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child:Container()),
+                  Expanded(
+                      flex: 7,
+                      child: Container(
 
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),child:Container(
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          child: Obx(()=>
+                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: SafeArea(
+                              child: SizedBox(
+                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
+                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
+                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
+                              ),
+                            ),
+                          )
+                              :(!Constent.adspurchase)?
+
+                          SizedBox(
+                              width:double.infinity,
+                              height: 30,
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  color: Colors.grey,
+                                ),
+                              )
+                          ):SizedBox()
+                          )))),
+                ],
+              ),
+            )
           ],
         ),
       ),

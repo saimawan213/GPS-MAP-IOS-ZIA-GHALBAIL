@@ -16,6 +16,7 @@ import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScre
 import 'package:mapsandnavigationflutter/Screens/NearbyLocation/NearbyLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightView.dart';
+import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockIos.dart';
 
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockView.dart';
 import 'package:shimmer/shimmer.dart';
@@ -163,8 +164,9 @@ class MainScreen_ViewIos extends StatelessWidget {
 
     onTap: () {
     viewModel.admob_helper.showInterstitialAd(callback: (){
-    Get.to(() => WorldClockView());
+    Get.to(() => WorldClockViewIos());
     });
+
 
 
 
@@ -307,7 +309,7 @@ class MainScreen_ViewIos extends StatelessWidget {
     ),
     ),
     Expanded(
-    flex: 1,
+    flex: 2,
     child:Container(),
     ),
     /*     Expanded(
@@ -630,7 +632,56 @@ class MainScreen_ViewIos extends StatelessWidget {
               child: Text("Fault Codes",style: TextStyle(color: Colors.white)),
 
             ),*/
+
+
       Expanded(
+        flex: 1,
+        child:
+        Container(
+
+            margin: EdgeInsets.only(top: 5.0,bottom: 5.0,),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child:Container(
+
+                child: Obx(()=>
+                (viewModel.admob_helper.mainisBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value)?
+                Align(
+                  alignment: Alignment.center,
+                  child: SafeArea(
+                    child: SizedBox(
+                      width:viewModel.admob_helper.mainanchoredAdaptiveAd!.size.width.toDouble(),
+                      height:viewModel.admob_helper.mainanchoredAdaptiveAd!.size.height.toDouble(),
+                      child: AdWidget(ad: viewModel.admob_helper.mainanchoredAdaptiveAd!),
+                    ),
+                  ),
+                )
+                    :SizedBox(
+                    width:double.infinity,
+                    height: 30,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.white,
+                      child: Container(
+                        color: Colors.grey,
+                      ),
+                    )
+                )
+                ))),
+
+      ),
+      /*Expanded(
         flex: 2,
         child: Column(
           children: [
@@ -641,7 +692,7 @@ class MainScreen_ViewIos extends StatelessWidget {
                 flex: 7,
                 child:Container(
 
-                    margin: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 5.0,right: 5.0),
+                    margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(3),
@@ -680,7 +731,8 @@ class MainScreen_ViewIos extends StatelessWidget {
           ],
         ),
 
-      ),
+      ),*/
+      SizedBox(height: 1,)
 
     ],
     ),

@@ -102,7 +102,7 @@ class RouteScreenViewModel extends GetxController {
     activateSpeechRecognizer();
     getCurrentLocation();
     admob_helper.loadInterstitalAd();
-    admob_helper.loadNativeAd();
+    admob_helper.loadNativeAdSmall();
     print("is native ad loaded:"+Constent.isNativeAdLoaded.value.toString());
     print("is native ad loaded122:"+admob_helper.nativeAd.toString());
     print("is open ad loaded122:"+Constent.isOpenAppAdShowing.value.toString());
@@ -123,6 +123,7 @@ class RouteScreenViewModel extends GetxController {
     // TODO: implement onClose
     super.onClose();
     Constent.isNativeAdLoaded.value=false;
+    Constent.isNativeAdSmallLoaded.value=false;
   }
 
   getCurrentLocation() async {

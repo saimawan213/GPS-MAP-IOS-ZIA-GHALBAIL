@@ -37,7 +37,7 @@ class WorldClockViewModel extends GetxController {
 
     ///Load Ads Here
 
-    admob_helper.loadsmallBannerAd();
+    admob_helper.adaptiveloadAd();
     super.onReady();
   }
 
@@ -45,6 +45,8 @@ class WorldClockViewModel extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+    admob_helper.isBannerLoaded.value=false;
+    admob_helper.anchoredAdaptiveAd=null;
   }
 
   void setData(weatherData) {

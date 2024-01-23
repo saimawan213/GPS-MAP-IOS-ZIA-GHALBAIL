@@ -369,55 +369,61 @@ class HistoryView extends StatelessWidget {
                 ),
               )),
             )),
-
-            SizedBox(height: 15,),
+            /*SizedBox(height: 8,),*/
             Expanded(
               flex: 2,
-              child:
-              Container(
-
-                margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 5.0,right: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(3),
-                  border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-             child:Container(
-                 margin: EdgeInsets.only(bottom: 10.0),
-                 child: Obx(()=>
-              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !viewModel.users.isEmpty)?
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SafeArea(
-                  child: SizedBox(
-                    width:viewModel.admob_helper.bannerAd!.size.width.toDouble(),
-                    height:viewModel.admob_helper.bannerAd!.size.height.toDouble(),
-                    child: AdWidget(ad: viewModel.admob_helper.bannerAd!),
-                  ),
-                ),
-              )
-                  :(viewModel.users.isEmpty)?SizedBox():SizedBox(
-                  width:double.infinity,
-                  height: 30,
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.white,
-                    child: Container(
-                      color: Colors.grey,
-                    ),
-                  )
-              )
-              ))),
-
-            ),
+              child:  Column(
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child:Container()),
+                  Expanded(
+                      flex: 8,
+                      child:
+                      Container(
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),child:Container(
+                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          child: Obx(()=>
+                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase && viewModel.users.isNotEmpty)?
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: SafeArea(
+                              child: SizedBox(
+                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
+                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
+                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
+                              ),
+                            ),
+                          )
+                              :(!Constent.adspurchase && viewModel.users.isNotEmpty)?
+                          SizedBox(
+                              width:double.infinity,
+                              height: 30,
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  color: Colors.grey,
+                                ),
+                              )
+                          ):SizedBox()
+                          )))),
+                ],
+              ),
+            )
 /*Expanded(
               flex: 1,
               child: showBannerAd(),

@@ -15,6 +15,8 @@ import GoogleMobileAds
       GeneratedPluginRegistrant.register(with: self)
 
         let nativeAdFactory = ListTileNativeAdFactory()
+        let smallNativeAdFactory = SmallNativeAdFactory()
+
         FLTGoogleMobileAdsPlugin.registerNativeAdFactory(
             self,
             factoryId: "listTileMedium2",
@@ -24,6 +26,12 @@ import GoogleMobileAds
                     self,
                     factoryId: "listTileMedium",
                     nativeAdFactory: nativeAdFactory)
+
+             FLTGoogleMobileAdsPlugin.registerNativeAdFactory(
+                                            self,
+                                            factoryId: "smallListTile",
+                                            nativeAdFactory: smallNativeAdFactory);
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

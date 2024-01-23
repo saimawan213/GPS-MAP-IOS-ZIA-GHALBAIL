@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 import 'package:widgets_to_image/widgets_to_image.dart';
 
@@ -40,7 +41,8 @@ String? imagepath;
     print('**** onReady *****');
     ///Load Ads Here
    // checkPermission();
-   admob_helper.loadsmallBannerAd();
+    admob_helper.adaptiveloadAd();
+  // admob_helper.loadsmallBannerAd();
     imgFromCamera();
     var now = DateTime.now();
     var formatterDate = DateFormat("EEEE, MM-dd-yyyy");
@@ -55,9 +57,10 @@ String? imagepath;
   }
   @override
   void onClose() {
-
     // TODO: implement onClose
     super.onClose();
+    admob_helper.isBannerLoaded.value=false;
+    admob_helper.anchoredAdaptiveAd=null;
   }
 
 /*  Future<bool?> checkPermission() async {

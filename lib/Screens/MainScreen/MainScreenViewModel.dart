@@ -36,7 +36,7 @@ class MainScreenViewModel extends GetxController {
           AppLifecycleReactor(appOpenAdManager: admob_helper1);
       appLifecycleReactor.listenToAppStateChanges();
       admob_helper.loadInterstitalAd();
-      admob_helper.loadsmallBannerAd();
+      admob_helper.mainjadaptiveloadAd();
     }
     super.onReady();
   }

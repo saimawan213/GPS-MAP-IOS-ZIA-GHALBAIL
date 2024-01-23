@@ -15,6 +15,7 @@ import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/NativeAdSkeleton.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenViewModel.dart';
+import 'package:mapsandnavigationflutter/Screens/RouteScreen/SmallNativeAdSkeleton.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -191,7 +192,7 @@ class RouteScreenView extends StatelessWidget {
                 // showing the route
                 SizedBox(height: 20),
               Expanded(
-              flex: 2,
+              flex: 4,
               child:Container(
 
 
@@ -610,11 +611,53 @@ class RouteScreenView extends StatelessWidget {
 
 
               ),
-SizedBox(height: 10,),
-
+/*SizedBox(height: 10,),*/
+            Expanded(
+              flex: 3,
+                child: Container()),
                 Expanded(
                   flex: 2,
-                  child:Container(
+                  child:
+                  Obx(
+                        () => Container(
+                      height: (!Constent.purchaseads.value)
+                          ? 130
+                          : 0,
+                      width: double.infinity,
+                      decoration:   (!Constent.purchaseads.value)
+                          ? BoxDecoration(
+                        border: Border.all(
+                          color: AppColor.borderColor, // Set the color of the border
+                          width: 3.0, // Set the width of the border
+                        ),
+                      )
+                          : BoxDecoration(color: Colors.white),
+                      child: Material(
+                        elevation: 2,
+                        child: Obx(
+                              () => (Constent.isNativeAdSmallLoaded.value &&
+                              viewModel.admob_helper.nativeAdSmall != null &&
+                                  !Constent.isOpenAppAdShowing.value
+                                  && !Constent.isInterstialAdShowing.value &&
+                                  !Constent.purchaseads.value)
+                              ? SizedBox(
+                            height: 130,
+                            width: Get.width,
+                            child: AdWidget(ad: viewModel.admob_helper.nativeAdSmall!),
+                          )
+                              :  !Constent.purchaseads.value
+                              ? SmallNativeAdSkeleton()
+                              : SizedBox(),
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+
+
+                SizedBox(height: 5,),
+
+                  /*Container(
 
                     margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
                     decoration: BoxDecoration(
@@ -659,10 +702,10 @@ SizedBox(height: 10,),
                         ),
                       ),
                     )
-                  ),
+                  ),*/
 
 
-                ),
+              //  ),
 
 
                /* SafeArea(
@@ -1120,13 +1163,13 @@ SizedBox(height: 10,),
                 ),*/
 
 
-                Expanded(
+           /*     Expanded(
                   flex: 0,
                   child:
 
                   Container(
 
-                     /* margin: EdgeInsets.only(top: 20.0),
+                     *//* margin: EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
@@ -1168,11 +1211,11 @@ SizedBox(height: 10,),
                             ),
                           ),
                         ),
-                      )*/
+                      )*//*
                   ),
 
 
-                ),
+                ),*/
 
           /*  Expanded(
               flex: 1,

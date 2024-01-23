@@ -11,11 +11,13 @@ import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart'
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 
 class Admob_Helper  {
-  NativeAd? nativeAd;
+  NativeAd? nativeAd,nativeAdSmall;
   RxBool isBannerLoaded = false.obs;
+  RxBool mainisBannerLoaded = false.obs;
   RxBool islargeBannerLoaded = false.obs;
   RxBool issmallBannerLoaded = false.obs;
   RxBool issmall1BannerLoaded = false.obs;
+  RxBool mainissmall1BannerLoaded = false.obs;
   RxBool nativeAdIsLoaded=false.obs;
   //RxBool nativeAdIsLoaded = false.obs;
   final double adAspectRatioMedium = (95 / 355);
@@ -32,11 +34,12 @@ class Admob_Helper  {
   bool _isShowingAd = false;
 
 
-  BannerAd? bannerAd;
+  BannerAd? bannerAd,mainbannerAd;
 
-  BannerAd? anchoredAdaptiveAd;
+  BannerAd? anchoredAdaptiveAd,mainanchoredAdaptiveAd;
   InterstitialAd? interstitialAd;
   bool isBannerAdReady = true;
+  bool mainisBannerAdReady = true;
 
   // TODO: replace this test ad unit with your own ad unit.
 /*
@@ -124,6 +127,33 @@ class Admob_Helper  {
         ..load();
     }
   }
+
+  void mainloadsmall1BannerAd() {
+    if(!Constent.adspurchase) {
+      mainbannerAd = BannerAd(
+        adUnitId: Constent.bannerAdID,
+        request: const AdRequest(),
+        size: AdSize.banner,
+        listener: BannerAdListener(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // setState(() {
+            mainissmall1BannerLoaded.value = true;
+            mainisBannerAdReady = true;
+            //  });
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (ad, err) {
+            debugPrint('BannerAd failed to load: $err');
+            // Dispose the ad here to free resources.
+            ad.dispose();
+          },
+        ),
+      )
+        ..load();
+    }
+  }
   Future<void> adaptiveloadAd() async {
 
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
@@ -168,6 +198,53 @@ class Admob_Helper  {
       return anchoredAdaptiveAd!.load();
     }
   }
+
+  Future<void> mainjadaptiveloadAd() async {
+
+    // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
+    if(!Constent.adspurchase) {
+      final AnchoredAdaptiveBannerAdSize? size =
+      await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+          Get.width.truncate());
+
+      if (size == null) {
+        print('Unable to get height of anchored banner.');
+        return;
+      }
+
+      mainanchoredAdaptiveAd = BannerAd(
+        // TODO: replace these test ad units with your own ad unit.
+        adUnitId: Constent.bannerAdID,
+        size: size,
+        request: AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (Ad ad) {
+            print("Banner loaded");
+            print('$ad loaded: ${ad.responseInfo}');
+            //setState(() {
+            // When the ad is loaded, get the ad size and use it to set
+            // the height of the ad container.
+            mainanchoredAdaptiveAd = ad as BannerAd;
+            print("Bannerr loadede file eee 12" +
+                mainisBannerLoaded.value.toString());
+            mainisBannerLoaded.value = true;
+            print(
+                "Bannerr loadede file eee " + mainisBannerLoaded.value.toString());
+            //  });
+          },
+          onAdFailedToLoad: (Ad ad, LoadAdError error) {
+            print('Anchored adaptive banner failedToLoad: $error');
+            mainanchoredAdaptiveAd = null;
+            ad.dispose();
+            adaptiveloadAd();
+          },
+        ),
+      );
+      return mainanchoredAdaptiveAd!.load();
+    }
+  }
+
+
   void deletebanner(){
     if(bannerAd!=null){
       bannerAd!.dispose();
@@ -290,6 +367,41 @@ class Admob_Helper  {
     else{
       callback!();
 
+    }
+  }
+
+  Future<void> loadNativeAdSmall(
+      {
+        TemplateType type = TemplateType.small,
+        String factoryId = 'smallListTile'
+      }
+      ) async {
+    try {
+      if(!Constent.adspurchase) {
+        nativeAdSmall = NativeAd(
+          factoryId: factoryId,
+          adUnitId: Constent.nativeAdID,
+          listener: NativeAdListener(
+            onAdLoaded: (ad) {
+              debugPrint('$NativeAd loaded.');
+              nativeAdSmall = null;
+              nativeAdSmall = ad as NativeAd;
+              Constent.isNativeAdSmallLoaded.value = true;
+            },
+            onAdFailedToLoad: (ad, error) {
+              // Dispose the ad here to free resources.
+              debugPrint('$NativeAd failed to load: $error');
+              ad.dispose();
+            },
+          ),
+          request: const AdRequest(),
+        );
+        return nativeAdSmall!.load();
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
   Future<void> loadNativeAd(

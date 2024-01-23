@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/NearbyLocation/NearByLocationViewModel.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NearbyLocationView extends StatelessWidget {
@@ -142,7 +143,7 @@ class NearbyLocationView extends StatelessWidget {
             );*/
                     },
                     child:  Container(
-                      margin: const EdgeInsets.only(top: 7.0,right: 30.0,left: 30.0,bottom: 0.0),
+                      margin: const EdgeInsets.only(top: 7.0,right: 30.0,left: 30.0),
                       //color: todo_controller.cardBackgroundColor,
                       decoration: BoxDecoration(
                         color: AppColor.primaryColor,
@@ -174,45 +175,62 @@ class NearbyLocationView extends StatelessWidget {
 
 
             ),
-SizedBox(height: 10.0,),
 
-             Expanded(
+
+            Expanded(
               flex: 2,
-              child:Container(
+              child:  Column(
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child:Container()),
+                  Expanded(
+                      flex: 10,
+                      child: Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),child:Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Obx(()=>
+                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: SafeArea(
+                              child: SizedBox(
+                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
+                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
+                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
+                              ),
+                            ),
+                          )
+                              :(!Constent.adspurchase)?
 
-    margin: EdgeInsets.only(top: 15.0,bottom: 5.0,left: 5.0,right: 5.0),
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(3),
-    border: Border.all(color: AppColor.primaryColor),// Adjust the radius as needed
-    boxShadow: [
-    BoxShadow(
-    color: Colors.grey.withOpacity(0.5),
-    spreadRadius: 2,
-    blurRadius: 5,
-    offset: Offset(0, 3),
-    ),
-    ],
-    ),
-           child:Container(
-               margin: EdgeInsets.only(bottom: 4.0),
-               child:Obx(()=>
-              (viewModel.admob_helper.issmall1BannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
-              Align(
-                alignment: Alignment.center,
-                child: SafeArea(
-
-                  child: SizedBox(
-                    width:viewModel.admob_helper.bannerAd!.size.width.toDouble(),
-                    height:viewModel.admob_helper.bannerAd!.size.height.toDouble(),
-                    child: AdWidget(ad: viewModel.admob_helper.bannerAd!),
-                  ),
-                ),
-              )
-                  :(!Constent.adspurchase)?SizedBox():SizedBox())),
+                          SizedBox(
+                              width:double.infinity,
+                              height: 30,
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  color: Colors.grey,
+                                ),
+                              )
+                          ):SizedBox()
+                          )))),
+                ],
               ),
-
-            ),
+            )
 
 
            /* Expanded(

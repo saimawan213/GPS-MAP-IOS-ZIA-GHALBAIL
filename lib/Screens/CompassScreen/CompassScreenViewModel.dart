@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 
 class CompassScreenViewModel extends GetxController {
@@ -20,13 +21,20 @@ class CompassScreenViewModel extends GetxController {
 
     super.onInit();
   }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    admob_helper.isBannerLoaded.value=false;
+    admob_helper.anchoredAdaptiveAd=null;
+  }
 
   @override
   void onReady() {
     print('**** onReady *****');
     ///Load Ads Here
     requestPermission();
-    admob_helper.loadsmallBannerAd();
+    admob_helper.adaptiveloadAd();
 
     FlutterCompass.events?.listen((CompassEvent event) {
 
@@ -52,12 +60,7 @@ class CompassScreenViewModel extends GetxController {
     //   compassDirection = _getCompassDirection(event.heading.toString());
     super.onReady();
   }
-  @override
-  void onClose() {
 
-    // TODO: implement onClose
-    super.onClose();
-  }
  /* void fetchPermissionStatus() {
     Permission.locationWhenInUse.status.then((status) {
      // if (mounted) {

@@ -568,12 +568,13 @@ class Admob_Helper  {
           //nativeAdIsLoaded.value=true;
           interstitialAd?.dispose();
           interstitialAd = null;
-          if(Platform.isAndroid){
+          Get.off(() => MainScreen_ViewIos());
+         /* if(Platform.isAndroid){
             Get.off(() => MainScreen_View());
           }
           else{
             Get.off(() => MainScreen_ViewIos());
-          }
+          }*/
 
         },
         // Called when a click is recorded for an ad.

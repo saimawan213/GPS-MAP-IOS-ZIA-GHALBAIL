@@ -375,17 +375,24 @@ class HistoryView extends StatelessWidget {
               child:  Column(
                 children: [
                   Expanded(
-                      flex: 2,
+                      flex: 3,
                       child:Container()),
                   Expanded(
-                      flex: 8,
+                      flex: 7,
                       child:
                       Container(
-                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                          margin: EdgeInsets.only(top: 5.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(3),
-                            border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                              border: Border(
+                                top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                                bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                                // You can remove the left and right borders by commenting them out
+                                // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                                // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                              ),
+                         //   border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),

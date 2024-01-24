@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => (Platform.isAndroid)? SplashView():SplashViewIos() ),
+        GetPage(name: '/', page: () => SplashViewIos()),
         GetPage(name: '/location', page: () => SelectlcoationView()),
       //  GetPage(name: '/ShowImage', page: () =>  PhotoViewerscreen(galleryItems: galleryItems)),
 

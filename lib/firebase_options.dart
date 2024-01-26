@@ -49,12 +49,12 @@ class DefaultFirebaseOptions {
     }
   }
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAzPYOzOqnvPBeolYtFIPQ1UCDwYAbI3T0',
-    appId: '1:1006775741778:ios:2abee6a1f382f58e741e8b',
-    messagingSenderId: '1006775741778',
-    projectId: 'ios-maps-zia',
-    storageBucket: 'ios-maps-zia.appspot.com',
-    iosClientId: '1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAGTSDHjGr0coNhCOByo2QV9h3UqaPCWGE',
+    appId: '1:908499502950:ios:fbdc95c918b7a044b46aa7',
+    messagingSenderId: '908499502950',
+    projectId: 'navigation-41bc9',
+    storageBucket: 'navigation-41bc9.appspot.com',
+    iosClientId: '908499502950-3nv8kdcv2t5bar9ce32e09lhi480ifjh.apps.googleusercontent.com',
     iosBundleId: 'com.pzapps.gpsmapsnavigation',
   );
   static const FirebaseOptions android = FirebaseOptions(

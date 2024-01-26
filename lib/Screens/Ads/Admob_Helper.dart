@@ -155,7 +155,6 @@ class Admob_Helper  {
     }
   }
   Future<void> adaptiveloadAd() async {
-
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
     if(!Constent.adspurchase) {
       final AnchoredAdaptiveBannerAdSize? size =

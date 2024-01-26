@@ -147,8 +147,8 @@ class SplashViewIos extends StatelessWidget {
                             }*/
 
                             // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
-
-                              viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
+                           // throw Exception();
+                            viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
                             Get.off(() => MainScreen_ViewIos());
                              });
 

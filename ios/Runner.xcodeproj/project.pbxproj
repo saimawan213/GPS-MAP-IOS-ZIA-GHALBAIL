@@ -540,11 +540,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.1.3;
-				FLUTTER_BUILD_NUMBER = 4;
+				FLUTTER_BUILD_NAME = 7.1.4;
+				FLUTTER_BUILD_NUMBER = 5;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -552,7 +552,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.3;
+				MARKETING_VERSION = 7.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -725,11 +725,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.1.3;
-				FLUTTER_BUILD_NUMBER = 4;
+				FLUTTER_BUILD_NAME = 7.1.4;
+				FLUTTER_BUILD_NUMBER = 5;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -737,7 +737,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.3;
+				MARKETING_VERSION = 7.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -754,11 +754,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = YBFTD2SC5T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 7.1.3;
-				FLUTTER_BUILD_NUMBER = 4;
+				FLUTTER_BUILD_NAME = 7.1.4;
+				FLUTTER_BUILD_NUMBER = 5;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Maps and Navigation";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -766,7 +766,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.3;
+				MARKETING_VERSION = 7.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pzapps.gpsmapsnavigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

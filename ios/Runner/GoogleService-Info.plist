@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj.apps.googleusercontent.com</string>
+	<string>908499502950-3nv8kdcv2t5bar9ce32e09lhi480ifjh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1006775741778-o1a2pk6t60pcgpd1oam6i2le3ohpegvj</string>
+	<string>com.googleusercontent.apps.908499502950-3nv8kdcv2t5bar9ce32e09lhi480ifjh</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAzPYOzOqnvPBeolYtFIPQ1UCDwYAbI3T0</string>
+	<string>AIzaSyAGTSDHjGr0coNhCOByo2QV9h3UqaPCWGE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1006775741778</string>
+	<string>908499502950</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.pzapps.gpsmapsnavigation</string>
 	<key>PROJECT_ID</key>
-	<string>ios-maps-zia</string>
+	<string>navigation-41bc9</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ios-maps-zia.appspot.com</string>
+	<string>navigation-41bc9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1006775741778:ios:2abee6a1f382f58e741e8b</string>
+	<string>1:908499502950:ios:fbdc95c918b7a044b46aa7</string>
 </dict>
 </plist>

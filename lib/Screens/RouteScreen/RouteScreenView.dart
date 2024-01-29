@@ -191,94 +191,99 @@ class RouteScreenView extends StatelessWidget {
                 // Show the place input fields & button for
                 // showing the route
                 SizedBox(height: 20),
-              Expanded(
-              flex: 4,
-              child:Container(
+                Expanded(
+                  flex: 4,
+                  child:  Column(
+                    children: [
+
+                      Expanded(
+                        flex: 4,
+                        child:Container(
 
 
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
 
 
-                 // Adjust the radius as needed
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                width: width * 0.9,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      /*  Text(
+                            // Adjust the radius as needed
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                /*  Text(
                                 'Navigation',
                                 style: TextStyle(fontSize: 20.0),
                               ),*/
-                      SizedBox(height: 30),
-                      _textField(
-                          label: 'Start',
-                          hint: 'Choose starting point',
-                          prefixIcon: IconButton(
-                            icon: Icon(Icons.my_location),
-                            onPressed: () {
-                              viewModel.startAddressController.text = viewModel.currentAddress;
-                              viewModel.startAddress.value = viewModel.currentAddress;
-                            },
-                          ),
-                          // prefixIcon: Icon(Icons.looks_one),
-                          textInputAction: TextInputAction.search,
-                          suffixIcon: Obx(() => IconButton(
-                            icon: Icon(viewModel.ptts11.value ? Icons.mic_off : Icons.mic),
-                            onPressed: () {
-                              viewModel.startTimer(context);
-                              viewModel.valuecheck=1;
-                              (viewModel.ptts1)? {
-                                print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
-                                print("call mic heree1"+viewModel.isListening.toString()),
-                                viewModel.speechRecognitionAvailable && !viewModel.isListening
-                                    ?{
-                                  //viewModel.ptts11.value=false,
-                                  viewModel.onMic(),
-                                  print("value of false 1234:"+viewModel.ptts11.value.toString()),
-                                  viewModel.ptts1=false, viewModel.start()}
-                                    : null}:
-                              {
-                                //viewModel.ptts11.value=true,
-                                viewModel.offMic(),
-                                viewModel.ptts1=true,
-                                viewModel.speech.cancel(),
-                                viewModel.speech.stop()
-                              };
-                            },
-                          )),
-                          controller: viewModel.startAddressController,
-                          focusNode: viewModel.startAddressFocusNode,
-                          width: width,
-                          locationCallback: (String value) {
-                            //   setState(() {
-                            viewModel.startAddress.value = value;
-                            // });
-                          }
+                                SizedBox(height: 30),
+                                _textField(
+                                    label: 'Start',
+                                    hint: 'Choose starting point',
+                                    prefixIcon: IconButton(
+                                      icon: Icon(Icons.my_location),
+                                      onPressed: () {
+                                        viewModel.startAddressController.text = viewModel.currentAddress;
+                                        viewModel.startAddress.value = viewModel.currentAddress;
+                                      },
+                                    ),
+                                    // prefixIcon: Icon(Icons.looks_one),
+                                    textInputAction: TextInputAction.search,
+                                    suffixIcon: Obx(() => IconButton(
+                                      icon: Icon(viewModel.ptts11.value ? Icons.mic_off : Icons.mic),
+                                      onPressed: () {
+                                        viewModel.startTimer(context);
+                                        viewModel.valuecheck=1;
+                                        (viewModel.ptts1)? {
+                                          print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
+                                          print("call mic heree1"+viewModel.isListening.toString()),
+                                          viewModel.speechRecognitionAvailable && !viewModel.isListening
+                                              ?{
+                                            //viewModel.ptts11.value=false,
+                                            viewModel.onMic(),
+                                            print("value of false 1234:"+viewModel.ptts11.value.toString()),
+                                            viewModel.ptts1=false, viewModel.start()}
+                                              : null}:
+                                        {
+                                          //viewModel.ptts11.value=true,
+                                          viewModel.offMic(),
+                                          viewModel.ptts1=true,
+                                          viewModel.speech.cancel(),
+                                          viewModel.speech.stop()
+                                        };
+                                      },
+                                    )),
+                                    controller: viewModel.startAddressController,
+                                    focusNode: viewModel.startAddressFocusNode,
+                                    width: width,
+                                    locationCallback: (String value) {
+                                      //   setState(() {
+                                      viewModel.startAddress.value = value;
+                                      // });
+                                    }
 
 
-                      ),
+                                ),
 
-                      SizedBox(height: 20),
-                      _textField(
-                          label: 'Destination',
-                          hint: 'Choose destination',
-                          prefixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: ()  {
+                                SizedBox(height: 20),
+                                _textField(
+                                    label: 'Destination',
+                                    hint: 'Choose destination',
+                                    prefixIcon: IconButton(
+                                      icon: Icon(Icons.search),
+                                      onPressed: ()  {
 
-                              /* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
+                                        /* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
                                     await userController.addUser(
                                       viewModel.startAddress.value,
                                       viewModel.destinationAddress.value,
@@ -286,18 +291,18 @@ class RouteScreenView extends StatelessWidget {
                                     );
                                   }
 */
-                              if(viewModel.startAddress==''){
-                                viewModel.startAddressController.text = viewModel.currentAddress;
-                                viewModel.startAddress.value =viewModel.currentAddress;
-                              }
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              viewModel.markers.clear();
-                              viewModel.polylines.clear();
-                              viewModel.polylineCoordinates.clear();
-                              viewModel.placeDistance.value = '';
+                                        if(viewModel.startAddress==''){
+                                          viewModel.startAddressController.text = viewModel.currentAddress;
+                                          viewModel.startAddress.value =viewModel.currentAddress;
+                                        }
+                                        FocusScope.of(context).requestFocus(FocusNode());
+                                        viewModel.markers.clear();
+                                        viewModel.polylines.clear();
+                                        viewModel.polylineCoordinates.clear();
+                                        viewModel.placeDistance.value = '';
 
 
-                              /*viewModel.calculateDistance().then((isCalculated) {
+                                        /*viewModel.calculateDistance().then((isCalculated) {
                                         if (isCalculated) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -317,19 +322,19 @@ class RouteScreenView extends StatelessWidget {
                                         }
                                       }*/
 
-                            },
-                          ),
-                          textInputAction: TextInputAction.search,
-                          suffixIcon: Obx(() => IconButton(
-                            icon: Icon(viewModel.ptts12.value ? Icons.mic_off : Icons.mic),
-                            onPressed: () {
-                              viewModel.valuecheck=2;
-                              viewModel.startTimer1(context);
-                              viewModel.destinationsreach();
-                              //viewModel.startTimer1(context);
+                                      },
+                                    ),
+                                    textInputAction: TextInputAction.search,
+                                    suffixIcon: Obx(() => IconButton(
+                                      icon: Icon(viewModel.ptts12.value ? Icons.mic_off : Icons.mic),
+                                      onPressed: () {
+                                        viewModel.valuecheck=2;
+                                        viewModel.startTimer1(context);
+                                        viewModel.destinationsreach();
+                                        //viewModel.startTimer1(context);
 
-                              /// check availability
-                              /*       (viewModel.ptts2)? {
+                                        /// check availability
+                                        /*       (viewModel.ptts2)? {
                                         print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
                                         print("call mic heree1"+viewModel.isListening.toString()),
                                         (viewModel.speechRecognitionAvailable && !viewModel.isListening)
@@ -346,18 +351,18 @@ class RouteScreenView extends StatelessWidget {
                                         viewModel.speech.cancel(),
                                         viewModel.speech.stop()
                                       };*/
-                            },
-                          ),),
-                          controller: viewModel.destinationAddressController,
-                          focusNode: viewModel.desrinationAddressFocusNode,
-                          width: width,
-                          locationCallback: (String value) {
-                            // setState(() {
-                            viewModel.destinationAddress.value = value;
-                            // });
-                          }),
-                      SizedBox(height: 20),
-                      /* Obx(()=>
+                                      },
+                                    ),),
+                                    controller: viewModel.destinationAddressController,
+                                    focusNode: viewModel.desrinationAddressFocusNode,
+                                    width: width,
+                                    locationCallback: (String value) {
+                                      // setState(() {
+                                      viewModel.destinationAddress.value = value;
+                                      // });
+                                    }),
+                                SizedBox(height: 20),
+                                /* Obx(()=>
                           viewModel.placeDistance.value == ''?SizedBox()
                               : Text(
                             'DISTANCE:'+ viewModel.placeDistance.value+'km',
@@ -368,7 +373,7 @@ class RouteScreenView extends StatelessWidget {
                           )
 
                           ),*/
-                      /*Row(
+                                /*Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Obx(() =>  Radio(
@@ -417,7 +422,7 @@ class RouteScreenView extends StatelessWidget {
                             Text('Transit'),*//*
                                 ],),*/
 
-                      /*   Visibility(
+                                /*   Visibility(
                             visible: viewModel.placeDistance == null ? false : true,
                             child: Text(
                               'DISTANCE: $viewModel.placeDistance km',
@@ -429,8 +434,8 @@ class RouteScreenView extends StatelessWidget {
                           ),*/
 
 
-                      // SizedBox(height: 5),
-                      /* Container(
+                                // SizedBox(height: 5),
+                                /* Container(
                                 width: double.infinity,
                                 color: AppColor.yellowColor,
                                 margin: EdgeInsets.only(top:40,right: 15, left:15,bottom: 40),
@@ -495,21 +500,21 @@ class RouteScreenView extends StatelessWidget {
                                 ),
 
                               ),*/
-                      Container(
-                          child: GestureDetector(
-                            onTap: () async {
-                              (viewModel.startAddressController.text == "") ?
-                              viewModel.callerrormassage():
-                              (viewModel.destinationAddressController.text == "")?viewModel.callerrormassage():
-                              viewModel.admob_helper.showInterstitialAd(callback: (){
-                                viewModel.performSearch('');
-                                //}
-                                /*  Get.to(() => NavigationScreenView(),
+                                Container(
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        (viewModel.startAddressController.text == "") ?
+                                        viewModel.callerrormassage():
+                                        (viewModel.destinationAddressController.text == "")?viewModel.callerrormassage():
+                                        viewModel.admob_helper.showInterstitialAd(callback: (){
+                                          viewModel.performSearch('');
+                                          //}
+                                          /*  Get.to(() => NavigationScreenView(),
                                             arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/
 
-                              });
+                                        });
 
-                              /*(viewModel.startAddressController.text != "" &&
+                                        /*(viewModel.startAddressController.text != "" &&
                                         viewModel.destinationAddressController.text != "") ?   viewModel.admob_helper.showInterstitialAd(callback: (){
                                 viewModel.performSearch('');
                                 //}
@@ -520,38 +525,38 @@ class RouteScreenView extends StatelessWidget {
 */
 
 
-                            },
-                            child:
-                            Container(
-                              margin: const EdgeInsets.only(top:7,
-                                  left: 20.0, right: 20.0),
-                              //color: todo_controller.cardBackgroundColor,
-                              decoration: BoxDecoration(
-                                color: AppColor.yellowColor,
-                                // borderRadius: BorderRadius.circular(15),
-                                // Adjust the radius as needed
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Container(
-                                // viewModel.performSearch(query);
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(8.0),
-                                child: const Text(
-                                  'Find Directions',
-                                  style:
-                                  TextStyle(fontSize: 18.0, color: Colors.white),
-                                ),
-                              ),
-                            ),)),
+                                      },
+                                      child:
+                                      Container(
+                                        margin: const EdgeInsets.only(top:7,
+                                            left: 20.0, right: 20.0),
+                                        //color: todo_controller.cardBackgroundColor,
+                                        decoration: BoxDecoration(
+                                          color: AppColor.yellowColor,
+                                          // borderRadius: BorderRadius.circular(15),
+                                          // Adjust the radius as needed
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Container(
+                                          // viewModel.performSearch(query);
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: const Text(
+                                            'Find Directions',
+                                            style:
+                                            TextStyle(fontSize: 18.0, color: Colors.white),
+                                          ),
+                                        ),
+                                      ),)),
 
-                      /*  ElevatedButton(
+                                /*  ElevatedButton(
                             onPressed: (_startAddress != '' &&
                                 _destinationAddress != '')
                                 ? () async {
@@ -604,13 +609,20 @@ class RouteScreenView extends StatelessWidget {
                               ),
                             ),
                           ),*/
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child:Container()),
                     ],
                   ),
-                ),
-              ),
-
-
-              ),
+                )
+            ,
 /*SizedBox(height: 10,),*/
             Expanded(
               flex: 3,
@@ -626,10 +638,17 @@ class RouteScreenView extends StatelessWidget {
                       width: double.infinity,
                       decoration:   (!Constent.purchaseads.value)
                           ? BoxDecoration(
-                        border: Border.all(
+                          border: Border(
+                            top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                            bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                            // You can remove the left and right borders by commenting them out
+                            // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                            // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          )
+                       /* border: Border.all(
                           color: AppColor.borderColor, // Set the color of the border
                           width: 3.0, // Set the width of the border
-                        ),
+                        ),*/
                       )
                           : BoxDecoration(color: Colors.white),
                       child: Material(

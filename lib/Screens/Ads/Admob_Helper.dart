@@ -190,7 +190,7 @@ class Admob_Helper  {
             print('Anchored adaptive banner failedToLoad: $error');
             anchoredAdaptiveAd = null;
             ad.dispose();
-            adaptiveloadAd();
+          //  adaptiveloadAd();
           },
         ),
       );
@@ -235,7 +235,7 @@ class Admob_Helper  {
             print('Anchored adaptive banner failedToLoad: $error');
             mainanchoredAdaptiveAd = null;
             ad.dispose();
-            adaptiveloadAd();
+            //adaptiveloadAd();
           },
         ),
       );
@@ -269,7 +269,7 @@ class Admob_Helper  {
               },
               // Called when an ad request failed.
               onAdFailedToLoad: (LoadAdError error) {
-                loadInterstitalAd();
+               // loadInterstitalAd();
                 debugPrint('InterstitialAd failed to load: $error');
               },
             ));
@@ -545,7 +545,7 @@ class Admob_Helper  {
           // Dispose the ad here to free resources.
           interstitialAd?.dispose();
           interstitialAd = null;
-          loadInterstitalAd();
+        //  loadInterstitalAd();
        /*   if(Platform.isAndroid){
             Get.off(() => MainScreen_View());
           }

@@ -900,7 +900,7 @@ class RouteScreenViewModel extends GetxController {
           await locationFromAddress(startAddress.value);
       List<Location> destinationPlacemark =
           await locationFromAddress(destinationAddress.value);
-      print("inside local hereee123e");
+      print("inside local hereee123e.");
       // Use the retrieved coordinates of the current position,
       // instead of the address if the start position is user's
       // current position, as it results in better accuracy.

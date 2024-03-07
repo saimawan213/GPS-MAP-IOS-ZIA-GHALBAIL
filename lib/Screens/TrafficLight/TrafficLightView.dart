@@ -1,21 +1,16 @@
 import 'dart:math' show cos, sqrt, asin;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
-import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightViewModel.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_permission_usecase.dart';
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
+import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';
+import 'package:mapsandnavigationflutter/utils/toast/toast.dart';
 
 class TrafficLightView extends StatelessWidget {
-  TrafficLightViewModel  viewModel = Get.put(TrafficLightViewModel());
+  TrafficLightViewModel viewModel = Get.put(TrafficLightViewModel());
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -76,6 +71,24 @@ class TrafficLightView extends StatelessWidget {
 
   // Create the polylines for showing the route between two places
 
+  Future<void> onTapCurrentLocation(BuildContext context) async {
+    try {
+      final locationPermissionUsecase = LocationPermissionUsecase();
+      final locationServicePermission = LocationServicePermissionUsecase();
+      await locationPermissionUsecase();
+      await locationServicePermission();
+      await viewModel.getCurrentLocation();
+    } on PermissionDenied catch (_) {
+      showToast(msg: "Location permission denied");
+    } on PermissionPermanentlyDenied catch (_) {
+      await showDialog(
+        context: context,
+        builder: (context) => LocationPermissionPopup(),
+      );
+    } on LocationServiceDisabledException catch (_) {
+      showToast(msg: "Enable location service");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,24 +101,24 @@ class TrafficLightView extends StatelessWidget {
         key: _scaffoldKey,
         body: Stack(
           children: <Widget>[
-            Obx(()=>
-            // Map View
-            GoogleMap(
-              markers: Set<Marker>.from(viewModel.markers),
-              initialCameraPosition: viewModel.initialLocation,
-              myLocationEnabled: true,
-              trafficEnabled: true,
-              myLocationButtonEnabled: false,
-              mapType: MapType.normal,
-              zoomGesturesEnabled: true,
-              zoomControlsEnabled: false,
-              polylines: Set<Polyline>.of(viewModel.polylines.values),
-              //  onMapCreated: viewModel.onMapcreated(GoogleMapController),
-              onMapCreated: (GoogleMapController controller) {
-                viewModel.mapController = controller;
-                viewModel.getCurrentLocation();
-              },
-            )),
+            Obx(() =>
+                // Map View
+                GoogleMap(
+                  markers: Set<Marker>.from(viewModel.markers),
+                  initialCameraPosition: viewModel.initialLocation,
+                  myLocationEnabled: true,
+                  trafficEnabled: true,
+                  myLocationButtonEnabled: false,
+                  mapType: MapType.normal,
+                  zoomGesturesEnabled: true,
+                  zoomControlsEnabled: false,
+                  polylines: Set<Polyline>.of(viewModel.polylines.values),
+                  //  onMapCreated: viewModel.onMapcreated(GoogleMapController),
+                  onMapCreated: (GoogleMapController controller) {
+                    viewModel.mapController = controller;
+                    viewModel.getCurrentLocation();
+                  },
+                )),
             // Show zoom buttons
             SafeArea(
               child: Padding(
@@ -156,7 +169,7 @@ class TrafficLightView extends StatelessWidget {
             ),
             // Show the place input fields & button for
             // showing the route
-       /*     SafeArea(
+            /*     SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
@@ -211,14 +224,14 @@ class TrafficLightView extends StatelessWidget {
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.search),
                                 onPressed: ()  {
-                                  *//* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
+                                  */ /* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
                                     await userController.addUser(
                                       viewModel.startAddress.value,
                                       viewModel.destinationAddress.value,
 
                                     );
                                   }
-*//*
+*/ /*
                                   if(viewModel.startAddress==''){
                                     viewModel.startAddressController.text = viewModel.currentAddress;
                                     viewModel.startAddress.value =viewModel.currentAddress;
@@ -271,7 +284,7 @@ class TrafficLightView extends StatelessWidget {
                           )
 
                           ),
-                          *//*   Visibility(
+                          */ /*   Visibility(
                             visible: viewModel.placeDistance == null ? false : true,
                             child: Text(
                               'DISTANCE: $viewModel.placeDistance km',
@@ -280,7 +293,7 @@ class TrafficLightView extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),*//*
+                          ),*/ /*
 
 
                           // SizedBox(height: 5),
@@ -297,32 +310,32 @@ class TrafficLightView extends StatelessWidget {
                                     viewModel.destinationAddress == '')
                                     ?   null : {
                                   print("Caal button1234"),
-                                  *//*  late double startLatitude1;
+                                  */ /*  late double startLatitude1;
                             late double startLongitude1;
                             late double destinationLatitude1;
-                            late double destinationLongitude1;*//*
+                            late double destinationLongitude1;*/ /*
                                   NavigationScreenViewModel.openMap(viewModel.startLatitude1,viewModel.startLongitude1,viewModel.destinationLatituate1, viewModel.destinationLongitude1),
                                   //viewModel.openMap(viewModel.st)
 
 
 
-                                  *//*  viewModel.startAddressFocusNode.unfocus(),
-                              viewModel.desrinationAddressFocusNode.unfocus(),*//*
+                                  */ /*  viewModel.startAddressFocusNode.unfocus(),
+                              viewModel.desrinationAddressFocusNode.unfocus(),*/ /*
                                   //      setState(() {
-                                  *//*  viewModel.markers.clear(),
+                                  */ /*  viewModel.markers.clear(),
                               viewModel.polylines.clear(),
                               viewModel.polylineCoordinates.clear(),
-                              viewModel.placeDistance.value = '',*//*
-                                  *//* (viewModel.markers.isNotEmpty)
+                              viewModel.placeDistance.value = '',*/ /*
+                                  */ /* (viewModel.markers.isNotEmpty)
                                ? viewModel.markers.clear():null,
                                (viewModel.polylines.isNotEmpty)
                             ?viewModel.polylines.clear():null,
                                (viewModel.polylineCoordinates.isNotEmpty)?
                             viewModel.polylineCoordinates.clear():null,
-                            viewModel.placeDistance.value = '',*//*
+                            viewModel.placeDistance.value = '',*/ /*
                                   // }),
 
-                                  *//*viewModel.calculateDistance().then((isCalculated) {
+                                  */ /*viewModel.calculateDistance().then((isCalculated) {
                                 if (isCalculated) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(
@@ -340,14 +353,14 @@ class TrafficLightView extends StatelessWidget {
                                     ),
                                   );
                                 }
-                              }),*//*
+                              }),*/ /*
                                 };
 
                               },
                             ),
 
                           ),
-                          *//*  ElevatedButton(
+                          */ /*  ElevatedButton(
                             onPressed: (_startAddress != '' &&
                                 _destinationAddress != '')
                                 ? () async {
@@ -399,7 +412,7 @@ class TrafficLightView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
-                          ),*//*
+                          ),*/ /*
                         ],
                       ),
                     ),
@@ -425,7 +438,7 @@ class TrafficLightView extends StatelessWidget {
                         ),
                         onTap: () {
                           Navigator.pop(context);
-                         /* viewModel.mapController.animateCamera(
+                          /* viewModel.mapController.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: LatLng(
@@ -458,19 +471,7 @@ class TrafficLightView extends StatelessWidget {
                           height: 56,
                           child: Icon(Icons.my_location),
                         ),
-                        onTap: () {
-                          viewModel.mapController.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: LatLng(
-                                  viewModel.currentPosition.latitude,
-                                  viewModel.currentPosition.longitude,
-                                ),
-                                zoom: 18.0,
-                              ),
-                            ),
-                          );
-                        },
+                        onTap: () => onTapCurrentLocation(context),
                       ),
                     ),
                   ),

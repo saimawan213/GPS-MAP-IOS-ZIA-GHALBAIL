@@ -1,28 +1,20 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:math' show cos, sqrt, asin;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/RouteScreen/NativeAdSkeleton.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/SmallNativeAdSkeleton.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_permission_usecase.dart';
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
+import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';
+import 'package:mapsandnavigationflutter/utils/toast/toast.dart';
 
 class RouteScreenView extends StatelessWidget {
-  RouteScreenViewModel  viewModel = Get.put(RouteScreenViewModel());
+  RouteScreenViewModel viewModel = Get.put(RouteScreenViewModel());
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -44,7 +36,7 @@ class RouteScreenView extends StatelessWidget {
         onChanged: (value) {
           locationCallback(value);
         },
-      /*  onSubmitted: (String query) {
+        /*  onSubmitted: (String query) {
           if (viewModel.debounce?.isActive ?? false) viewModel.debounce?.cancel();
           viewModel.debounce = Timer(const Duration(milliseconds: 1000), () {
             print("call hereee1234 inside");
@@ -89,122 +81,75 @@ class RouteScreenView extends StatelessWidget {
 
   // Create the polylines for showing the route between two places
 
+  Future<void> onTapCurrentLocation(BuildContext context) async {
+    try {
+      final locationPermissionUsecase = LocationPermissionUsecase();
+      final locationServicePermission = LocationServicePermissionUsecase();
+      await locationPermissionUsecase();
+      await locationServicePermission();
+
+      await viewModel.getCurrentLocation();
+
+      viewModel.startAddressController.text = viewModel.currentAddress;
+      viewModel.startAddress.value = viewModel.currentAddress;
+    } on PermissionDenied catch (_) {
+      showToast(msg: "Location permission denied");
+    } on PermissionPermanentlyDenied catch (_) {
+      await showDialog(
+        context: context,
+        builder: (context) => LocationPermissionPopup(),
+      );
+    } on LocationServiceDisabledException catch (_) {
+      showToast(msg: "Enable location service");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    viewModel.context=context;
+    viewModel.context = context;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return  Scaffold(
-      resizeToAvoidBottomInset : false,
-      appBar: AppBar(
-        title: const Text('Route Finder', style: TextStyle(color: Colors.white)),
-        backgroundColor: AppColor.yellowColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white, // or MenuOutlined
-          onPressed: () {
-            Get.back();
-            print("call in app ");
-            // Get.to(() => InApp());
-            //  Get.to(/InApp);
-            //InApp inAppfile= InApp();
-            //viewModel.inAppfile;
-            // Open the drawer here
-          },
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title:
+              const Text('Route Finder', style: TextStyle(color: Colors.white)),
+          backgroundColor: AppColor.yellowColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white, // or MenuOutlined
+            onPressed: () {
+              Get.back();
+              print("call in app ");
+              // Get.to(() => InApp());
+              //  Get.to(/InApp);
+              //InApp inAppfile= InApp();
+              //viewModel.inAppfile;
+              // Open the drawer here
+            },
+          ),
         ),
-      ),
-        body:Container(
+        body: Container(
           height: height,
           width: width,
           child: Scaffold(
-            resizeToAvoidBottomInset : false,
+            resizeToAvoidBottomInset: false,
             key: _scaffoldKey,
             body: Column(
               children: <Widget>[
-              /*  Obx(()=>
-                // Map View
-                GoogleMap(
-                  markers: Set<Marker>.from(viewModel.markers),
-                  initialCameraPosition: viewModel.initialLocation,
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  mapType: MapType.normal,
-                  zoomGesturesEnabled: true,
-                  zoomControlsEnabled: false,
-                  polylines: Set<Polyline>.of(viewModel.polylines.values),
-                  //  onMapCreated: viewModel.onMapcreated(GoogleMapController),
-                  onMapCreated: (GoogleMapController controller) {
-                    viewModel.mapController = controller;
-                    viewModel.getCurrentLocation();
-                  },
-                )),*/
-                // Show zoom buttons
-               /* SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ClipOval(
-                          child: Material(
-                            color: Colors.green.shade100, // button color
-                            child: InkWell(
-                              splashColor: AppColor.primaryColor, // inkwell color
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Icon(Icons.add),
-                              ),
-                              onTap: () {
-                                viewModel.mapController.animateCamera(
-                                  CameraUpdate.zoomIn(),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        ClipOval(
-                          child: Material(
-                            color: Colors.green.shade100, // button color
-                            child: InkWell(
-                              splashColor: AppColor.primaryColor, // inkwell color
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Icon(Icons.remove),
-                              ),
-                              onTap: () {
-                                viewModel.mapController.animateCamera(
-                                  CameraUpdate.zoomOut(),
-                                );
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),*/
                 // Show the place input fields & button for
                 // showing the route
                 SizedBox(height: 20),
                 Expanded(
                   flex: 4,
-                  child:  Column(
+                  child: Column(
                     children: [
-
                       Expanded(
                         flex: 4,
-                        child:Container(
-
-
+                        child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
-
 
                             // Adjust the radius as needed
                             boxShadow: [
@@ -218,7 +163,8 @@ class RouteScreenView extends StatelessWidget {
                           ),
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                            padding:
+                                const EdgeInsets.only(top: 10.0, bottom: 10.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -232,48 +178,61 @@ class RouteScreenView extends StatelessWidget {
                                     hint: 'Choose starting point',
                                     prefixIcon: IconButton(
                                       icon: Icon(Icons.my_location),
-                                      onPressed: () {
-                                        viewModel.startAddressController.text = viewModel.currentAddress;
-                                        viewModel.startAddress.value = viewModel.currentAddress;
-                                      },
+                                      onPressed: () =>
+                                          onTapCurrentLocation(context),
                                     ),
                                     // prefixIcon: Icon(Icons.looks_one),
                                     textInputAction: TextInputAction.search,
                                     suffixIcon: Obx(() => IconButton(
-                                      icon: Icon(viewModel.ptts11.value ? Icons.mic_off : Icons.mic),
-                                      onPressed: () {
-                                        viewModel.startTimer(context);
-                                        viewModel.valuecheck=1;
-                                        (viewModel.ptts1)? {
-                                          print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
-                                          print("call mic heree1"+viewModel.isListening.toString()),
-                                          viewModel.speechRecognitionAvailable && !viewModel.isListening
-                                              ?{
-                                            //viewModel.ptts11.value=false,
-                                            viewModel.onMic(),
-                                            print("value of false 1234:"+viewModel.ptts11.value.toString()),
-                                            viewModel.ptts1=false, viewModel.start()}
-                                              : null}:
-                                        {
-                                          //viewModel.ptts11.value=true,
-                                          viewModel.offMic(),
-                                          viewModel.ptts1=true,
-                                          viewModel.speech.cancel(),
-                                          viewModel.speech.stop()
-                                        };
-                                      },
-                                    )),
-                                    controller: viewModel.startAddressController,
+                                          icon: Icon(viewModel.ptts11.value
+                                              ? Icons.mic_off
+                                              : Icons.mic),
+                                          onPressed: () {
+                                            viewModel.startTimer(context);
+                                            viewModel.valuecheck = 1;
+                                            (viewModel.ptts1)
+                                                ? {
+                                                    print("call mic heree" +
+                                                        viewModel
+                                                            .speechRecognitionAvailable
+                                                            .toString()),
+                                                    print("call mic heree1" +
+                                                        viewModel.isListening
+                                                            .toString()),
+                                                    viewModel.speechRecognitionAvailable &&
+                                                            !viewModel
+                                                                .isListening
+                                                        ? {
+                                                            //viewModel.ptts11.value=false,
+                                                            viewModel.onMic(),
+                                                            print("value of false 1234:" +
+                                                                viewModel.ptts11
+                                                                    .value
+                                                                    .toString()),
+                                                            viewModel.ptts1 =
+                                                                false,
+                                                            viewModel.start()
+                                                          }
+                                                        : null
+                                                  }
+                                                : {
+                                                    //viewModel.ptts11.value=true,
+                                                    viewModel.offMic(),
+                                                    viewModel.ptts1 = true,
+                                                    viewModel.speech.cancel(),
+                                                    viewModel.speech.stop()
+                                                  };
+                                          },
+                                        )),
+                                    controller:
+                                        viewModel.startAddressController,
                                     focusNode: viewModel.startAddressFocusNode,
                                     width: width,
                                     locationCallback: (String value) {
                                       //   setState(() {
                                       viewModel.startAddress.value = value;
                                       // });
-                                    }
-
-
-                                ),
+                                    }),
 
                                 SizedBox(height: 20),
                                 _textField(
@@ -281,8 +240,7 @@ class RouteScreenView extends StatelessWidget {
                                     hint: 'Choose destination',
                                     prefixIcon: IconButton(
                                       icon: Icon(Icons.search),
-                                      onPressed: ()  {
-
+                                      onPressed: () {
                                         /* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
                                     await userController.addUser(
                                       viewModel.startAddress.value,
@@ -291,16 +249,18 @@ class RouteScreenView extends StatelessWidget {
                                     );
                                   }
 */
-                                        if(viewModel.startAddress==''){
-                                          viewModel.startAddressController.text = viewModel.currentAddress;
-                                          viewModel.startAddress.value =viewModel.currentAddress;
+                                        if (viewModel.startAddress == '') {
+                                          viewModel.startAddressController
+                                              .text = viewModel.currentAddress;
+                                          viewModel.startAddress.value =
+                                              viewModel.currentAddress;
                                         }
-                                        FocusScope.of(context).requestFocus(FocusNode());
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
                                         viewModel.markers.clear();
                                         viewModel.polylines.clear();
                                         viewModel.polylineCoordinates.clear();
                                         viewModel.placeDistance.value = '';
-
 
                                         /*viewModel.calculateDistance().then((isCalculated) {
                                         if (isCalculated) {
@@ -321,20 +281,22 @@ class RouteScreenView extends StatelessWidget {
                                           );
                                         }
                                       }*/
-
                                       },
                                     ),
                                     textInputAction: TextInputAction.search,
-                                    suffixIcon: Obx(() => IconButton(
-                                      icon: Icon(viewModel.ptts12.value ? Icons.mic_off : Icons.mic),
-                                      onPressed: () {
-                                        viewModel.valuecheck=2;
-                                        viewModel.startTimer1(context);
-                                        viewModel.destinationsreach();
-                                        //viewModel.startTimer1(context);
+                                    suffixIcon: Obx(
+                                      () => IconButton(
+                                        icon: Icon(viewModel.ptts12.value
+                                            ? Icons.mic_off
+                                            : Icons.mic),
+                                        onPressed: () {
+                                          viewModel.valuecheck = 2;
+                                          viewModel.startTimer1(context);
+                                          viewModel.destinationsreach();
+                                          //viewModel.startTimer1(context);
 
-                                        /// check availability
-                                        /*       (viewModel.ptts2)? {
+                                          /// check availability
+                                          /*       (viewModel.ptts2)? {
                                         print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
                                         print("call mic heree1"+viewModel.isListening.toString()),
                                         (viewModel.speechRecognitionAvailable && !viewModel.isListening)
@@ -351,14 +313,18 @@ class RouteScreenView extends StatelessWidget {
                                         viewModel.speech.cancel(),
                                         viewModel.speech.stop()
                                       };*/
-                                      },
-                                    ),),
-                                    controller: viewModel.destinationAddressController,
-                                    focusNode: viewModel.desrinationAddressFocusNode,
+                                        },
+                                      ),
+                                    ),
+                                    controller:
+                                        viewModel.destinationAddressController,
+                                    focusNode:
+                                        viewModel.desrinationAddressFocusNode,
                                     width: width,
                                     locationCallback: (String value) {
                                       // setState(() {
-                                      viewModel.destinationAddress.value = value;
+                                      viewModel.destinationAddress.value =
+                                          value;
                                       // });
                                     }),
                                 SizedBox(height: 20),
@@ -409,7 +375,7 @@ class RouteScreenView extends StatelessWidget {
                                       //   });
                                     },)),
                                   Text('Walking'),
-                                  *//*  Obx(() => Radio(
+                                  */ /*  Obx(() => Radio(
 
                               value: 4,
                               groupValue: viewModel.selectedValue.value,
@@ -419,7 +385,7 @@ class RouteScreenView extends StatelessWidget {
                                 viewModel.selectedValue.value = value!;
                                 //   });
                               },)),
-                            Text('Transit'),*//*
+                            Text('Transit'),*/ /*
                                 ],),*/
 
                                 /*   Visibility(
@@ -432,7 +398,6 @@ class RouteScreenView extends StatelessWidget {
                               ),
                             ),
                           ),*/
-
 
                                 // SizedBox(height: 5),
                                 /* Container(
@@ -450,32 +415,32 @@ class RouteScreenView extends StatelessWidget {
                                         viewModel.destinationAddress == '')
                                         ?   null : {
                                       print("Caal button1234"),
-                                      *//*  late double startLatitude1;
+                                      */ /*  late double startLatitude1;
                             late double startLongitude1;
                             late double destinationLatitude1;
-                            late double destinationLongitude1;*//*
+                            late double destinationLongitude1;*/ /*
                                     //  viewModel.openMap(viewModel.startLatitude1,viewModel.startLongitude1,viewModel.destinationLatituate1, viewModel.destinationLongitude1),
                                       //viewModel.openMap(viewModel.st)
 
 
 
-                                      *//*  viewModel.startAddressFocusNode.unfocus(),
-                              viewModel.desrinationAddressFocusNode.unfocus(),*//*
+                                      */ /*  viewModel.startAddressFocusNode.unfocus(),
+                              viewModel.desrinationAddressFocusNode.unfocus(),*/ /*
                                       //      setState(() {
-                                      *//*  viewModel.markers.clear(),
+                                      */ /*  viewModel.markers.clear(),
                               viewModel.polylines.clear(),
                               viewModel.polylineCoordinates.clear(),
-                              viewModel.placeDistance.value = '',*//*
-                                      *//* (viewModel.markers.isNotEmpty)
+                              viewModel.placeDistance.value = '',*/ /*
+                                      */ /* (viewModel.markers.isNotEmpty)
                                ? viewModel.markers.clear():null,
                                (viewModel.polylines.isNotEmpty)
                             ?viewModel.polylines.clear():null,
                                (viewModel.polylineCoordinates.isNotEmpty)?
                             viewModel.polylineCoordinates.clear():null,
-                            viewModel.placeDistance.value = '',*//*
+                            viewModel.placeDistance.value = '',*/ /*
                                       // }),
 
-                                      *//*viewModel.calculateDistance().then((isCalculated) {
+                                      */ /*viewModel.calculateDistance().then((isCalculated) {
                                 if (isCalculated) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(
@@ -493,7 +458,7 @@ class RouteScreenView extends StatelessWidget {
                                     ),
                                   );
                                 }
-                              }),*//*
+                              }),*/ /*
                                     };
 
                                   },
@@ -502,59 +467,63 @@ class RouteScreenView extends StatelessWidget {
                               ),*/
                                 Container(
                                     child: GestureDetector(
-                                      onTap: () async {
-                                        (viewModel.startAddressController.text == "") ?
-                                        viewModel.callerrormassage():
-                                        (viewModel.destinationAddressController.text == "")?viewModel.callerrormassage():
-                                        viewModel.admob_helper.showInterstitialAd(callback: (){
-                                          viewModel.performSearch('');
-                                          //}
-                                          /*  Get.to(() => NavigationScreenView(),
+                                  onTap: () async {
+                                    (viewModel.startAddressController.text ==
+                                            "")
+                                        ? viewModel.callerrormassage()
+                                        : (viewModel.destinationAddressController
+                                                    .text ==
+                                                "")
+                                            ? viewModel.callerrormassage()
+                                            : viewModel.admob_helper
+                                                .showInterstitialAd(
+                                                    callback: () {
+                                                viewModel.performSearch('');
+                                                //}
+                                                /*  Get.to(() => NavigationScreenView(),
                                             arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/
+                                              });
 
-                                        });
-
-                                        /*(viewModel.startAddressController.text != "" &&
+                                    /*(viewModel.startAddressController.text != "" &&
                                         viewModel.destinationAddressController.text != "") ?   viewModel.admob_helper.showInterstitialAd(callback: (){
                                 viewModel.performSearch('');
                                 //}
-                                *//*  Get.to(() => NavigationScreenView(),
-                                            arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*//*
+                                */ /*  Get.to(() => NavigationScreenView(),
+                                            arguments: {"source": '',"destination": '',"Sourcelath":0.0,"Sourcelog":0.0,"destinationlath":0.0,"destinationlog":0.0});*/ /*
 
                               }): viewModel.callerrormassage();
 */
-
-
-                                      },
-                                      child:
-                                      Container(
-                                        margin: const EdgeInsets.only(top:7,
-                                            left: 20.0, right: 20.0),
-                                        //color: todo_controller.cardBackgroundColor,
-                                        decoration: BoxDecoration(
-                                          color: AppColor.yellowColor,
-                                          // borderRadius: BorderRadius.circular(15),
-                                          // Adjust the radius as needed
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.5),
-                                              spreadRadius: 2,
-                                              blurRadius: 5,
-                                              offset: Offset(0, 3),
-                                            ),
-                                          ],
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 7, left: 20.0, right: 20.0),
+                                    //color: todo_controller.cardBackgroundColor,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.yellowColor,
+                                      // borderRadius: BorderRadius.circular(15),
+                                      // Adjust the radius as needed
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
                                         ),
-                                        child: Container(
-                                          // viewModel.performSearch(query);
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: const Text(
-                                            'Find Directions',
-                                            style:
-                                            TextStyle(fontSize: 18.0, color: Colors.white),
-                                          ),
-                                        ),
-                                      ),)),
+                                      ],
+                                    ),
+                                    child: Container(
+                                      // viewModel.performSearch(query);
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: const Text(
+                                        'Find Directions',
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                )),
 
                                 /*  ElevatedButton(
                             onPressed: (_startAddress != '' &&
@@ -613,70 +582,65 @@ class RouteScreenView extends StatelessWidget {
                             ),
                           ),
                         ),
-
-
                       ),
-                      Expanded(
-                          flex: 1,
-                          child:Container()),
+                      Expanded(flex: 1, child: Container()),
                     ],
                   ),
-                )
-            ,
+                ),
 /*SizedBox(height: 10,),*/
-            Expanded(
-              flex: 3,
-                child: Container()),
+                Expanded(flex: 3, child: Container()),
                 Expanded(
-                  flex: 2,
-                  child:
-                  Obx(
-                        () => Container(
-                      height: (!Constent.purchaseads.value)
-                          ? 130
-                          : 0,
-                      width: double.infinity,
-                      decoration:   (!Constent.purchaseads.value)
-                          ? BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                            bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                            // You can remove the left and right borders by commenting them out
-                            // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                            // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                          )
-                       /* border: Border.all(
+                    flex: 2,
+                    child: Obx(
+                      () => Container(
+                        height: (!Constent.purchaseads.value) ? 130 : 0,
+                        width: double.infinity,
+                        decoration: (!Constent.purchaseads.value)
+                            ? BoxDecoration(
+                                border: Border(
+                                top: BorderSide(
+                                    color: Color(0xFFD6D6D6), width: 3),
+                                bottom: BorderSide(
+                                    color: Color(0xFFD6D6D6), width: 3),
+                                // You can remove the left and right borders by commenting them out
+                                // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                                // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                              )
+                                /* border: Border.all(
                           color: AppColor.borderColor, // Set the color of the border
                           width: 3.0, // Set the width of the border
                         ),*/
-                      )
-                          : BoxDecoration(color: Colors.white),
-                      child: Material(
-                        elevation: 2,
-                        child: Obx(
-                              () => (Constent.isNativeAdSmallLoaded.value &&
-                              viewModel.admob_helper.nativeAdSmall != null &&
-                                  !Constent.isOpenAppAdShowing.value
-                                  && !Constent.isInterstialAdShowing.value &&
-                                  !Constent.purchaseads.value)
-                              ? SizedBox(
-                            height: 130,
-                            width: Get.width,
-                            child: AdWidget(ad: viewModel.admob_helper.nativeAdSmall!),
-                          )
-                              :  !Constent.purchaseads.value
-                              ? SmallNativeAdSkeleton()
-                              : SizedBox(),
+                                )
+                            : BoxDecoration(color: Colors.white),
+                        child: Material(
+                          elevation: 2,
+                          child: Obx(
+                            () => (Constent.isNativeAdSmallLoaded.value &&
+                                    viewModel.admob_helper.nativeAdSmall !=
+                                        null &&
+                                    !Constent.isOpenAppAdShowing.value &&
+                                    !Constent.isInterstialAdShowing.value &&
+                                    !Constent.purchaseads.value)
+                                ? SizedBox(
+                                    height: 130,
+                                    width: Get.width,
+                                    child: AdWidget(
+                                        ad: viewModel
+                                            .admob_helper.nativeAdSmall!),
+                                  )
+                                : !Constent.purchaseads.value
+                                    ? SmallNativeAdSkeleton()
+                                    : SizedBox(),
+                          ),
                         ),
                       ),
-                    ),
-                  )
+                    )),
+
+                SizedBox(
+                  height: 5,
                 ),
 
-
-                SizedBox(height: 5,),
-
-                  /*Container(
+                /*Container(
 
                     margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
                     decoration: BoxDecoration(
@@ -723,11 +687,9 @@ class RouteScreenView extends StatelessWidget {
                     )
                   ),*/
 
+                //  ),
 
-              //  ),
-
-
-               /* SafeArea(
+                /* SafeArea(
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
@@ -745,10 +707,10 @@ class RouteScreenView extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                            *//*  Text(
+                            */ /*  Text(
                                 'Navigation',
                                 style: TextStyle(fontSize: 20.0),
-                              ),*//*
+                              ),*/ /*
                               SizedBox(height: 10),
                               _textField(
                                   label: 'Start',
@@ -806,14 +768,14 @@ class RouteScreenView extends StatelessWidget {
                                     icon: Icon(Icons.search),
                                     onPressed: ()  {
 
-                                      *//* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
+                                      */ /* if(viewModel.startAddress!='' && viewModel.destinationAddress!=''){
                                     await userController.addUser(
                                       viewModel.startAddress.value,
                                       viewModel.destinationAddress.value,
 
                                     );
                                   }
-*//*
+*/ /*
                                       if(viewModel.startAddress==''){
                                         viewModel.startAddressController.text = viewModel.currentAddress;
                                         viewModel.startAddress.value =viewModel.currentAddress;
@@ -825,7 +787,7 @@ class RouteScreenView extends StatelessWidget {
                                       viewModel.placeDistance.value = '';
 
 
-                                      *//*viewModel.calculateDistance().then((isCalculated) {
+                                      */ /*viewModel.calculateDistance().then((isCalculated) {
                                         if (isCalculated) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -843,7 +805,7 @@ class RouteScreenView extends StatelessWidget {
                                             ),
                                           );
                                         }
-                                      }*//*
+                                      }*/ /*
 
                                     },
                                   ),
@@ -857,7 +819,7 @@ class RouteScreenView extends StatelessWidget {
                                       //viewModel.startTimer1(context);
 
                                       /// check availability
-                               *//*       (viewModel.ptts2)? {
+                               */ /*       (viewModel.ptts2)? {
                                         print("call mic heree"+viewModel.speechRecognitionAvailable.toString()),
                                         print("call mic heree1"+viewModel.isListening.toString()),
                                         (viewModel.speechRecognitionAvailable && !viewModel.isListening)
@@ -873,7 +835,7 @@ class RouteScreenView extends StatelessWidget {
                                         viewModel.ptts2=true,
                                         viewModel.speech.cancel(),
                                         viewModel.speech.stop()
-                                      };*//*
+                                      };*/ /*
                                     },
                                   ),),
                                   controller: viewModel.destinationAddressController,
@@ -885,7 +847,7 @@ class RouteScreenView extends StatelessWidget {
                                     // });
                                   }),
                               SizedBox(height: 10),
-                              *//* Obx(()=>
+                              */ /* Obx(()=>
                           viewModel.placeDistance.value == ''?SizedBox()
                               : Text(
                             'DISTANCE:'+ viewModel.placeDistance.value+'km',
@@ -895,8 +857,8 @@ class RouteScreenView extends StatelessWidget {
                             ),
                           )
 
-                          ),*//*
-                              *//*Row(
+                          ),*/ /*
+                              */ /*Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Obx(() =>  Radio(
@@ -932,7 +894,7 @@ class RouteScreenView extends StatelessWidget {
                                       //   });
                                     },)),
                                   Text('Walking'),
-                                  *//**//*  Obx(() => Radio(
+                                  */ /**/ /*  Obx(() => Radio(
 
                               value: 4,
                               groupValue: viewModel.selectedValue.value,
@@ -942,10 +904,10 @@ class RouteScreenView extends StatelessWidget {
                                 viewModel.selectedValue.value = value!;
                                 //   });
                               },)),
-                            Text('Transit'),*//**//*
-                                ],),*//*
+                            Text('Transit'),*/ /**/ /*
+                                ],),*/ /*
 
-                              *//*   Visibility(
+                              */ /*   Visibility(
                             visible: viewModel.placeDistance == null ? false : true,
                             child: Text(
                               'DISTANCE: $viewModel.placeDistance km',
@@ -954,11 +916,11 @@ class RouteScreenView extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),*//*
+                          ),*/ /*
 
 
                               // SizedBox(height: 5),
-                             *//* Container(
+                             */ /* Container(
                                 width: double.infinity,
                                 color: AppColor.yellowColor,
                                 margin: EdgeInsets.only(top:40,right: 15, left:15,bottom: 40),
@@ -973,32 +935,32 @@ class RouteScreenView extends StatelessWidget {
                                         viewModel.destinationAddress == '')
                                         ?   null : {
                                       print("Caal button1234"),
-                                      *//**//*  late double startLatitude1;
+                                      */ /**/ /*  late double startLatitude1;
                             late double startLongitude1;
                             late double destinationLatitude1;
-                            late double destinationLongitude1;*//**//*
+                            late double destinationLongitude1;*/ /**/ /*
                                     //  viewModel.openMap(viewModel.startLatitude1,viewModel.startLongitude1,viewModel.destinationLatituate1, viewModel.destinationLongitude1),
                                       //viewModel.openMap(viewModel.st)
 
 
 
-                                      *//**//*  viewModel.startAddressFocusNode.unfocus(),
-                              viewModel.desrinationAddressFocusNode.unfocus(),*//**//*
+                                      */ /**/ /*  viewModel.startAddressFocusNode.unfocus(),
+                              viewModel.desrinationAddressFocusNode.unfocus(),*/ /**/ /*
                                       //      setState(() {
-                                      *//**//*  viewModel.markers.clear(),
+                                      */ /**/ /*  viewModel.markers.clear(),
                               viewModel.polylines.clear(),
                               viewModel.polylineCoordinates.clear(),
-                              viewModel.placeDistance.value = '',*//**//*
-                                      *//**//* (viewModel.markers.isNotEmpty)
+                              viewModel.placeDistance.value = '',*/ /**/ /*
+                                      */ /**/ /* (viewModel.markers.isNotEmpty)
                                ? viewModel.markers.clear():null,
                                (viewModel.polylines.isNotEmpty)
                             ?viewModel.polylines.clear():null,
                                (viewModel.polylineCoordinates.isNotEmpty)?
                             viewModel.polylineCoordinates.clear():null,
-                            viewModel.placeDistance.value = '',*//**//*
+                            viewModel.placeDistance.value = '',*/ /**/ /*
                                       // }),
 
-                                      *//**//*viewModel.calculateDistance().then((isCalculated) {
+                                      */ /**/ /*viewModel.calculateDistance().then((isCalculated) {
                                 if (isCalculated) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(
@@ -1016,13 +978,13 @@ class RouteScreenView extends StatelessWidget {
                                     ),
                                   );
                                 }
-                              }),*//**//*
+                              }),*/ /**/ /*
                                     };
 
                                   },
                                 ),
 
-                              ),*//*
+                              ),*/ /*
                           Container(
                             child: GestureDetector(
                               onTap: () async {
@@ -1061,7 +1023,7 @@ class RouteScreenView extends StatelessWidget {
                                 ),
                               ),)),
 
-                              *//*  ElevatedButton(
+                              */ /*  ElevatedButton(
                             onPressed: (_startAddress != '' &&
                                 _destinationAddress != '')
                                 ? () async {
@@ -1113,7 +1075,7 @@ class RouteScreenView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
-                          ),*//*
+                          ),*/ /*
                             ],
                           ),
                         ),
@@ -1162,7 +1124,7 @@ class RouteScreenView extends StatelessWidget {
                               child: Icon(Icons.my_location),
                             ),
                             onTap: () {
-                           *//*   viewModel.mapController.animateCamera(
+                           */ /*   viewModel.mapController.animateCamera(
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
                                     target: LatLng(
@@ -1172,7 +1134,7 @@ class RouteScreenView extends StatelessWidget {
                                     zoom: 18.0,
                                   ),
                                 ),
-                              );*//*
+                              );*/ /*
                             },
                           ),
                         ),
@@ -1181,14 +1143,13 @@ class RouteScreenView extends StatelessWidget {
                   ),
                 ),*/
 
-
-           /*     Expanded(
+                /*     Expanded(
                   flex: 0,
                   child:
 
                   Container(
 
-                     *//* margin: EdgeInsets.only(top: 20.0),
+                     */ /* margin: EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
@@ -1230,13 +1191,13 @@ class RouteScreenView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )*//*
+                      )*/ /*
                   ),
 
 
                 ),*/
 
-          /*  Expanded(
+                /*  Expanded(
               flex: 1,
               child:Container()),*/
               ],

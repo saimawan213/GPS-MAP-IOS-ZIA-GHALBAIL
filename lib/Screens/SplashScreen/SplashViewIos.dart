@@ -1,17 +1,40 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/gdpr/gdpr_helper.dart'
+    as gdpr;
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashViewModel.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SplashViewIos extends StatelessWidget {
+class SplashViewIos extends StatefulWidget {
+  @override
+  State<SplashViewIos> createState() => _SplashViewIosState();
+}
+
+class _SplashViewIosState extends State<SplashViewIos> {
   final SplashViewModel viewModel = Get.put(SplashViewModel());
+
+  Future<void> callConsentForm() async {
+    try {
+      final gdprHelper = gdpr.GeneralDataProtectionRegulationHelper();
+      await gdprHelper.requestConsentInfoUpdate();
+    } catch (e) {}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      callConsentForm();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,26 +46,24 @@ class SplashViewIos extends StatelessWidget {
           //      Center(
           Expanded(
             flex: 1,
-            child: Container(
-
-            ),
+            child: Container(),
           ),
           Expanded(
             flex: 1,
-            child:
-            Container(
+            child: Container(
                 width: 100.0,
                 height: 100.0,
                 child: Image(
-                  image: AssetImage("assets/images/app_logo.png"), // Replace with the correct asset path
+                  image: AssetImage(
+                      "assets/images/app_logo.png"), // Replace with the correct asset path
                 )
-              /*decoration: BoxDecoration(
+                /*decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover, image: AssetImage("assets/images/appicon.png")),
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 color: Colors.redAccent,
               ),*/
-            ),
+                ),
             /*  Image.asset(
               'assets/images/app_logo.png',
               width: 200,
@@ -51,85 +72,82 @@ class SplashViewIos extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child:Column(
-                children: [
-                  Container(
-
-                    alignment: Alignment.center,
-                    child:IconButton(
-                      icon:Icon(Icons.location_on,size: 60,
-                      color: Colors.green,),
-                      onPressed: (){},
-
-
-                    ),
+            child: Column(children: [
+              Container(
+                alignment: Alignment.center,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+                    size: 60,
+                    color: Colors.green,
                   ),
-
-                  Container(
-                    alignment: Alignment.center,
-                    child:Obx(()=>Text(
+                  onPressed: () {},
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Obx(() => Text(
                       viewModel.currentlocation.value,
-                      style:
-                      TextStyle(fontSize: 20.0, color: AppColor.primaryColor),
+                      style: TextStyle(
+                          fontSize: 20.0, color: AppColor.primaryColor),
                       textAlign: TextAlign.center,
                     )),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child:const Text(
-                      "Welcome To \n Maps and Navigation",
-                      style:
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  "Welcome To \n Maps and Navigation",
+                  style:
                       TextStyle(fontSize: 30.0, color: AppColor.primaryColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child:const Text(
-                      "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
-                      style:
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  "Nearby|GPS Location|WorldClock \n Compass|Geo live Location",
+                  style:
                       TextStyle(fontSize: 13.0, color: AppColor.primaryColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ]),
-
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ]),
           ),
           Expanded(
             flex: 1,
-
-            child:Column(
+            child: Column(
               children: [
                 Expanded(
                   flex: 4,
-                  child: Container(
-
-                  ),
+                  child: Container(),
                 ),
                 Expanded(
                   flex: 6,
                   child: Container(
                     alignment: Alignment.center,
                     child: Obx(
-                          () => viewModel.showProgressBar.value
+                      () => viewModel.showProgressBar.value
                           ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 40.0, right: 40.0,bottom: 5.0),
-                            child: LinearProgressIndicator(
-                              value: viewModel.progressValue / 100, // Set the value between 0 and 1
-                              backgroundColor: Colors.grey,
-                              valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor),
-                            ),
-                          ),
-                          Text('${viewModel.progressValue.toInt()}/100'),
-                        ],
-                      )
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: 40.0, right: 40.0, bottom: 5.0),
+                                  child: LinearProgressIndicator(
+                                    value: viewModel.progressValue /
+                                        100, // Set the value between 0 and 1
+                                    backgroundColor: Colors.grey,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        AppColor.primaryColor),
+                                  ),
+                                ),
+                                Text('${viewModel.progressValue.toInt()}/100'),
+                              ],
+                            )
                           : Container(
-                        child: GestureDetector(
-                          onTap: () async {
-                            /*final String jsonString = await rootBundle.loadString('assets/categories.json');
+                              child: GestureDetector(
+                                onTap: () async {
+                                  /*final String jsonString = await rootBundle.loadString('assets/categories.json');
                             final data = jsonDecode(jsonString);
                             print(data['pois']);
                             List<dynamic> list= data['pois'];
@@ -146,56 +164,55 @@ class SplashViewIos extends StatelessWidget {
                               throw 'Could not open the map.';
                             }*/
 
-                            // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
-                           // throw Exception();
-                            viewModel.admob_helper.showInterstitialAd(isSplash:true,  callback: (){
-                            Get.off(() => MainScreen_ViewIos());
-                             });
-
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-                            //color: todo_controller.cardBackgroundColor,
-                            decoration: BoxDecoration(
-                              color: AppColor.primaryColor,
-                              borderRadius: BorderRadius.circular(15),
-                              // Adjust the radius as needed
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
+                                  // viewModel.admob_helper.showInterstitialAd(isSplash:true,nextScreen: '/MainScreen_View',  callback: (){});
+                                  // throw Exception();
+                                  viewModel.admob_helper.showInterstitialAd(
+                                      isSplash: true,
+                                      callback: () {
+                                        Get.off(() => MainScreen_ViewIos());
+                                      });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 40.0, right: 40.0),
+                                  //color: todo_controller.cardBackgroundColor,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.primaryColor,
+                                    borderRadius: BorderRadius.circular(15),
+                                    // Adjust the radius as needed
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: const Text(
+                                      'Lets Go',
+                                      style: TextStyle(
+                                          fontSize: 22.0, color: Colors.white),
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(8.0),
-                              child: const Text(
-                                'Lets Go',
-                                style:
-                                TextStyle(fontSize: 22.0, color: Colors.white),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ),
               ],
             ),
-
-
-
           ),
 
           Expanded(
             flex: 1,
-            child:Container(),
+            child: Container(),
 
-          /*  Column(
+            /*  Column(
               children: [
                 Expanded(
                     flex: 3,
@@ -234,7 +251,6 @@ class SplashViewIos extends StatelessWidget {
                     )))),
               ],
             ),*/
-
           ),
         ],
       ),

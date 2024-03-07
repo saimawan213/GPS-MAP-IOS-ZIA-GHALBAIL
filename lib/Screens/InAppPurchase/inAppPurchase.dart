@@ -6,12 +6,8 @@ import 'package:mapsandnavigationflutter/Screens/InAppPurchase/InAppPurchaseView
 class inAppPurchase extends StatelessWidget {
   InAppPurchaseViewModel viewModel = Get.put(InAppPurchaseViewModel());
 
-
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -35,14 +31,14 @@ class inAppPurchase extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                /* child: Lottie.asset(
+                  /* child: Lottie.asset(
                   'assets/lottie/adspurchase.json',
                   height: 50.0,
                   repeat: true,
                   reverse: true,
                   animate: true,
                 ),*/
-                /* margin: EdgeInsets.all(10),
+                  /* margin: EdgeInsets.all(10),
                 child: Column(
 
                   children: [
@@ -63,7 +59,7 @@ class inAppPurchase extends StatelessWidget {
                       ),),
                   ],
                 ),*/
-                /*TextButton(
+                  /*TextButton(
                   style: TextButton.styleFrom(
                     // backgroundColor: Colors.green[800],
                     backgroundColor: Colors.blue,
@@ -83,7 +79,7 @@ class inAppPurchase extends StatelessWidget {
 
                  // child: Text(productDetails.price),
                 ),*/
-              ),
+                  ),
             ),
             /*  Expanded(
                 flex: 1,
@@ -93,15 +89,14 @@ class inAppPurchase extends StatelessWidget {
             ),*/
             Expanded(
               flex: 1,
-              child:Card(
-
+              child: Card(
                 margin: EdgeInsets.all(10),
                 child: Column(
-
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Click on Price Button to Remove all Ads From the App",
+                      child: Text(
+                          "Click on Price Button to Remove all Ads From the App",
                           style: TextStyle(color: Colors.blue)),
                     ),
                     TextButton(
@@ -111,9 +106,10 @@ class inAppPurchase extends StatelessWidget {
                       },
                       child: Text(viewModel.lifeTimePrice.value),
                       style: TextButton.styleFrom(
-                        primary: Colors.white, // Text and icon color
+                        foregroundColor: Colors.white, // Text and icon color
                         backgroundColor: Colors.blue, // Button background color
-                      ),),
+                      ),
+                    ),
                   ],
                 ),
                 /*TextButton(
@@ -138,19 +134,9 @@ class inAppPurchase extends StatelessWidget {
                 ),*/
               ),
             ),
-
-            Expanded(
-                flex: 2,
-                child:
-                Container(
-                )
-            ),
-
-
-
+            Expanded(flex: 2, child: Container()),
           ],
         ),
-
       ),
     );
   }

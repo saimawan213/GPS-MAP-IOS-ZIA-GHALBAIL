@@ -1,172 +1,201 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/CompassScreen/CompassScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_permission_usecase.dart';
+import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
+import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';
+import 'package:mapsandnavigationflutter/utils/toast/toast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 
-
-
-
 class CompassScreenView extends StatelessWidget {
+  CompassScreenViewModel viewModel = Get.put(CompassScreenViewModel());
 
-  CompassScreenViewModel  viewModel = Get.put(CompassScreenViewModel());
+  Future<void> checkLocationPermission() async {
+    final locationPermissionUsecase = LocationPermissionUsecase();
+    final locationServicePermission = LocationServicePermissionUsecase();
+    await locationPermissionUsecase();
+    await locationServicePermission();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-
         appBar: AppBar(
           title: const Text('Compass'),
           backgroundColor: AppColor.primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.white,// or MenuOutlined
+            color: Colors.white, // or MenuOutlined
             onPressed: () {
               Navigator.pop(context);
               print("call in app ");
-              // Get.to(() => InApp());
-              //  Get.to(/InApp);
-              //InApp inAppfile= InApp();
-              //viewModel.inAppfile;
-              // Open the drawer here
             },
           ),
         ),
-        body: Obx(()=>
-        viewModel.hasPermissions.value ?
-            Builder(builder: (context) {
-             // if (viewModel.hasPermissions.value) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    /*   borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],*/
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                     // _buildManualReader(),
-                    Expanded(
-                    flex: 1,
-                    child: Container(),
-                    ),
-                  Expanded(
-                    flex: 7,
-                      child:Column(
-                        children: [
-                          Text(
-                            'Compass Direction and Degree:',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                    Obx(() =>   Text(
-                      viewModel.compassDirection.value +"\t\t\t" +viewModel.compassvalue.value.toStringAsFixed(0)+ "\u00B0",
-                      style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-
-                    ),),
-                          Expanded(child: _buildCompass()),
-                        ],
-                      ),
-                   /* Obx(() =>   Text(
-                      viewModel.compassDirection.value +"\t\t\t" +viewModel.compassvalue.value.substring(0,viewModel.compassvalue.value.indexOf('.'))+ "\u00B0",
-                      style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-                    ),),*/
-                   ),
-
-
-
-                  Expanded(
-                    flex: 2,
-                    child:  Column(
-                      children: [
-                        Expanded(
-                            flex: 4,
-                            child:Container()),
-                        Expanded(
-                            flex: 6,
-                            child: Container(
-
-                                margin: EdgeInsets.only(top: 5.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(3),
-                                  border: Border(
-                                    top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                    bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                    // You can remove the left and right borders by commenting them out
-                                    // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                    // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+        body: Builder(
+          builder: (context) {
+            return FutureBuilder(
+              future: checkLocationPermission(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.error is PermissionPermanentlyDenied ||
+                    snapshot.error is PermissionDenied ||
+                    snapshot.error is LocationServiceDisabledException) {
+                  return retryButton(context);
+                } else {
+                  return Obx(
+                    () => viewModel.hasPermissions.value
+                        ? Builder(builder: (context) {
+                            return Container(
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              child: Column(
+                                children: <Widget>[
+                                  // _buildManualReader(),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(),
                                   ),
-                                  //border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),child:Container(
-                                margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                                child: Obx(()=>
-                                (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SafeArea(
-                                    child: SizedBox(
-                                      width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
-                                      height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
-                                      child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
+                                  Expanded(
+                                    flex: 7,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Compass Direction and Degree:',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        Obx(
+                                          () => Text(
+                                            viewModel.compassDirection.value +
+                                                "\t\t\t" +
+                                                viewModel.compassvalue.value
+                                                    .toStringAsFixed(0) +
+                                                "\u00B0",
+                                            style: TextStyle(
+                                                fontSize: 48,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Expanded(child: _buildCompass()),
+                                      ],
                                     ),
                                   ),
-                                )
-                                    :(!Constent.adspurchase)?
 
-                                SizedBox(
-                                    width:double.infinity,
-                                    height: 30,
-                                    child: Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.white,
-                                      child: Container(
-                                        color: Colors.grey,
-                                      ),
-                                    )
-                                ):SizedBox()
-                                )))),
-                      ],
-                    ),
-                  )
-
-
-
-                   /*   Obx(() =>  Text(
-                        viewModel.compassvalue.value.substring(0,viewModel.compassvalue.value.indexOf('.')),
-                        style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-                      ),),*/
-
-                    ],
-                  ),
-                );
-           /*   } else {
-                return _buildPermissionSheet();
-              }*/
-            }) :
-       SizedBox(),
-
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      children: [
+                                        Expanded(flex: 4, child: Container()),
+                                        Expanded(
+                                          flex: 6,
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 5.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                              border: Border(
+                                                top: BorderSide(
+                                                    color: Color(0xFFD6D6D6),
+                                                    width: 3),
+                                                bottom: BorderSide(
+                                                    color: Color(0xFFD6D6D6),
+                                                    width: 3),
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 5,
+                                                  offset: Offset(0, 3),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5.0, bottom: 5.0),
+                                              child: Obx(
+                                                () => (viewModel
+                                                            .admob_helper
+                                                            .isBannerLoaded
+                                                            .value &&
+                                                        !Constent
+                                                            .isOpenAppAdShowing
+                                                            .value &&
+                                                        !Constent
+                                                            .isInterstialAdShowing
+                                                            .value &&
+                                                        !Constent.adspurchase)
+                                                    ? Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: SafeArea(
+                                                          child: SizedBox(
+                                                            width: viewModel
+                                                                .admob_helper
+                                                                .anchoredAdaptiveAd!
+                                                                .size
+                                                                .width
+                                                                .toDouble(),
+                                                            height: viewModel
+                                                                .admob_helper
+                                                                .anchoredAdaptiveAd!
+                                                                .size
+                                                                .height
+                                                                .toDouble(),
+                                                            child: AdWidget(
+                                                                ad: viewModel
+                                                                    .admob_helper
+                                                                    .anchoredAdaptiveAd!),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : (!Constent.adspurchase)
+                                                        ? SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 30,
+                                                            child: Shimmer
+                                                                .fromColors(
+                                                              baseColor: Colors
+                                                                  .grey[300]!,
+                                                              highlightColor:
+                                                                  Colors.white,
+                                                              child: Container(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : SizedBox(),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          })
+                        : SizedBox(),
+                  );
+                }
+              },
+            );
+          },
         ),
       ),
     );
@@ -181,13 +210,13 @@ class CompassScreenView extends StatelessWidget {
             child: Text('Read Value'),
             onPressed: () async {
               final CompassEvent tmp = await FlutterCompass.events!.first;
-             /* setState(() {
+              /* setState(() {
                 _lastRead = tmp;
                 _lastReadAt = DateTime.now();
               });*/
             },
           ),
-        /*  Expanded(
+          /*  Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -225,7 +254,7 @@ class CompassScreenView extends StatelessWidget {
         }
 
         double? direction = snapshot.data!.heading;
-        print('direction is:'+direction.toString());
+        print('direction is:' + direction.toString());
         /* setState(() {
           compassDirection = _getCompassDirection(snapshot.data!.heading);
         });*/
@@ -238,15 +267,14 @@ class CompassScreenView extends StatelessWidget {
           );
 
         return Material(
-        /*  shape: CircleBorder(),
+          /*  shape: CircleBorder(),
           clipBehavior: Clip.antiAlias,
           elevation: 4.0,*/
           child: Container(
-
             padding: EdgeInsets.all(50.0),
             decoration: const BoxDecoration(
               color: Colors.white,
-           /*   borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
+              /*   borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -257,7 +285,7 @@ class CompassScreenView extends StatelessWidget {
               ],*/
             ),
             alignment: Alignment.center,
-          /*  decoration: BoxDecoration(
+            /*  decoration: BoxDecoration(
               shape: BoxShape.circle,
             ),*/
             child: Transform.rotate(
@@ -269,6 +297,7 @@ class CompassScreenView extends StatelessWidget {
       },
     );
   }
+
   String _getCompassDirection(double heading) {
     if (heading >= 337.5 || heading < 22.5) {
       return "N";
@@ -288,39 +317,38 @@ class CompassScreenView extends StatelessWidget {
       return "NW";
     }
   }
-/*  Widget _buildPermissionSheet() {
+
+  Widget retryButton(BuildContext context) {
+    Future<void> onTapRetry(BuildContext context) async {
+      try {
+        final locationPermissionUsecase = LocationPermissionUsecase();
+        final locationServicePermission = LocationServicePermissionUsecase();
+        await locationPermissionUsecase();
+        await locationServicePermission();
+        await viewModel.requestPermission();
+      } on PermissionDenied catch (_) {
+        showToast(msg: "Location permission denied");
+      } on PermissionPermanentlyDenied catch (_) {
+        await showDialog(
+          context: context,
+          builder: (context) => LocationPermissionPopup(),
+        );
+      } on LocationServiceDisabledException catch (_) {
+        showToast(msg: "Enable location service");
+      }
+    }
+
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text('Location Permission Required'),
+          Text('Location Permission Required.'),
           ElevatedButton(
-            child: Text('Request Permissions'),
-            onPressed: () {
-              Permission.locationWhenInUse.request().then((ignored) {
-                viewModel.fetchPermissionStatus();
-              });
-            },
+            child: Text('Retry'),
+            onPressed: () => onTapRetry(context),
           ),
-          SizedBox(height: 16),
-          ElevatedButton(
-            child: Text('Open App Settings'),
-            onPressed: () {
-              openAppSettings().then((opened) {
-                //
-              });
-            },
-          )
         ],
       ),
     );
-  }*/
-
-/*  void _fetchPermissionStatus() {
-    Permission.locationWhenInUse.status.then((status) {
-      if (mounted) {
-        setState(() => _hasPermissions = status == PermissionStatus.granted);
-      }
-    });
-  }*/
+  }
 }

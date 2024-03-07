@@ -11,9 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../Constents/Constent.dart';
 
 class MyLocationViewModel extends GetxController {
-
-
-
   CameraPosition initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
 
   late GoogleMapController mapController;
@@ -32,21 +29,21 @@ class MyLocationViewModel extends GetxController {
 
   RxString startAddress = ''.obs;
   RxString destinationAddress = ''.obs;
-  RxString placeDistance=''.obs;
+  RxString placeDistance = ''.obs;
   RxSet<Marker> markers = <Marker>{}.obs;
   //Set<Marker> markers = {};
 
   // late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
- /* String? sourcepath,destinationpath;
+  /* String? sourcepath,destinationpath;
   double? sourcelath,sourcelog,destinationlath,destinationlog;
   HistoryViewModel  userController = Get.put(HistoryViewModel());*/
 
   @override
   Future<void> onInit() async {
     print('**** onInit *****');
-  /*  sourcelath=Get.arguments['Sourcelath'];
+    /*  sourcelath=Get.arguments['Sourcelath'];
     sourcelog=Get.arguments['Sourcelog'];
     destinationlath=Get.arguments['destinationlath'];
     destinationlog=Get.arguments['destinationlog'];
@@ -59,7 +56,7 @@ class MyLocationViewModel extends GetxController {
       getCurrentLocation();
     }
     else{
-     *//* Future.delayed(Duration(seconds: 2), (){
+     */ /* Future.delayed(Duration(seconds: 2), (){
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -67,7 +64,7 @@ class MyLocationViewModel extends GetxController {
               zoom: 18.0,
             ),
           ),
-        );*//*
+        );*/ /*
         //  final double souclog=sourcelog!;
 
         markers: Set<Marker>.from(markers);
@@ -90,25 +87,25 @@ class MyLocationViewModel extends GetxController {
   @override
   void onReady() {
     print('**** onReady *****');
+
     ///Load Ads Here
-
-
 
     super.onReady();
   }
+
   @override
   void onClose() {
-
     // TODO: implement onClose
     super.onClose();
   }
-  getCurrentLocation() async {
-    if(Constent.splashcurrentAddress!="") {
+
+  Future<void> getCurrentLocation() async {
+    if (Constent.splashcurrentAddress != "") {
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: LatLng(
-                Constent.Splashcurrentlath, Constent.Splashcurrentlog),
+            target:
+                LatLng(Constent.Splashcurrentlath, Constent.Splashcurrentlog),
             zoom: 18.0,
           ),
         ),
@@ -116,8 +113,7 @@ class MyLocationViewModel extends GetxController {
       currentAddress = Constent.splashcurrentAddress;
       startAddressController.text = Constent.splashcurrentAddress;
       startAddress.value = Constent.splashcurrentAddress;
-      currentPosition=Constent.splashcurrentPosition;
-
+      currentPosition = Constent.splashcurrentPosition;
 
       /* Set<Marker>.from(markers);
       initialCameraPosition:
@@ -129,8 +125,7 @@ class MyLocationViewModel extends GetxController {
       destinationAddressController.text = destinationpath!;
       performSearch('');*/
       // performSearch('');
-    }
-    else{
+    } else {
       bool serviceEnabled;
       LocationPermission permission;
 
@@ -151,27 +146,28 @@ class MyLocationViewModel extends GetxController {
       if (permission == LocationPermission.deniedForever) {
         return;
       }
-    /*  LocationPermission  c=await Geolocator.checkPermission();
+      /*  LocationPermission  c=await Geolocator.checkPermission();
 
       if(c==LocationPermission.always){*/
-        await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-            .then((Position position) async {
-          // setState(() {
-          currentPosition = position;
-          print('CURRENT POS: $currentPosition');
-          //  if(sourcepath == '') {
-          mapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: LatLng(position.latitude, position.longitude),
-                zoom: 18.0,
-              ),
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) async {
+        // setState(() {
+        currentPosition = position;
+        print('CURRENT POS: $currentPosition');
+        //  if(sourcepath == '') {
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(position.latitude, position.longitude),
+              zoom: 18.0,
             ),
-          );
-          // });
-          await getAddress();
-          // }
-          /*    else{
+          ),
+        );
+        // });
+        await getAddress();
+        // }
+        /*    else{
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -189,11 +185,11 @@ class MyLocationViewModel extends GetxController {
         destinationAddressController.text=destinationpath!;
         performSearch('');
       }*/
-        }).catchError((e) {
-          print(e);
-        });
-     // }
-  /*    else{
+      }).catchError((e) {
+        print(e);
+      });
+      // }
+      /*    else{
         LocationPermission p=await Geolocator.requestPermission();
         if(p==LocationPermission.always){
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
@@ -213,7 +209,7 @@ class MyLocationViewModel extends GetxController {
     // });
     await getAddress();
     // }
-    *//*    else{
+    */ /*    else{
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -230,17 +226,16 @@ class MyLocationViewModel extends GetxController {
         destinationAddress.value=destinationpath!;
         destinationAddressController.text=destinationpath!;
         performSearch('');
-      }*//*
+      }*/ /*
     }).catchError((e) {
     print(e);
     });
     }
 
   }*/
+    }
+  }
 
-
-
-  }}
 /*  getCurrentLocation() async {
     print('call heeee');
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
@@ -295,6 +290,7 @@ class MyLocationViewModel extends GetxController {
       print(e);
     });
   }
+
   getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
@@ -304,7 +300,7 @@ class MyLocationViewModel extends GetxController {
 
       //  setState(() {
       currentAddress =
-      "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+          "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
       startAddressController.text = currentAddress;
       startAddress.value = currentAddress;
       //  });
@@ -317,29 +313,33 @@ class MyLocationViewModel extends GetxController {
   Future<bool> calculateDistance() async {
     try {
       print("inside local hereeee");
-      double startLatitude=0.0, startLongitude=0.0,destinationLatitude=0.0,destinationLongitude=0.0;
+      double startLatitude = 0.0,
+          startLongitude = 0.0,
+          destinationLatitude = 0.0,
+          destinationLongitude = 0.0;
       // Retrieving placemarks from addresses
 
-     // if(sourcepath==''){
-        List<Location> startPlacemark = await locationFromAddress(startAddress.value);
-        List<Location> destinationPlacemark =
-        await locationFromAddress(destinationAddress.value);
-        print("inside local hereee123e");
-        // Use the retrieved coordinates of the current position,
-        // instead of the address if the start position is user's
-        // current position, as it results in better accuracy.
-        startLatitude = startAddress == currentAddress
-            ? currentPosition.latitude
-            : startPlacemark[0].latitude;
+      // if(sourcepath==''){
+      List<Location> startPlacemark =
+          await locationFromAddress(startAddress.value);
+      List<Location> destinationPlacemark =
+          await locationFromAddress(destinationAddress.value);
+      print("inside local hereee123e");
+      // Use the retrieved coordinates of the current position,
+      // instead of the address if the start position is user's
+      // current position, as it results in better accuracy.
+      startLatitude = startAddress == currentAddress
+          ? currentPosition.latitude
+          : startPlacemark[0].latitude;
 
-        startLongitude = startAddress == currentAddress
-            ? currentPosition.longitude
-            : startPlacemark[0].longitude;
+      startLongitude = startAddress == currentAddress
+          ? currentPosition.longitude
+          : startPlacemark[0].longitude;
 
-        destinationLatitude = destinationPlacemark[0].latitude;
-        destinationLongitude = destinationPlacemark[0].longitude;
-    //  }
-    /*  else{
+      destinationLatitude = destinationPlacemark[0].latitude;
+      destinationLongitude = destinationPlacemark[0].longitude;
+      //  }
+      /*  else{
 
         startLatitude= sourcelath!;
         startLongitude=sourcelog!;
@@ -353,11 +353,11 @@ class MyLocationViewModel extends GetxController {
         destinationpath='';
 
       }*/
-      startLatitude1=startLatitude;
-      startLongitude1=startLongitude;
-      destinationLatituate1=destinationLatitude;
-      destinationLongitude1=destinationLongitude;
-  /*    if(startAddress!='' && destinationAddress!=''){
+      startLatitude1 = startLatitude;
+      startLongitude1 = startLongitude;
+      destinationLatituate1 = destinationLatitude;
+      destinationLongitude1 = destinationLongitude;
+      /*    if(startAddress!='' && destinationAddress!=''){
         await userController.addUser(
           startAddress.value,
           destinationAddress.value,
@@ -492,10 +492,12 @@ class MyLocationViewModel extends GetxController {
     return 12742 * asin(sqrt(a));
   }
 
-  static Future<void> openMap(double startLatitude,double startLongitude,double destinationLatitude,double destinationLongitude) async {
+  static Future<void> openMap(double startLatitude, double startLongitude,
+      double destinationLatitude, double destinationLongitude) async {
     // String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     // String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving &dir_action=navigate';
-    String googleUrl='https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
+    String googleUrl =
+        'https://www.google.com/maps/dir/?api=1&origin=$startLatitude,$startLongitude&destination=$destinationLatitude,$destinationLongitude&travelmode=driving';
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
     } else {
@@ -505,11 +507,11 @@ class MyLocationViewModel extends GetxController {
   // Create the polylines for showing the route between two places
 
   _createPolylines(
-      double startLatitude,
-      double startLongitude,
-      double destinationLatitude,
-      double destinationLongitude,
-      ) async {
+    double startLatitude,
+    double startLongitude,
+    double destinationLatitude,
+    double destinationLongitude,
+  ) async {
     //  polylinePoints = PolylinePoints();
     /*   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Secrets.API_KEY, // Google Maps API Key
@@ -537,12 +539,12 @@ class MyLocationViewModel extends GetxController {
     );
     polylines[id] = polyline;
   }
-  performSearch(query) async {
 
-    if(startAddress==''){
+  performSearch(query) async {
+    if (startAddress == '') {
       getCurrentLocation1();
       startAddressController.text = currentAddress;
-      startAddress.value =currentAddress;
+      startAddress.value = currentAddress;
     }
 
 //    FocusScope.of(context).requestFocus(FocusNode());
@@ -550,7 +552,6 @@ class MyLocationViewModel extends GetxController {
     polylines.clear();
     polylineCoordinates.clear();
     placeDistance.value = '';
-
 
     calculateDistance().then((isCalculated) {
       /*   if (isCalculated) {

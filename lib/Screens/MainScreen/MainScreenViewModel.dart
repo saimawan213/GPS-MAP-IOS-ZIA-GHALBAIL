@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MainScreenViewModel extends GetxController {
   late PackageInfo packageInfo;
-  Admob_Helper  admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
   late AppLifecycleReactor appLifecycleReactor;
 
   @override
@@ -29,9 +28,8 @@ class MainScreenViewModel extends GetxController {
 
     ///Load Ads Here
 
-    if(!Constent.adspurchase) {
-      Admob_Helper admob_helper1 = Admob_Helper()
-        ..loadopenupad();
+    if (!Constent.adspurchase) {
+      Admob_Helper admob_helper1 = Admob_Helper()..loadopenupad();
       appLifecycleReactor =
           AppLifecycleReactor(appOpenAdManager: admob_helper1);
       appLifecycleReactor.listenToAppStateChanges();
@@ -50,79 +48,86 @@ class MainScreenViewModel extends GetxController {
 
   Future<bool> onWillPopfun(BuildContext context) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
+          context: context,
+          builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
             title: Text("Are you sure you want to exit?",
                 style: TextStyle(color: Colors.black)),
             actions: [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 onPressed: () => exit(0),
                 //Navigator.of(context).pop(true),
-                child: Text("Yes",style: TextStyle(
-                  color: Colors.white,
-                ),),
+                child: Text(
+                  "Yes",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.blue),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("No",style: TextStyle(
-                    color: Colors.white,
-                  ),)
-              ),
+                  child: Text(
+                    "No",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )),
             ],
           ),
-
-    ) ?? false;
+        ) ??
+        false;
   }
 
   void openPlayStore() async {
     packageInfo = await PackageInfo.fromPlatform();
     String packageName = packageInfo.packageName;
-    if(Platform.isAndroid){
-      Uri playStoreUrl = Uri.parse('https://play.google.com/store/apps/details?id='+packageName);
+    if (Platform.isAndroid) {
+      Uri playStoreUrl = Uri.parse(
+          'https://play.google.com/store/apps/details?id=' + packageName);
       if (await canLaunchUrl(playStoreUrl)) {
         await launchUrl(playStoreUrl);
       } else {
         throw 'Could not launch $playStoreUrl';
       }
     }
-     if(Platform.isIOS){
-      Uri playStoreUrl = Uri.parse('https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238');
+    if (Platform.isIOS) {
+      Uri playStoreUrl = Uri.parse(
+          'https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238');
       if (await canLaunchUrl(playStoreUrl)) {
         await launchUrl(playStoreUrl);
       } else {
         throw 'Could not launch $playStoreUrl';
       }
     }
-
   }
+
   Future<void> shareApp() async {
-     String Link='';
-    if(Platform.isAndroid) {
+    String Link = '';
+    if (Platform.isAndroid) {
       packageInfo = await PackageInfo.fromPlatform();
       String packageName = packageInfo.packageName;
-       Link = 'https://play.google.com/store/apps/details?id='+packageName;
+      Link = 'https://play.google.com/store/apps/details?id=' + packageName;
     }
-    if(Platform.isIOS){
-       Link='https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238';
+    if (Platform.isIOS) {
+      Link =
+          'https://apps.apple.com/us/app/gps-navigation-map-direction/id1548093238';
       // final String appLink = 'https://play.google.com/store/apps/details?id='+packageName;
       //final String message = 'Check out my new app '+ioslink ;
     }
-    final String message = 'Check out my new app '+Link ;
+    final String message = 'Check out my new app ' + Link;
 
     // Share the app link and message using the share dialog
     //await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
     await FlutterShare.share(title: 'Share App', text: message);
 
-
     // Share the app link and message using the share dialog
     //await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
-   // await FlutterShare.share(title: 'Share App', text: message);
+    // await FlutterShare.share(title: 'Share App', text: message);
   }
-  Future<bool> showExitPopup(context) async{
+
+  Future<bool> showExitPopup(context) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -147,17 +152,4 @@ class MainScreenViewModel extends GetxController {
       },
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

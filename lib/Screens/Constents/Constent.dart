@@ -7,9 +7,10 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+
 class Constent {
-  static double Splashcurrentlath=0.0;
-  static double Splashcurrentlog=0.0;
+  static double Splashcurrentlath = 0.0;
+  static double Splashcurrentlog = 0.0;
   static String splashcurrentAddress = '';
   static late Position splashcurrentPosition;
   String location; //location name for the UI
@@ -23,10 +24,10 @@ class Constent {
   static RxBool isNativeAdSmallLoaded = false.obs;
 
   static bool isAlternativeInterstitial = true;
-  static bool appopencheck=true;
-  static RxBool purchaseads=false.obs;
-  static bool adspurchase=false;
- /* static  String location1 = '';
+  static bool appopencheck = true;
+  static RxBool purchaseads = false.obs;
+  static bool adspurchase = false;
+  /* static  String location1 = '';
   static  String flag1 = '';
   static  String time1 = '';
   static  bool isDaytime1=false;
@@ -72,9 +73,10 @@ class Constent {
       cityName = cityName.replaceAll('_', ' ');
       return Constent(url: e, location: cityName);
     }).toList();
-    print("ia amm heeee:"+countryList.length.toString());
+    print("ia amm heeee:" + countryList.length.toString());
     return countryList;
   }
+
   Future<void> getTimebyip() async {
     // Future is like promise in JS, void means that i will return void but only when the function is fully complete
     try {
@@ -85,9 +87,9 @@ class Constent {
       int offset = int.parse(data["utc_offset"].substring(1, 3));
       String operator = data["utc_offset"].substring(0, 1);
       url = data["timezone"];
-      String name1=data["timezone"];
+      String name1 = data["timezone"];
       location = name1.substring(name1.lastIndexOf('/') + 1);
-      print("locationb iaasas:"+location);
+      print("locationb iaasas:" + location);
       // getWeather1(cityName1);
       if (operator == "+") {
         now = now.add(new Duration(hours: offset));
@@ -102,6 +104,7 @@ class Constent {
       time = "could not get time data";
     }
   }
+
 /*  Future<void> getWeather1() async {
     try {
       var url_path = Uri.parse(
@@ -124,6 +127,7 @@ class Constent {
       print(e);
     }
   }
+
   static Future checkIntenetConnection() async {
     try {
       final result = await InternetAddress.lookup('example.com');
@@ -137,27 +141,27 @@ class Constent {
       return false;
     }
   }
+
   static showNoConnectionDialog(BuildContext context) async {
     return await showDialog<bool>(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            backgroundColor: Colors.white,
-            title: Text('No internet connection',
-              style: TextStyle(color: Colors.black)),
-              content: const Text('Please check your internet connection!'),
-            actions: [
-
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text("Close",style: TextStyle(
-                    color: Colors.white,
-                  ),)
-              ),
-            ],
-          ),
-
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text('No internet connection',
+            style: TextStyle(color: Colors.black)),
+        content: const Text('Please check your internet connection!'),
+        actions: [
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(foregroundColor: Colors.blue),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(
+                "Close",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              )),
+        ],
+      ),
     );
   }
 /*  static showNoConnectionDialog(BuildContext context)  {
@@ -178,106 +182,81 @@ class Constent {
     );
   }*/
 
-
 // static RxBool pcodeshowProgressBar = true.obs;
   //static bool testAd = false;
 
-
-
-  static String get bannerAdID{
-
-    if(Platform.isAndroid){
-      if(kDebugMode){
+  static String get bannerAdID {
+    if (Platform.isAndroid) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/6300978111';
-      }
-      else{
+      } else {
         return 'ca-app-pub-8011932915847069/1156033646';
       }
-
-    }else if(Platform.isIOS){
-      if(kDebugMode){
+    } else if (Platform.isIOS) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/2934735716';
-      }
-      else{
+      } else {
         return 'ca-app-pub-6941637095433882/5799117821';
       }
-
-    }else{
+    } else {
       throw UnsupportedError("Un supported");
     }
-
   }
 
-  static String get interstialAdID{
-    if(Platform.isAndroid){
+  static String get interstialAdID {
+    if (Platform.isAndroid) {
       print("call interstialad");
-      if(kDebugMode){
+      if (kDebugMode) {
         print("call11 interstialad");
         return 'ca-app-pub-3940256099942544/1033173712';
-      }
-      else{
+      } else {
         print("call11565 interstialad");
         return 'ca-app-pub-8011932915847069/9295405784';
       }
-
-    }else if(Platform.isIOS){
-      if(kDebugMode){
+    } else if (Platform.isIOS) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/4411468910';
-      }
-      else{
+      } else {
         return 'ca-app-pub-6941637095433882/6431147997';
       }
-
-    }else{
+    } else {
       throw UnsupportedError("Un supported");
     }
-
   }
-  static String get openupAdID{
 
-    if(Platform.isAndroid){
-      if(kDebugMode){
+  static String get openupAdID {
+    if (Platform.isAndroid) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/9257395921';
-      }
-      else{
+      } else {
         return 'ca-app-pub-8011932915847069/3496452020';
       }
-
-    }else if(Platform.isIOS){
-      if(kDebugMode){
+    } else if (Platform.isIOS) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/5575463023';
-      }
-      else{
+      } else {
         return 'ca-app-pub-6941637095433882/7998618403';
       }
-
-    }else{
+    } else {
       throw UnsupportedError("Un supported");
     }
-
   }
 
-  static String get nativeAdID{
-    if(Platform.isAndroid){
-      if(kDebugMode){
+  static String get nativeAdID {
+    if (Platform.isAndroid) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/2247696110';
-      }
-      else{
+      } else {
         return 'ca-app-pub-8011932915847069/3590625295';
       }
-
-    }else if(Platform.isIOS){
-      if(kDebugMode){
+    } else if (Platform.isIOS) {
+      if (kDebugMode) {
         return 'ca-app-pub-3940256099942544/3986624511';
-      }
-      else{
+      } else {
         return 'ca-app-pub-6941637095433882/2954476333';
       }
-
-    }else{
+    } else {
       throw UnsupportedError("Un supported");
     }
-
   }
-
 }

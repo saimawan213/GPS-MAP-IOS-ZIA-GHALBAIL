@@ -18,8 +18,9 @@ class LocationPermissionPopup extends StatelessWidget {
           child: Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {
-            openAppSettings();
+          onPressed: () async {
+            await openAppSettings();
+            Navigator.of(context).pop();
           },
           child: Text('Open App Settings'),
         ),

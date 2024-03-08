@@ -8,7 +8,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashView.dart';
 import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashViewIos.dart';
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/SelectlcoationView.dart';
 import 'package:mapsandnavigationflutter/firebase_options.dart';
@@ -16,6 +15,7 @@ import 'package:mapsandnavigationflutter/firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+
   ///Lock Screen Rotation
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -44,13 +44,11 @@ class MyApp extends StatelessWidget {
     // final InAppPurchase _inAppPurchase = InAppPurchase.instance;
     // _inAppPurchase.restorePurchases();
     return GetMaterialApp(
-
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => SplashViewIos()),
         GetPage(name: '/location', page: () => SelectlcoationView()),
-      //  GetPage(name: '/ShowImage', page: () =>  PhotoViewerscreen(galleryItems: galleryItems)),
-
+        //  GetPage(name: '/ShowImage', page: () =>  PhotoViewerscreen(galleryItems: galleryItems)),
       ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

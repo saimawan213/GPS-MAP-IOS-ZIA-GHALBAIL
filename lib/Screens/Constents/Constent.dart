@@ -187,13 +187,13 @@ class Constent {
 
   static String get bannerAdID {
     if (Platform.isAndroid) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/6300978111';
       } else {
         return 'ca-app-pub-8011932915847069/1156033646';
       }
     } else if (Platform.isIOS) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/2934735716';
       } else {
         return 'ca-app-pub-6941637095433882/5799117821';
@@ -206,7 +206,7 @@ class Constent {
   static String get interstialAdID {
     if (Platform.isAndroid) {
       print("call interstialad");
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         print("call11 interstialad");
         return 'ca-app-pub-3940256099942544/1033173712';
       } else {
@@ -214,7 +214,7 @@ class Constent {
         return 'ca-app-pub-8011932915847069/9295405784';
       }
     } else if (Platform.isIOS) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/4411468910';
       } else {
         return 'ca-app-pub-6941637095433882/6431147997';
@@ -226,13 +226,13 @@ class Constent {
 
   static String get openupAdID {
     if (Platform.isAndroid) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/9257395921';
       } else {
         return 'ca-app-pub-8011932915847069/3496452020';
       }
     } else if (Platform.isIOS) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/5575463023';
       } else {
         return 'ca-app-pub-6941637095433882/7998618403';
@@ -244,13 +244,13 @@ class Constent {
 
   static String get nativeAdID {
     if (Platform.isAndroid) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/2247696110';
       } else {
         return 'ca-app-pub-8011932915847069/3590625295';
       }
     } else if (Platform.isIOS) {
-      if (kDebugMode) {
+      if (kDebugMode || kProfileMode) {
         return 'ca-app-pub-3940256099942544/3986624511';
       } else {
         return 'ca-app-pub-6941637095433882/2954476333';

@@ -13,7 +13,10 @@ class GeneralDataProtectionRegulationHelper {
         debugGeography: DebugGeography.debugGeographyEea,
         testIdentifiers: [
           "EA45BD96A6C174F630C8F49C1774855A",
-          "BE03A9039FACD6F7068C726C43BF26E0"
+          "BE03A9039FACD6F7068C726C43BF26E0",
+          "3CF507DFFFDCF37153D32252A1C7EA9F",
+          "7ede5165bcc0ae3f294eb4162e1ad965",
+          "7FAACB31-0FCB-4613-9334-FA955A04CE74"
         ],
       ),
     );

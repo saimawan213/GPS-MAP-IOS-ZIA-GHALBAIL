@@ -3,16 +3,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-
 
 class CompassScreenViewModel extends GetxController {
   RxString compassDirection = "N".obs;
-  RxDouble compassvalue= (0.0).obs;
+  RxDouble compassvalue = (0.0).obs;
   RxBool hasPermissions = false.obs;
   CompassEvent? lastRead;
- Admob_Helper admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
   DateTime? lastReadAt;
 
   @override
@@ -21,31 +20,32 @@ class CompassScreenViewModel extends GetxController {
 
     super.onInit();
   }
+
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    admob_helper.isBannerLoaded.value=false;
-    admob_helper.anchoredAdaptiveAd=null;
+    admob_helper.isBannerLoaded.value = false;
+    admob_helper.anchoredAdaptiveAd = null;
   }
 
   @override
   void onReady() {
     print('**** onReady *****');
+
     ///Load Ads Here
     requestPermission();
     admob_helper.adaptiveloadAd();
 
     FlutterCompass.events?.listen((CompassEvent event) {
-
-        print('direction is1:'+event.heading.toString());
-        //List values = event.heading.toString().split(".");
-        //  bool a= isNumeric(event.heading.toString());
-        print('direction 123 first:'+sanitizeHeading(event.heading).toString());
-        compassDirection.value = _getCompassDirection(sanitizeHeading(event.heading));
-        compassvalue.value=sanitizeHeading(event.heading);
-
-      });
+      print('direction is1:' + event.heading.toString());
+      //List values = event.heading.toString().split(".");
+      //  bool a= isNumeric(event.heading.toString());
+      print('direction 123 first:' + sanitizeHeading(event.heading).toString());
+      compassDirection.value =
+          _getCompassDirection(sanitizeHeading(event.heading));
+      compassvalue.value = sanitizeHeading(event.heading);
+    });
     /*if(!a){
        // String s = "Hello World!";
         print('direction 123 first:'+sanitizeHeading(event.heading).toString());
@@ -61,7 +61,7 @@ class CompassScreenViewModel extends GetxController {
     super.onReady();
   }
 
- /* void fetchPermissionStatus() {
+  /* void fetchPermissionStatus() {
     Permission.locationWhenInUse.status.then((status) {
      // if (mounted) {
      //   setState(() => _hasPermissions = status == PermissionStatus.granted); setState(() => _hasPermissions = status == PermissionStatus.granted);
@@ -92,8 +92,8 @@ class CompassScreenViewModel extends GetxController {
     if (permission == LocationPermission.deniedForever) {
       return;
     }
-    hasPermissions.value=true;
- /*   LocationPermission c=await Geolocator.checkPermission();
+    hasPermissions.value = true;
+    /*   LocationPermission c=await Geolocator.checkPermission();
     if(c==LocationPermission.always){
       hasPermissions.value=true;
     }
@@ -107,12 +107,14 @@ class CompassScreenViewModel extends GetxController {
       fetchPermissionStatus();
     });*/
   }
+
   double sanitizeHeading(double? hd) {
     if (hd == null) return 0;
     if (hd < 0) return 360 + hd;
     if (hd > 0) return hd;
     return hd;
   }
+
   String _getCompassDirection(double heading) {
     if (heading >= 337.5 || heading < 22.5) {
       return "N";
@@ -132,5 +134,4 @@ class CompassScreenViewModel extends GetxController {
       return "NW";
     }
   }
-
 }

@@ -2,23 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 
-class Admob_Helper  {
-  NativeAd? nativeAd,nativeAdSmall;
+class Admob_Helper {
+  NativeAd? nativeAd, nativeAdSmall;
   RxBool isBannerLoaded = false.obs;
   RxBool mainisBannerLoaded = false.obs;
   RxBool islargeBannerLoaded = false.obs;
   RxBool issmallBannerLoaded = false.obs;
   RxBool issmall1BannerLoaded = false.obs;
   RxBool mainissmall1BannerLoaded = false.obs;
-  RxBool nativeAdIsLoaded=false.obs;
+  RxBool nativeAdIsLoaded = false.obs;
   //RxBool nativeAdIsLoaded = false.obs;
   final double adAspectRatioMedium = (95 / 355);
   RxString versionString = "".obs;
@@ -33,10 +31,9 @@ class Admob_Helper  {
   AppOpenAd? appOpenAd;
   bool _isShowingAd = false;
 
+  BannerAd? bannerAd, mainbannerAd;
 
-  BannerAd? bannerAd,mainbannerAd;
-
-  BannerAd? anchoredAdaptiveAd,mainanchoredAdaptiveAd;
+  BannerAd? anchoredAdaptiveAd, mainanchoredAdaptiveAd;
   InterstitialAd? interstitialAd;
   bool isBannerAdReady = true;
   bool mainisBannerAdReady = true;
@@ -50,7 +47,7 @@ class Admob_Helper  {
 
   /// Loads a banner ad.
   void loadBannerAd() {
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       bannerAd = BannerAd(
         adUnitId: Constent.bannerAdID,
         request: const AdRequest(),
@@ -71,12 +68,12 @@ class Admob_Helper  {
             ad.dispose();
           },
         ),
-      )
-        ..load();
+      )..load();
     }
   }
+
   void loadsmallBannerAd() {
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       bannerAd = BannerAd(
         adUnitId: Constent.bannerAdID,
         request: const AdRequest(),
@@ -97,12 +94,12 @@ class Admob_Helper  {
             ad.dispose();
           },
         ),
-      )
-        ..load();
+      )..load();
     }
   }
+
   void loadsmall1BannerAd() {
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       bannerAd = BannerAd(
         adUnitId: Constent.bannerAdID,
         request: const AdRequest(),
@@ -123,13 +120,12 @@ class Admob_Helper  {
             ad.dispose();
           },
         ),
-      )
-        ..load();
+      )..load();
     }
   }
 
   void mainloadsmall1BannerAd() {
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       mainbannerAd = BannerAd(
         adUnitId: Constent.bannerAdID,
         request: const AdRequest(),
@@ -150,16 +146,16 @@ class Admob_Helper  {
             ad.dispose();
           },
         ),
-      )
-        ..load();
+      )..load();
     }
   }
+
   Future<void> adaptiveloadAd() async {
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       final AnchoredAdaptiveBannerAdSize? size =
-      await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-          Get.width.truncate());
+          await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+              Get.width.truncate());
 
       if (size == null) {
         print('Unable to get height of anchored banner.');
@@ -190,7 +186,7 @@ class Admob_Helper  {
             print('Anchored adaptive banner failedToLoad: $error');
             anchoredAdaptiveAd = null;
             ad.dispose();
-          //  adaptiveloadAd();
+            //  adaptiveloadAd();
           },
         ),
       );
@@ -199,12 +195,11 @@ class Admob_Helper  {
   }
 
   Future<void> mainjadaptiveloadAd() async {
-
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
-    if(!Constent.adspurchase) {
+    if (!Constent.adspurchase) {
       final AnchoredAdaptiveBannerAdSize? size =
-      await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-          Get.width.truncate());
+          await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+              Get.width.truncate());
 
       if (size == null) {
         print('Unable to get height of anchored banner.');
@@ -227,8 +222,8 @@ class Admob_Helper  {
             print("Bannerr loadede file eee 12" +
                 mainisBannerLoaded.value.toString());
             mainisBannerLoaded.value = true;
-            print(
-                "Bannerr loadede file eee " + mainisBannerLoaded.value.toString());
+            print("Bannerr loadede file eee " +
+                mainisBannerLoaded.value.toString());
             //  });
           },
           onAdFailedToLoad: (Ad ad, LoadAdError error) {
@@ -243,9 +238,8 @@ class Admob_Helper  {
     }
   }
 
-
-  void deletebanner(){
-    if(bannerAd!=null){
+  void deletebanner() {
+    if (bannerAd != null) {
       bannerAd!.dispose();
     }
   }
@@ -262,14 +256,13 @@ class Admob_Helper  {
               onAdLoaded: (ad) {
                 print("Interstital loaded");
 
-
                 debugPrint('$ad loaded.');
                 // Keep a reference to the ad so you can show it later.
                 interstitialAd = ad;
               },
               // Called when an ad request failed.
               onAdFailedToLoad: (LoadAdError error) {
-               // loadInterstitalAd();
+                // loadInterstitalAd();
                 debugPrint('InterstitialAd failed to load: $error');
               },
             ));
@@ -285,27 +278,27 @@ class Admob_Helper  {
     }
   }
 
-  void showInterstitialAd( {bool isSplash = false,Function? callback}) {
-    if(!Constent.adspurchase) {
-    if(interstitialAd!=null) {
-     /* if (Constent.isAlternativeopenInterstitial){*/
+  void showInterstitialAd({bool isSplash = false, Function? callback}) {
+    if (!Constent.adspurchase) {
+      if (interstitialAd != null) {
+        /* if (Constent.isAlternativeopenInterstitial){*/
         print("show ads:" + interstitialAd.toString());
 //    if(AppConst.adspurchase){
-      if (Constent.isAlternativeInterstitial) {
-        if (!isSplash) {
-          interstitialAdCallBack(callback);
-        } else {
-          interstitialAdCallBack1();
-        }
-        interstitialAd?.show();
+        if (Constent.isAlternativeInterstitial) {
+          if (!isSplash) {
+            interstitialAdCallBack(callback);
+          } else {
+            interstitialAdCallBack1();
+          }
+          interstitialAd?.show();
 
-        Constent.isAlternativeInterstitial = false;
-      } else {
-        loadInterstitalAd();
-        Constent.isAlternativeInterstitial = true;
-        if (!isSplash) {
-          callback!();
-          /*if (nextScreen == 'no') {
+          Constent.isAlternativeInterstitial = false;
+        } else {
+          loadInterstitalAd();
+          Constent.isAlternativeInterstitial = true;
+          if (!isSplash) {
+            callback!();
+            /*if (nextScreen == 'no') {
             print('call function here');
             callback!();
           }
@@ -313,8 +306,8 @@ class Admob_Helper  {
             print('call Class here');
             Get.toNamed(nextScreen);
           }*/
+          }
         }
-      }
 /*    }
       else{
         Constent.isAlternativeopenInterstitial=true;
@@ -333,20 +326,15 @@ class Admob_Helper  {
 
 
       }*/
-    }
-
-
-    else if(isSplash){
-      if(Platform.isAndroid){
-        Get.off(() => MainScreen_View());
-      }
-      else{
-        Get.off(() => MainScreen_ViewIos());
-      }
-    }
-    else{
-      callback!();
-      /*if (nextScreen == 'no') {
+      } else if (isSplash) {
+        if (Platform.isAndroid) {
+          Get.off(() => MainScreen_View());
+        } else {
+          Get.off(() => MainScreen_ViewIos());
+        }
+      } else {
+        callback!();
+        /*if (nextScreen == 'no') {
         print('call function here');
         callback!();
       }
@@ -354,29 +342,23 @@ class Admob_Helper  {
         print('call Class here');
         Get.toNamed(nextScreen);
       }*/
-    }
+      }
 
-
-    /* }
+      /* }
     else {
       loadInterstitalAd();
       //AppConst.isAlternativeInterstitial =true;
     }*/
-  }
-    else{
+    } else {
       callback!();
-
     }
   }
 
   Future<void> loadNativeAdSmall(
-      {
-        TemplateType type = TemplateType.small,
-        String factoryId = 'smallListTile'
-      }
-      ) async {
+      {TemplateType type = TemplateType.small,
+      String factoryId = 'smallListTile'}) async {
     try {
-      if(!Constent.adspurchase) {
+      if (!Constent.adspurchase) {
         nativeAdSmall = NativeAd(
           factoryId: factoryId,
           adUnitId: Constent.nativeAdID,
@@ -403,12 +385,13 @@ class Admob_Helper  {
       print(e.toString());
     }
   }
+
   Future<void> loadNativeAd(
       {TemplateType type = TemplateType.medium,
-        String factoryId = 'listTileMedium2'}) async {
+      String factoryId = 'listTileMedium2'}) async {
     try {
-      if(!Constent.adspurchase) {
-        nativeAd =   NativeAd(
+      if (!Constent.adspurchase) {
+        nativeAd = NativeAd(
           factoryId: factoryId,
           adUnitId: Constent.nativeAdID,
           listener: NativeAdListener(
@@ -428,32 +411,28 @@ class Admob_Helper  {
           request: const AdRequest(),
         );
         return nativeAd!.load();
-
-      }
-      else{
-        return null ;
+      } else {
+        return null;
       }
     } catch (e) {
       print(e.toString());
     }
   }
-  void interstitialAdCallBack(Function? callback){
+
+  void interstitialAdCallBack(Function? callback) {
     interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      // Called when the ad showed the full screen content.
+        // Called when the ad showed the full screen content.
         onAdShowedFullScreenContent: (ad) {
           /* if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = false;
                       }*/
-          print("test Interstial Ads " +
-              Constent.appopencheck.toString());
+          print("test Interstial Ads " + Constent.appopencheck.toString());
           Constent.appopencheck = false;
-          Constent.isInterstialAdShowing.value=true;
-
+          Constent.isInterstialAdShowing.value = true;
 
           Constent.isAlternativeInterstitial = false;
 
-          print("test Interstial Ads124 " +
-              Constent.appopencheck.toString());
+          print("test Interstial Ads124 " + Constent.appopencheck.toString());
           //  nativeAdIsLoaded.value=false;
         },
         // Called when an impression occurs on the ad.
@@ -464,7 +443,7 @@ class Admob_Helper  {
                         nativeAdIsLoaded.value = true;
                       }*/
           Constent.isAlternativeInterstitial = false;
-          Constent.isInterstialAdShowing.value=false;
+          Constent.isInterstialAdShowing.value = false;
 
           /* if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = true;
@@ -492,14 +471,14 @@ class Admob_Helper  {
           /*if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = true;
                       }*/
-          Constent.isInterstialAdShowing.value=false;
+          Constent.isInterstialAdShowing.value = false;
           Constent.appopencheck = true;
           //nativeAdIsLoaded.value=true;
           interstitialAd?.dispose();
           interstitialAd = null;
           loadInterstitalAd();
           callback!();
-         /* if(nextScreen=='no'){
+          /* if(nextScreen=='no'){
             print('call function here');
             callback!();
           }
@@ -512,21 +491,20 @@ class Admob_Helper  {
         onAdClicked: (ad) {});
   }
 
-  void interstitialAdCallBack1(){
+  void interstitialAdCallBack1() {
     interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      // Called when the ad showed the full screen content.
+        // Called when the ad showed the full screen content.
         onAdShowedFullScreenContent: (ad) {
           /* if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = false;
                       }*/
-          print("test Interstial Ads " +
-              Constent.appopencheck.toString());
+          print("test Interstial Ads " + Constent.appopencheck.toString());
           Constent.appopencheck = false;
           Constent.isAlternativeInterstitial = false;
-          Constent.isInterstialAdShowing.value=false;;
+          Constent.isInterstialAdShowing.value = false;
+          ;
 
-          print("test Interstial Ads124 " +
-              Constent.appopencheck.toString());
+          print("test Interstial Ads124 " + Constent.appopencheck.toString());
           //  nativeAdIsLoaded.value=false;
         },
         // Called when an impression occurs on the ad.
@@ -537,7 +515,7 @@ class Admob_Helper  {
                         nativeAdIsLoaded.value = true;
                       }*/
           Constent.isAlternativeInterstitial = false;
-          Constent.isInterstialAdShowing.value=false;
+          Constent.isInterstialAdShowing.value = false;
           /* if(anchoredAdaptiveAd!=null) {
                         isBannerLoaded.value = true;
                       }*/
@@ -545,8 +523,8 @@ class Admob_Helper  {
           // Dispose the ad here to free resources.
           interstitialAd?.dispose();
           interstitialAd = null;
-        //  loadInterstitalAd();
-       /*   if(Platform.isAndroid){
+          //  loadInterstitalAd();
+          /*   if(Platform.isAndroid){
             Get.off(() => MainScreen_View());
           }
           else{
@@ -562,25 +540,22 @@ class Admob_Helper  {
                         isBannerLoaded.value = true;
                       }*/
 
-          Constent.isInterstialAdShowing.value=false;
+          Constent.isInterstialAdShowing.value = false;
           Constent.appopencheck = true;
           //nativeAdIsLoaded.value=true;
           interstitialAd?.dispose();
           interstitialAd = null;
           Get.off(() => MainScreen_ViewIos());
-         /* if(Platform.isAndroid){
+          /* if(Platform.isAndroid){
             Get.off(() => MainScreen_View());
           }
           else{
             Get.off(() => MainScreen_ViewIos());
           }*/
-
         },
         // Called when a click is recorded for an ad.
         onAdClicked: (ad) {});
   }
-
-
 
   /* @override
   void dispose() {
@@ -600,7 +575,6 @@ class Admob_Helper  {
   }*/
 
   loadopenupad() {
-
     AppOpenAd.load(
       adUnitId: Constent.openupAdID,
       orientation: AppOpenAd.orientationPortrait,
@@ -616,7 +590,6 @@ class Admob_Helper  {
         },
       ),
     );
-
   }
 
   /* void callopenuponstart(){
@@ -639,9 +612,6 @@ class Admob_Helper  {
       loadopenupad();
       return;
     }
-
-
-
 
     //print('Interstital alreay show 455565.'+Constent.isAlternativeInterstitialopen.toString());
     /*if(!Constent.isAlternativeInterstitialopen) {
@@ -666,19 +636,16 @@ class Admob_Helper  {
       loadopenupad();
       return;
     }
-    if(!Constent.appopencheck) {
+    if (!Constent.appopencheck) {
       print('Interstital alreay show .');
       return;
     }
-    if(Constent.isAlternativeInterstitial) {
+    if (Constent.isAlternativeInterstitial) {
       Constent.isAlternativeInterstitial = false;
-
-    }
-    else{
+    } else {
       Constent.isAlternativeInterstitial = true;
       return;
     }
-
 
     /* if(Const.adspurchase){
       print("Ads purchase");
@@ -688,15 +655,15 @@ class Admob_Helper  {
     // Set the fullScreenContentCallback and show the ad.
     appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
-        print("openup ads show "+isBannerLoaded.value.toString());
+        print("openup ads show " + isBannerLoaded.value.toString());
         //print("1openup ads show "+nativeAdIsLoaded.value.toString());
 
         //if(anchoredAdaptiveAd!=null) {
         print("open up ads call hereee");
-        Constent.isOpenAppAdShowing.value=true;
+        Constent.isOpenAppAdShowing.value = true;
 
         //  }
-        print("open up ads call hereee12444"+isBannerLoaded.value.toString());
+        print("open up ads call hereee12444" + isBannerLoaded.value.toString());
         //  if(nativeAd!=null){
         //  nativeAdIsLoaded.value=false;
         //  }
@@ -704,7 +671,7 @@ class Admob_Helper  {
         // nativeAdIsLoaded.value = false;
         _isShowingAd = true;
         //  print("123openup ads show "+nativeAdIsLoaded.value.toString());
-        print("openup ads show12 "+nativeAdIsLoaded.value.toString());
+        print("openup ads show12 " + nativeAdIsLoaded.value.toString());
         print('$ad onAdShowedFullScreenContent');
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
@@ -713,12 +680,11 @@ class Admob_Helper  {
         //nativeAdIsLoaded.value = true;
         //if(anchoredAdaptiveAd!=null) {
         //isBannerLoaded.value=true;
-        Constent.isOpenAppAdShowing.value=false;
+        Constent.isOpenAppAdShowing.value = false;
         // }
         //  if(nativeAd!=null){
         // nativeAdIsLoaded.value=true;
         // }
-
 
         ad.dispose();
         appOpenAd = null;
@@ -729,7 +695,7 @@ class Admob_Helper  {
         //   nativeAdIsLoaded.value = true;
         //  if(anchoredAdaptiveAd!=null) {
         //  isBannerLoaded.value=true;
-        Constent.isOpenAppAdShowing.value=false;
+        Constent.isOpenAppAdShowing.value = false;
         //  }
         //  if(nativeAd!=null){
         // nativeAdIsLoaded.value=true;
@@ -744,7 +710,6 @@ class Admob_Helper  {
     // if(AppConst.isAlternativeInterstitial){
     appOpenAd!.show();
     //}
-
   }
 
   /*showbanner(){
@@ -821,10 +786,10 @@ class Admob_Helper  {
             print("Native loaded");
             print('$NativeAd loaded.');
             //  setState(() {
-            nativeAdIsLoaded.value=true;
+            nativeAdIsLoaded.value = true;
             //nativeAdIsLoaded.value = true;
             //     print("nativecheck ads show "+nativeAdIsLoaded.value.toString());
-            print("nativecheck ads show123 "+nativeAdIsLoaded.toString());
+            print("nativecheck ads show123 " + nativeAdIsLoaded.toString());
             // });
           },
           onAdFailedToLoad: (ad, error) {
@@ -874,5 +839,4 @@ class Admob_Helper  {
                 size: 16.0)))
       ..load();
   }
-
 }

@@ -8,8 +8,6 @@ import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:shimmer/shimmer.dart';
 
-
-
 /*
 class HistoryView extends StatelessWidget {
   const HistoryView({super.key});
@@ -22,8 +20,7 @@ class HistoryView extends StatelessWidget {
 */
 
 class HistoryView extends StatelessWidget {
-  HistoryViewModel  viewModel = Get.put(HistoryViewModel());
-
+  HistoryViewModel viewModel = Get.put(HistoryViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,7 @@ class HistoryView extends StatelessWidget {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor:AppColor.primaryColor,
+        backgroundColor: AppColor.primaryColor,
         title: Text(
           " History",
           style: TextStyle(
@@ -57,15 +54,11 @@ class HistoryView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.delete_forever),
             color: Colors.white,
-
             onPressed: () {
               viewModel.deleteAllUser();
 
               // Handle your icon tap here
             },
-
-
-
           ),
         ],
       ),
@@ -80,48 +73,65 @@ class HistoryView extends StatelessWidget {
             ),*/
 
             Expanded(
-              flex: 10,
-              child:Obx(()=> viewModel.showProgressBar.value
-                  ? Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColor.yellowColor), // Set color here
-                ),
-              ): Obx(() =>(viewModel.users.isEmpty) ? Lottie.asset(
-                'assets/nodatafound.json',
-                height: 200.0,
-                repeat: true,
-                reverse: true,
-                animate: true,
-              ):
-                  SingleChildScrollView(
-                child: Column(
-                  children:
-
-                  List.generate(viewModel.users.length, (index) {
-                    var user = viewModel.users[index];
-                    // Replace this with your actual item widget
-                    return Container(
-                      margin: EdgeInsets.only(left: 30.0,right: 30.0,top:15.0,bottom: 15.0),
-                      padding: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColor.primaryColor,  // You can set the border color here.
-                          width: 2.0,          // You can set the border width here.
-                        ),
-                        color: Colors.white, // Set the background color of the container
-                        borderRadius: BorderRadius.circular(16.0), // Set the corner radius
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey, // Set the shadow color
-                            offset: Offset(0, 2), // Set the shadow offset
-                            blurRadius: 4.0, // Set the blur radius
-                            spreadRadius: 0, // Set the spread radius
+                flex: 10,
+                child: Obx(
+                  () => viewModel.showProgressBar.value
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColor.yellowColor), // Set color here
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        )
+                      : Obx(
+                          () => (viewModel.users.isEmpty)
+                              ? Lottie.asset(
+                                  'assets/nodatafound.json',
+                                  height: 200.0,
+                                  repeat: true,
+                                  reverse: true,
+                                  animate: true,
+                                )
+                              : SingleChildScrollView(
+                                  child: Column(
+                                    children: List.generate(
+                                        viewModel.users.length, (index) {
+                                      var user = viewModel.users[index];
+                                      // Replace this with your actual item widget
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            left: 30.0,
+                                            right: 30.0,
+                                            top: 15.0,
+                                            bottom: 15.0),
+                                        padding: EdgeInsets.all(10.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: AppColor
+                                                .primaryColor, // You can set the border color here.
+                                            width:
+                                                2.0, // You can set the border width here.
+                                          ),
+                                          color: Colors
+                                              .white, // Set the background color of the container
+                                          borderRadius: BorderRadius.circular(
+                                              16.0), // Set the corner radius
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors
+                                                  .grey, // Set the shadow color
+                                              offset: Offset(0,
+                                                  2), // Set the shadow offset
+                                              blurRadius:
+                                                  4.0, // Set the blur radius
+                                              spreadRadius:
+                                                  0, // Set the spread radius
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
 /*ReadMoreText(
                             textAlign: TextAlign.start,
                             user.id.toString(),
@@ -135,44 +145,52 @@ class HistoryView extends StatelessWidget {
                             //trimExpandedText: ' show less',
                           ),*/
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                               margin: EdgeInsets.only(top:6.0,left: 16.0,right: 16.0),
-                                child: const Text(
-
-                                  textAlign: TextAlign.start,
-                                 "Source:",
-                                  // trimLines: 1,
-                                  //   preDataText: "",
-                                  //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                  // colorClickableText: Colors.pink,
-                                  //  trimMode: TrimMode.Line,
-                                  //trimCollapsedText: '...Show detail',
-                                  //trimExpandedText: ' show less',
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 40.0),
-                                child: Text(
-
-                                  textAlign: TextAlign.start,
-                                  user.SourceLocation ?? "",
-                                 // trimLines: 1,
-                         //   preDataText: "",
-                         //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
-                                  style: TextStyle(color: Colors.black,),
-                                 // colorClickableText: Colors.pink,
-                                //  trimMode: TrimMode.Line,
-                                  //trimCollapsedText: '...Show detail',
-                                  //trimExpandedText: ' show less',
-                                ),
-                              ),
-                            ],
-                          ),
-    /*  Text(
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 6.0,
+                                                      left: 16.0,
+                                                      right: 16.0),
+                                                  child: const Text(
+                                                    textAlign: TextAlign.start,
+                                                    "Source:",
+                                                    // trimLines: 1,
+                                                    //   preDataText: "",
+                                                    //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    // colorClickableText: Colors.pink,
+                                                    //  trimMode: TrimMode.Line,
+                                                    //trimCollapsedText: '...Show detail',
+                                                    //trimExpandedText: ' show less',
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      left: 40.0),
+                                                  child: Text(
+                                                    textAlign: TextAlign.start,
+                                                    user.SourceLocation ?? "",
+                                                    // trimLines: 1,
+                                                    //   preDataText: "",
+                                                    //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                    // colorClickableText: Colors.pink,
+                                                    //  trimMode: TrimMode.Line,
+                                                    //trimCollapsedText: '...Show detail',
+                                                    //trimExpandedText: ' show less',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            /*  Text(
                             textAlign: TextAlign.start,
                             user.distinationText ?? "",
                           //  trimLines: 1,
@@ -185,47 +203,58 @@ class HistoryView extends StatelessWidget {
                             //trimExpandedText: ' show less',
                           ),*/
 
-
-                          SizedBox(height: 5.0,),
-                          Divider(
-                            color: AppColor.primaryColor,
-                          ),
-                          SizedBox(height: 5.0,),
-
-                          Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top:6.0,left: 16.0,right: 16.0),
-                                child: const Text(
-
-                                  textAlign: TextAlign.start,
-                                  "Destination:",
-                                  // trimLines: 1,
-                                  //   preDataText: "",
-                                  //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                  // colorClickableText: Colors.pink,
-                                  //  trimMode: TrimMode.Line,
-                                  //trimCollapsedText: '...Show detail',
-                                  //trimExpandedText: ' show less',
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(left: 40.0),
-                                child: Text(
-                                  textAlign: TextAlign.start, user.DestinationLocation ?? "",
-                                //  trimLines: 1,
-                                 // preDataText: "",
-                                 // preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
-                                  style: TextStyle(color: Colors.black),
-                                 // colorClickableText: Colors.pink,
-                                //  trimMode: TrimMode.Line,
-                                  //trimCollapsedText: '...Show detail',
-                                  //trimExpandedText: ' show less',
-                                ),
-                              ),
-                            ],
-                          ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Divider(
+                                              color: AppColor.primaryColor,
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 6.0,
+                                                      left: 16.0,
+                                                      right: 16.0),
+                                                  child: const Text(
+                                                    textAlign: TextAlign.start,
+                                                    "Destination:",
+                                                    // trimLines: 1,
+                                                    //   preDataText: "",
+                                                    //   preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    // colorClickableText: Colors.pink,
+                                                    //  trimMode: TrimMode.Line,
+                                                    //trimCollapsedText: '...Show detail',
+                                                    //trimExpandedText: ' show less',
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 40.0),
+                                                  child: Text(
+                                                    textAlign: TextAlign.start,
+                                                    user.DestinationLocation ??
+                                                        "",
+                                                    //  trimLines: 1,
+                                                    // preDataText: "",
+                                                    // preDataTextStyle: TextStyle(fontWeight: FontWeight.w500),
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                    // colorClickableText: Colors.pink,
+                                                    //  trimMode: TrimMode.Line,
+                                                    //trimCollapsedText: '...Show detail',
+                                                    //trimExpandedText: ' show less',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
 /* Text(
                             textAlign: TextAlign.start,
                             user.translatedText ?? "",
@@ -239,34 +268,56 @@ class HistoryView extends StatelessWidget {
                             //trimExpandedText: ' show less',
                           ),*/
 
-                          SizedBox(height: 12.0,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                 Get.to(() => NavigationScreenView(),
-                                    arguments: {"source": user.SourceLocation,"destination": user.DestinationLocation,"Sourcelath":user.SourceLath,"Sourcelog":user.SourceLog,"destinationlath":user.DestinationLath,"destinationlog":user.DestinationLog});
-                                 // userController.admob_helper.showInterstitialAd();
-                                  //Get.toNamed(RoutesName.textView);
-                                 // Get.toNamed(RoutesName.textView, arguments: {'view': "pdf", 'text': user.distinationText, 'translatedTextAlready': user.translatedText});
-                                },
-                                child:
+                                            SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.to(
+                                                        () =>
+                                                            NavigationScreenView(),
+                                                        arguments: {
+                                                          "source": user
+                                                              .SourceLocation,
+                                                          "destination": user
+                                                              .DestinationLocation,
+                                                          "Sourcelath":
+                                                              user.SourceLath,
+                                                          "Sourcelog":
+                                                              user.SourceLog,
+                                                          "destinationlath": user
+                                                              .DestinationLath,
+                                                          "destinationlog": user
+                                                              .DestinationLog
+                                                        });
+                                                    // userController.admob_helper.showInterstitialAd();
+                                                    //Get.toNamed(RoutesName.textView);
+                                                    // Get.toNamed(RoutesName.textView, arguments: {'view': "pdf", 'text': user.distinationText, 'translatedTextAlready': user.translatedText});
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        50.0, // Adjust the width as needed
+                                                    height:
+                                                        50.0, // Adjust the height as needed
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: AppColor
+                                                          .primaryColor, // Background color for the circular icon
+                                                    ),
+                                                    alignment: Alignment.center,
 
-                                Container(
-                                  width: 50.0, // Adjust the width as needed
-                                  height: 50.0, // Adjust the height as needed
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColor.primaryColor, // Background color for the circular icon
-                                  ),
-                                  alignment: Alignment.center,
+                                                    child: const Icon(
+                                                      Icons.navigation,
+                                                      color: Colors.white,
+                                                    ),
 
-                                  child:const Icon(Icons.navigation, color: Colors.white,),
-
-
-                                  /*Image(
+                                                    /*Image(
                                     width: 30,
                                     height: 30,
                                     color: Colors.white,
@@ -282,8 +333,8 @@ class HistoryView extends StatelessWidget {
             color: Colors.white,
           ),
         ),*/
-                                ),
-                                /*Container(
+                                                  ),
+                                                  /*Container(
                                   padding: EdgeInsets.only(left: 10,right: 10,top: 4,bottom: 4),
                                   decoration: BoxDecoration(
 
@@ -299,29 +350,41 @@ class HistoryView extends StatelessWidget {
                                     ),
                                   ),
                                 ),*/
-                              ),
-                              SizedBox(width: 6,),
-                              SizedBox(width: 6,),
-                              InkWell(
-                                onTap: (){
-                                //  userController.admob_helper.showInterstitialAd();
-                                  print("User Id for delete is "+user.id.toString());
-                                  viewModel.deleteUser(user.id!);
-                                  //Get.toNamed(RoutesName.textView);
-                                  //Get.toNamed(RoutesName.textView, arguments: {'view': "camera", 'text': user.distinationText});
-                                },
-                                child:Container(
-                                  width: 50.0, // Adjust the width as needed
-                                  height: 50.0, // Adjust the height as needed
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColor.primaryColor, // Background color for the circular icon
-                                  ),
-                                  alignment: Alignment.center,
-                                  child:const Icon(Icons.delete, color: Colors.white,),
+                                                ),
+                                                SizedBox(
+                                                  width: 6,
+                                                ),
+                                                SizedBox(
+                                                  width: 6,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    //  userController.admob_helper.showInterstitialAd();
+                                                    print(
+                                                        "User Id for delete is " +
+                                                            user.id.toString());
+                                                    viewModel
+                                                        .deleteUser(user.id!);
+                                                    //Get.toNamed(RoutesName.textView);
+                                                    //Get.toNamed(RoutesName.textView, arguments: {'view': "camera", 'text': user.distinationText});
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        50.0, // Adjust the width as needed
+                                                    height:
+                                                        50.0, // Adjust the height as needed
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: AppColor
+                                                          .primaryColor, // Background color for the circular icon
+                                                    ),
+                                                    alignment: Alignment.center,
+                                                    child: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.white,
+                                                    ),
 
-
-                                  /*Image(
+                                                    /*Image(
                                     width: 30,
                                     height: 30,
                                     color: Colors.white,
@@ -337,9 +400,9 @@ class HistoryView extends StatelessWidget {
             color: Colors.white,
           ),
         ),*/
-                                ),
+                                                  ),
 
-                                /*Container(
+                                                  /*Container(
                                   padding: EdgeInsets.only(left: 10,right: 10,top: 4,bottom: 4),
                                   decoration: BoxDecoration(
 
@@ -355,79 +418,91 @@ class HistoryView extends StatelessWidget {
                                     ),
                                   ),
                                 ),*/
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-              )),
-            )),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                        ),
+                )),
             /*SizedBox(height: 8,),*/
             Expanded(
               flex: 2,
-              child:  Column(
+              child: Column(
                 children: [
+                  Expanded(flex: 3, child: Container()),
                   Expanded(
-                      flex: 3,
-                      child:Container()),
-                  Expanded(
-                      flex: 7,
-                      child:
-                      Container(
-                          margin: EdgeInsets.only(top: 5.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(3),
-                              border: Border(
-                                top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                // You can remove the left and right borders by commenting them out
-                                // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                                // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                              ),
-                         //   border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),child:Container(
-                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                          child: Obx(()=>
-                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase && viewModel.users.isNotEmpty)?
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SafeArea(
-                              child: SizedBox(
-                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
-                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
-                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
-                              ),
-                            ),
-                          )
-                              :(!Constent.adspurchase && viewModel.users.isNotEmpty)?
-                          SizedBox(
-                              width:double.infinity,
-                              height: 30,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  color: Colors.grey,
-                                ),
-                              )
-                          ):SizedBox()
-                          )))),
+                    flex: 7,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 5.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFe8f0fe),
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border(
+                          top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          bottom:
+                              BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          // You can remove the left and right borders by commenting them out
+                          // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                        ),
+                        //   border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                        child: Obx(() =>
+                            (viewModel.admob_helper.isBannerLoaded.value &&
+                                    !Constent.isOpenAppAdShowing.value &&
+                                    !Constent.isInterstialAdShowing.value &&
+                                    !Constent.adspurchase &&
+                                    viewModel.users.isNotEmpty)
+                                ? Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SafeArea(
+                                      child: SizedBox(
+                                        width: viewModel.admob_helper
+                                            .anchoredAdaptiveAd!.size.width
+                                            .toDouble(),
+                                        height: viewModel.admob_helper
+                                            .anchoredAdaptiveAd!.size.height
+                                            .toDouble(),
+                                        child: AdWidget(
+                                            ad: viewModel.admob_helper
+                                                .anchoredAdaptiveAd!),
+                                      ),
+                                    ),
+                                  )
+                                : (!Constent.adspurchase &&
+                                        viewModel.users.isNotEmpty)
+                                    ? SizedBox(
+                                        width: double.infinity,
+                                        height: 30,
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.grey[300]!,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            color: Colors.grey,
+                                          ),
+                                        ))
+                                    : SizedBox()),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -484,7 +559,6 @@ Padding(
   }
 */
 
-
 /*Widget showBannerAd(){
     return Obx(
           ()=>
@@ -506,5 +580,4 @@ Padding(
       SizedBox(),
     );
   }*/
-
 }

@@ -1,5 +1,5 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 
 class AppLifecycleReactor {
   final Admob_Helper appOpenAdManager;

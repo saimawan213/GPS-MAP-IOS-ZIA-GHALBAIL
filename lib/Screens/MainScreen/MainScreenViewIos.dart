@@ -168,23 +168,27 @@ class MainScreen_ViewIos extends StatelessWidget {
 
                             //  SizedBox(width: 8.0), // Add spacing between cards
                             Expanded(
-                                child: Container(
-                                    child: GestureDetector(
-                              onTap: () {
-                                viewModel.admob_helper.showInterstitialAd(
-                                    callback: () {
-                                  Get.to(() => TrafficLightView());
-                                });
-                              },
                               child: Container(
-                                margin: EdgeInsets.only(left: 1.0, right: 1.0),
-                                child: CardViewIos(
-                                  imageUrl:
-                                      'assets/images/trafficlight.png', // Replace with your image URL
-                                  labelText: 'Traffic Light',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // viewModel.admob_helper.showInterstitialAd(
+                                    //   callback: () {
+                                    Get.to(() => TrafficLightView());
+                                    // },
+                                    // );
+                                  },
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.only(left: 1.0, right: 1.0),
+                                    child: CardViewIos(
+                                      imageUrl:
+                                          'assets/images/trafficlight.png', // Replace with your image URL
+                                      labelText: 'Traffic Light',
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ))),
+                            ),
                             //SizedBox(width: 8.0), // Add spacing between cards
 
                             Expanded(
@@ -603,59 +607,64 @@ class MainScreen_ViewIos extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(
-                    margin: EdgeInsets.only(top: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border(
-                        top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                        bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                        // You can remove the left and right borders by commenting them out
-                        // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                        // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                      ),
-
-                      /*Border.all(color: AppColor.borderColor,width: 3),*/ // Adjust the radius as needed
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
+                  margin: EdgeInsets.only(top: 20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(3),
+                    border: Border(
+                      top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                      bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                      // You can remove the left and right borders by commenting them out
+                      // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                      // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
                     ),
-                    child: Container(
-                        child: Obx(() =>
-                            (viewModel.admob_helper.mainisBannerLoaded.value &&
-                                    !Constent.isOpenAppAdShowing.value &&
-                                    !Constent.isInterstialAdShowing.value)
-                                ? Align(
-                                    alignment: Alignment.center,
-                                    child: SafeArea(
-                                      child: SizedBox(
-                                        width: viewModel.admob_helper
-                                            .mainanchoredAdaptiveAd!.size.width
-                                            .toDouble(),
-                                        height: viewModel.admob_helper
-                                            .mainanchoredAdaptiveAd!.size.height
-                                            .toDouble(),
-                                        child: AdWidget(
-                                            ad: viewModel.admob_helper
-                                                .mainanchoredAdaptiveAd!),
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox(
-                                    width: double.infinity,
-                                    height: 30,
-                                    child: Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.white,
-                                      child: Container(
-                                        color: Colors.grey,
-                                      ),
-                                    ))))),
+
+                    /*Border.all(color: AppColor.borderColor,width: 3),*/ // Adjust the radius as needed
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    color: Color(0xFFe8f0fe),
+                    child: Obx(
+                      () => (viewModel.admob_helper.mainisBannerLoaded.value &&
+                              !Constent.isOpenAppAdShowing.value &&
+                              !Constent.isInterstialAdShowing.value)
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: SafeArea(
+                                child: SizedBox(
+                                  width: viewModel.admob_helper
+                                      .mainanchoredAdaptiveAd!.size.width
+                                      .toDouble(),
+                                  height: viewModel.admob_helper
+                                      .mainanchoredAdaptiveAd!.size.height
+                                      .toDouble(),
+                                  child: AdWidget(
+                                      ad: viewModel.admob_helper
+                                          .mainanchoredAdaptiveAd!),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 30,
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
               ),
               /*Expanded(
         flex: 2,

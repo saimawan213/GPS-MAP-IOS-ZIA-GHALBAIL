@@ -2,16 +2,15 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/DatabaseHandler.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/locationService.dart';
 
-
 class HistoryViewModel extends GetxController {
   LocationService _service = LocationService();
   var users = <User>[].obs;
- Admob_Helper admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
   RxBool showProgressBar = true.obs;
 //  AdsManager admob_helper = AdsManager();
 
@@ -22,7 +21,7 @@ class HistoryViewModel extends GetxController {
     startTimer();
     fetchUsers();
 
-   // admob_helper.loadsmall1BannerAd();
+    // admob_helper.loadsmall1BannerAd();
   }
 
   Future<void> fetchUsers() async {
@@ -32,13 +31,21 @@ class HistoryViewModel extends GetxController {
 
   void startTimer() {
     Future.delayed(Duration(seconds: 2), () {
-      print("Show progress bar value"+showProgressBar.value.toString());
+      print("Show progress bar value" + showProgressBar.value.toString());
       showProgressBar.value = false;
-      print("Show progress bar value12333"+showProgressBar.value.toString());
+      print("Show progress bar value12333" + showProgressBar.value.toString());
     });
   }
-  Future<int> addUser(String SourceLocation, String DestinationLocation,double SourceLog, double SourceLath,double DestinationLog,double DestinationLath) async {
-    int result = await _service.addUser(SourceLocation, DestinationLocation, SourceLog, SourceLath, DestinationLog, DestinationLath);
+
+  Future<int> addUser(
+      String SourceLocation,
+      String DestinationLocation,
+      double SourceLog,
+      double SourceLath,
+      double DestinationLog,
+      double DestinationLath) async {
+    int result = await _service.addUser(SourceLocation, DestinationLocation,
+        SourceLog, SourceLath, DestinationLog, DestinationLath);
     if (result > 0) {
       // Reload the users list after adding a new user
       await fetchUsers();
@@ -57,7 +64,7 @@ class HistoryViewModel extends GetxController {
 
   Future<int> deleteUser(int id) async {
     int result = await _service.deleteUser(id);
-    print("result in userController is "+ result.toString());
+    print("result in userController is " + result.toString());
     if (result > 0) {
       SnackBar mySnackBar = const SnackBar(
         content: Text('Item Deleted Successfully'),
@@ -70,24 +77,25 @@ class HistoryViewModel extends GetxController {
 
     return result;
   }
+
   Future<int> deleteAllUser() async {
     int result = await _service.deleteAllUser();
     await fetchUsers();
     return result;
   }
 
-
   @override
   void onReady() {
     admob_helper.adaptiveloadAd();
-  //  admob_helper.loadInterstitalAd();
+    //  admob_helper.loadInterstitalAd();
     super.onReady();
   }
+
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    admob_helper.isBannerLoaded.value=false;
-    admob_helper.anchoredAdaptiveAd=null;
+    admob_helper.isBannerLoaded.value = false;
+    admob_helper.anchoredAdaptiveAd = null;
   }
 }

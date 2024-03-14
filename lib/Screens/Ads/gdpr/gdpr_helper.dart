@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class GeneralDataProtectionRegulationHelper {
-  final GetStorage storage = GetStorage(); // Create an instance of get_storage
 
   Future<FormError?> requestConsentInfoUpdate() async {
     final completer = Completer<FormError?>();

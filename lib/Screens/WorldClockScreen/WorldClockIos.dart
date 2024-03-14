@@ -27,23 +27,22 @@ class WorldClockViewIos extends StatelessWidget {
     return Scaffold(
       appBar: appBar(),
       //  bottomNavigationBar: bannerAd(),
-      body:Center(
-        child: Obx(
-                () =>(viewModel.data.value.isEmpty)?CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColor.primaryColor), // Set color here
-            ):
-
-
-            Column(
-              children: [
-                locationBtn(context),
-                firstContainer(context),
-                secondContainer(),
-                bannerAd(),
-                SizedBox(height: 5),
-                // bannerAd(),
-              ],
-            )),
+      body: Center(
+        child: Obx(() => (viewModel.data.value.isEmpty)
+            ? CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColor.primaryColor), // Set color here
+              )
+            : Column(
+                children: [
+                  locationBtn(context),
+                  firstContainer(context),
+                  secondContainer(),
+                  bannerAd(),
+                  SizedBox(height: 5),
+                  // bannerAd(),
+                ],
+              )),
       ),
     );
   }
@@ -53,7 +52,7 @@ class WorldClockViewIos extends StatelessWidget {
       flex: 4,
       child: Container(
           margin:
-          EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
+              EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
           padding: EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             border: Border.all(
@@ -75,11 +74,11 @@ class WorldClockViewIos extends StatelessWidget {
             ],
           ),
           child: Obx(
-                () => (viewModel.checknet.value)
+            () => (viewModel.checknet.value)
                 ? Refrshindicatorwodge(context)
                 : SizedBox(
-              width: double.infinity,
-            ),
+                    width: double.infinity,
+                  ),
             /* Constent.showNoConnectionDialog(context).then((data) async {
          // await setupWorldTime();
         }),*/
@@ -92,7 +91,7 @@ class WorldClockViewIos extends StatelessWidget {
       flex: 4,
       child: Container(
         margin:
-        EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
+            EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0),
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           border: Border.all(
@@ -114,7 +113,7 @@ class WorldClockViewIos extends StatelessWidget {
           ],
         ),
         child: Obx(
-              () => Column(
+          () => Column(
             children: [
               Expanded(
                 flex: 5,
@@ -127,10 +126,9 @@ class WorldClockViewIos extends StatelessWidget {
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/sunrise.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/sunrise.png"), // Replace with the correct asset path
+                            )),
                         /*Image(
                           image: AssetImage("assets/images/sunrise.png"), // Replace with the correct asset path
                         ),*/
@@ -144,27 +142,24 @@ class WorldClockViewIos extends StatelessWidget {
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/sunset.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/sunset.png"), // Replace with the correct asset path
+                            )),
                         Text("Sunset"),
                         Text(viewModel.Sunset.value),
                       ],
                     ),
                     Column(
                       children: [
-
                         Container(
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/windspeed.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/windspeed.png"), // Replace with the correct asset path
+                            )),
                         Text("Wind Speed"),
-                        Text(viewModel.windSpeed.value+"m/s"),
+                        Text(viewModel.windSpeed.value + "m/s"),
                       ],
                     ),
                   ],
@@ -182,42 +177,37 @@ class WorldClockViewIos extends StatelessWidget {
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/pressure.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/pressure.png"), // Replace with the correct asset path
+                            )),
                         Text("Pressure"),
-                        Text(viewModel.pressure.value+"hPa"),
+                        Text(viewModel.pressure.value + "hPa"),
                       ],
                     ),
                     Column(
                       children: [
-
                         Container(
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/humidity.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/humidity.png"), // Replace with the correct asset path
+                            )),
                         Text("Humidity"),
-                        Text(viewModel.humidity.value+"%"),
+                        Text(viewModel.humidity.value + "%"),
                       ],
                     ),
                     Column(
                       children: [
-
                         Container(
                             width: 30.0,
                             height: 30.0,
                             child: Image(
-                              image: AssetImage("assets/images/clouds.png"), // Replace with the correct asset path
-                            )
-
-                        ),
+                              image: AssetImage(
+                                  "assets/images/clouds.png"), // Replace with the correct asset path
+                            )),
                         Text("clouds"),
-                        Text(viewModel.clouds.value+"%"),
+                        Text(viewModel.clouds.value + "%"),
                       ],
                     ),
                   ],
@@ -231,22 +221,21 @@ class WorldClockViewIos extends StatelessWidget {
   }
 
   Widget bannerAd() {
-    return  Expanded(
+    return Expanded(
       flex: 2,
-      child:  Column(
+      child: Column(
         children: [
-          Expanded(
-              flex: 3,
-              child:Container()),
+          Expanded(flex: 3, child: Container()),
           Expanded(
               flex: 7,
               child: Container(
-
-                  margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFe8f0fe),
                     borderRadius: BorderRadius.circular(3),
-                    border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
+                    border: Border.all(
+                        color: AppColor.borderColor,
+                        width: 3), // Adjust the radius as needed
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
@@ -255,34 +244,42 @@ class WorldClockViewIos extends StatelessWidget {
                         offset: Offset(0, 3),
                       ),
                     ],
-                  ),child:Container(
-                  margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                  child: Obx(()=>
-                  (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SafeArea(
-                      child: SizedBox(
-                        width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
-                        height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
-                        child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
-                      ),
-                    ),
-                  )
-                      :(!Constent.adspurchase)?
-
-                  SizedBox(
-                      width:double.infinity,
-                      height: 30,
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.white,
-                        child: Container(
-                          color: Colors.grey,
-                        ),
-                      )
-                  ):SizedBox()
-                  )))),
+                  ),
+                  child: Container(
+                      margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                      child: Obx(() =>
+                          (viewModel.admob_helper.isBannerLoaded.value &&
+                                  !Constent.isOpenAppAdShowing.value &&
+                                  !Constent.isInterstialAdShowing.value &&
+                                  !Constent.adspurchase)
+                              ? Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SafeArea(
+                                    child: SizedBox(
+                                      width: viewModel.admob_helper
+                                          .anchoredAdaptiveAd!.size.width
+                                          .toDouble(),
+                                      height: viewModel.admob_helper
+                                          .anchoredAdaptiveAd!.size.height
+                                          .toDouble(),
+                                      child: AdWidget(
+                                          ad: viewModel.admob_helper
+                                              .anchoredAdaptiveAd!),
+                                    ),
+                                  ),
+                                )
+                              : (!Constent.adspurchase)
+                                  ? SizedBox(
+                                      width: double.infinity,
+                                      height: 30,
+                                      child: Shimmer.fromColors(
+                                        baseColor: Colors.grey[300]!,
+                                        highlightColor: Colors.white,
+                                        child: Container(
+                                          color: Colors.grey,
+                                        ),
+                                      ))
+                                  : SizedBox())))),
         ],
       ),
     );
@@ -349,42 +346,42 @@ class WorldClockViewIos extends StatelessWidget {
   Widget Refrshindicatorwodge(BuildContext context) {
     return Obx(() => (viewModel.data.length == 0)
         ?
-    // await setupWorldTime();
-    /* Constent.showNoConnectionDialog(context).then((data) async {
+        // await setupWorldTime();
+        /* Constent.showNoConnectionDialog(context).then((data) async {
       // await setupWorldTime();
     })*/
 
-    SizedBox(width: double.infinity)
+        SizedBox(width: double.infinity)
         : Container(
-      width: double.infinity,
-      // decoration: BoxDecoration(
-      // image: DecorationImage(
-      //     image: AssetImage('assets/$bgImage'), fit: BoxFit.cover)),
-      child: Column(children: <Widget>[
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(viewModel.data["location"],
-                style: TextStyle(
-                    fontSize: 20, letterSpacing: 2, color: Colors.black)),
-          ],
-        ),
-        SizedBox(height: 15),
-        Text(
-          viewModel.data['time'],
-          style: TextStyle(fontSize: 25, color: Colors.black),
-        ),
-        SizedBox(height: 15),
-        Text(
-            "${viewModel.data['weatherData'] != null ? (viewModel.data["weatherData"]['main']['temp'].round()) : ''}° ${viewModel.data['weatherData'] != null ? viewModel.data["weatherData"]['weather'][0]['description'] : ''}",
-            style: TextStyle(
-                fontSize: 20, letterSpacing: 2, color: Colors.black))
-        // WeatherWidget(
-        //   weatherData: viewModel.data["weatherData"],
-        // ),
-      ]),
-    ));
+            width: double.infinity,
+            // decoration: BoxDecoration(
+            // image: DecorationImage(
+            //     image: AssetImage('assets/$bgImage'), fit: BoxFit.cover)),
+            child: Column(children: <Widget>[
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(viewModel.data["location"],
+                      style: TextStyle(
+                          fontSize: 20, letterSpacing: 2, color: Colors.black)),
+                ],
+              ),
+              SizedBox(height: 15),
+              Text(
+                viewModel.data['time'],
+                style: TextStyle(fontSize: 25, color: Colors.black),
+              ),
+              SizedBox(height: 15),
+              Text(
+                  "${viewModel.data['weatherData'] != null ? (viewModel.data["weatherData"]['main']['temp'].round()) : ''}° ${viewModel.data['weatherData'] != null ? viewModel.data["weatherData"]['weather'][0]['description'] : ''}",
+                  style: TextStyle(
+                      fontSize: 20, letterSpacing: 2, color: Colors.black))
+              // WeatherWidget(
+              //   weatherData: viewModel.data["weatherData"],
+              // ),
+            ]),
+          ));
     // return RefreshIndicator(
     //   onRefresh: () async {
     //     print("datalocation::" + viewModel.data["location"]);

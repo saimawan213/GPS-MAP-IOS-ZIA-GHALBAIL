@@ -101,7 +101,7 @@ class CompassScreenView extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(top: 5.0),
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
+                                              color: Color(0xFFe8f0fe),
                                               borderRadius:
                                                   BorderRadius.circular(3),
                                               border: Border(

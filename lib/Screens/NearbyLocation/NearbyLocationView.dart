@@ -10,14 +10,14 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NearbyLocationView extends StatelessWidget {
-  NearByLocationViewModel  viewModel = Get.put(NearByLocationViewModel());
+  NearByLocationViewModel viewModel = Get.put(NearByLocationViewModel());
 
   @override
   Widget build(BuildContext context) {
     //admob_helper.adaptiveloadAd();
 
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         //duplicateItems.addAll(todo_controller.pfaultdata);
         // TRY THIS: Try changing the color here to a specific color (to
@@ -34,9 +34,12 @@ class NearbyLocationView extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Nearby Location",style: TextStyle(color: Colors.white),),
+        title: const Text(
+          "Nearby Location",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      body:  Container(
+      body: Container(
         child: Column(
           children: <Widget>[
             Column(
@@ -45,9 +48,8 @@ class NearbyLocationView extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: TextField(
                     onChanged: (value) {
-
-                        print("call hereee1234 inside");
-                        viewModel.filterSearchResults(value);
+                      print("call hereee1234 inside");
+                      viewModel.filterSearchResults(value);
 
                       // filterSearchResults(value);
                       // viewModel.filterSearchResults(value);
@@ -59,33 +61,27 @@ class NearbyLocationView extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Search",
                       hintText: "Search",
-                      hintStyle: const TextStyle(
-                          color: AppColor.primaryColor
-                      ),
-                      labelStyle: const TextStyle(
-                          color: AppColor.primaryColor
-                      ),
+                      hintStyle: const TextStyle(color: AppColor.primaryColor),
+                      labelStyle: const TextStyle(color: AppColor.primaryColor),
                       // suffixIcon:Icon(Icons.mic),
 
-
-
                       enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: AppColor.primaryColor, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(25.0))
-                      ),
+                          borderSide: BorderSide(
+                              color: AppColor.primaryColor, width: 2.0),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(25.0))),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(25.0))),
 
-                      focusedBorder:const OutlineInputBorder(
-                          borderSide: BorderSide(color: AppColor.primaryColor, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(25.0))
-
-                      ),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColor.primaryColor, width: 2.0),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(25.0))),
 
                       prefixIcon: GestureDetector(
-                        onTap:(){
-
-                        } ,
+                        onTap: () {},
                         child: Container(
                           padding: EdgeInsets.all(8.0),
                           /* decoration: BoxDecoration(
@@ -97,16 +93,16 @@ class NearbyLocationView extends StatelessWidget {
                           ),
                         ),
                       ),
-                     /* suffixIcon: GestureDetector(
+                      /* suffixIcon: GestureDetector(
                         onTap:(){
 
                         },
                         child:   Container(
                           padding: EdgeInsets.all(8.0),
-                          *//*  decoration: BoxDecoration(
+                          */ /*  decoration: BoxDecoration(
                       color: Colors.green,
                       borderRadius: BorderRadius.circular(8.0),
-                    ),*//*
+                    ),*/ /*
 
 
                         )
@@ -114,40 +110,79 @@ class NearbyLocationView extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
             Expanded(
               flex: 14,
-              child:
-              Container(  child:Obx(() => viewModel.items.isEmpty ? Lottie.asset(
-                'assets/nodatafound.json',
-                height: 200.0,
-                repeat: true,
-                reverse: true,
-                animate: true,
-              ):ListView.builder(
-                itemCount: viewModel.items.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () async {
-                      viewModel.callgooglemap(viewModel.items[index]);
-                      /* print("Called card view:"+viewModel.items[index].name.toString());
-                        Get.to(() => Pfault_solution(),
-                            arguments: {"obd1":  viewModel.items[index]});*/
-                      /* Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Pfault_solution(obd1: viewModel.items[index],),
+              child: Container(
+                child: Obx(
+                  () => viewModel.items.isEmpty
+                      ? Lottie.asset(
+                          'assets/nodatafound.json',
+                          height: 200.0,
+                          repeat: true,
+                          reverse: true,
+                          animate: true,
+                        )
+                      : ListView.builder(
+                          itemCount: viewModel.items.length,
+                          padding: EdgeInsets.only(bottom: 20),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () async {
+                                viewModel.callgooglemap(viewModel.items[index]);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                    top: 7.0, right: 30.0, left: 30.0),
+                                //color: todo_controller.cardBackgroundColor,
+                                decoration: BoxDecoration(
+                                  color: AppColor.primaryColor,
+                                  borderRadius: BorderRadius.circular(
+                                      15), // Adjust the radius as needed
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+
+                                child: TodoItem(
+                                  todo: viewModel.items[index],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                ),
               ),
-            );*/
-                    },
-                    child:  Container(
-                      margin: const EdgeInsets.only(top: 7.0,right: 30.0,left: 30.0),
-                      //color: todo_controller.cardBackgroundColor,
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  /* Expanded(
+                      flex: 1,
+                      child:Container()),*/
+                  Expanded(
+                    flex: 10,
+                    child: Container(
+                      /*margin: EdgeInsets.only(top: 5.0),*/
                       decoration: BoxDecoration(
-                        color: AppColor.primaryColor,
-                        borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
+                        color: Color(0xFFe8f0fe),
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border(
+                          top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          bottom:
+                              BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          // You can remove the left and right borders by commenting them out
+                          // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                          // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                        ),
+                        //border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
@@ -157,90 +192,48 @@ class NearbyLocationView extends StatelessWidget {
                           ),
                         ],
                       ),
-
-                      child: TodoItem(
-
-                        todo: viewModel.items[index],
-                      ),
-
-
-
-                    ),
-
-                  );
-                },
-              )
-
-              )),
-
-
-            ),
-
-
-            Expanded(
-              flex: 2,
-              child:  Column(
-                children: [
-                 /* Expanded(
-                      flex: 1,
-                      child:Container()),*/
-                  Expanded(
-                      flex: 10,
                       child: Container(
-                          /*margin: EdgeInsets.only(top: 5.0),*/
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(3),
-                            border: Border(
-                              top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                              bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                              // You can remove the left and right borders by commenting them out
-                              // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                              // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                            ),
-                            //border: Border.all(color: AppColor.borderColor,width: 3),// Adjust the radius as needed
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),child:Container(
-                          margin: EdgeInsets.only(bottom: 5.0),
-                          child: Obx(()=>
-                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SafeArea(
-                              child: SizedBox(
-                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
-                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
-                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
-                              ),
-                            ),
-                          )
-                              :(!Constent.adspurchase)?
-
-                          SizedBox(
-                              width:double.infinity,
-                              height: 30,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  color: Colors.grey,
-                                ),
-                              )
-                          ):SizedBox()
-                          )))),
+                        color: Color(0xFFe8f0fe),
+                        margin: EdgeInsets.only(bottom: 5.0),
+                        child: Obx(() =>
+                            (viewModel.admob_helper.isBannerLoaded.value &&
+                                    !Constent.isOpenAppAdShowing.value &&
+                                    !Constent.isInterstialAdShowing.value &&
+                                    !Constent.adspurchase)
+                                ? Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SizedBox(
+                                      width: viewModel.admob_helper
+                                          .anchoredAdaptiveAd!.size.width
+                                          .toDouble(),
+                                      height: viewModel.admob_helper
+                                          .anchoredAdaptiveAd!.size.height
+                                          .toDouble(),
+                                      child: AdWidget(
+                                          ad: viewModel.admob_helper
+                                              .anchoredAdaptiveAd!),
+                                    ),
+                                  )
+                                : (!Constent.adspurchase)
+                                    ? SizedBox(
+                                        width: double.infinity,
+                                        height: 30,
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.grey[300]!,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            color: Colors.grey,
+                                          ),
+                                        ))
+                                    : SizedBox()),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
 
-
-           /* Expanded(
+            /* Expanded(
               flex: 1,
               child: Obx(
                       ()=> (viewModel.admob_helper.isBannerLoaded.value && viewModel.admob_helper.anchoredAdaptiveAd!=null)?
@@ -253,16 +246,8 @@ class NearbyLocationView extends StatelessWidget {
               ),
 
             ),*/
-
-
           ],
         ),
-
-
-
-
-
-
 
 /*
       Obx(()=>
@@ -284,7 +269,6 @@ class NearbyLocationView extends StatelessWidget {
 
       }),
   }*/
-
       ),
 
       /*  floatingActionButton: FloatingActionButton(
@@ -296,16 +280,13 @@ class NearbyLocationView extends StatelessWidget {
         tooltip: 'Add a Todo',
         child: const Icon(Icons.add),
       ),*/
-
-
     );
   }
 }
 
 class TodoItem extends StatelessWidget {
- // final String todomodel = Get.put(String());
-  TodoItem({ this.todo})
-      : super(key: ObjectKey(todo));
+  // final String todomodel = Get.put(String());
+  TodoItem({this.todo}) : super(key: ObjectKey(todo));
 
   final String? todo;
 
@@ -329,11 +310,13 @@ class TodoItem extends StatelessWidget {
           color: AppColor.yellowColor, // Background color for the circular icon
         ),
         alignment: Alignment.center,
-        child:Image(
+        child: Image(
           width: 30,
           height: 30,
           color: Colors.white,
-          image: AssetImage("assets/images/"+todo!+".png"), // Replace with the correct asset path
+          image: AssetImage("assets/images/" +
+              todo! +
+              ".png"), // Replace with the correct asset path
         ), /*Container(
           width: 40.0, // Adjust the width as needed
           height: 40.0,
@@ -346,8 +329,9 @@ class TodoItem extends StatelessWidget {
           ),
         ),*/
       ),
-     // Icon(Icons.star,color: Colors.blue),
-      title: Center(child: Text(todo!,style: const TextStyle(color: Colors.white))),
+      // Icon(Icons.star,color: Colors.blue),
+      title: Center(
+          child: Text(todo!, style: const TextStyle(color: Colors.white))),
       /*subtitle: Row(children: <Widget>[
         Expanded(
           child:  Text(todo!, style:const TextStyle(fontSize: 12)),
@@ -364,14 +348,14 @@ class TodoItem extends StatelessWidget {
         activeColor: Colors.red,
         value: todo.completed,
         onChanged: (value) {
-         *//* onTodoChanged(todo);*//*
+         */ /* onTodoChanged(todo);*/ /*
         },
       ),*/
       /* title: Row(children: <Widget>[
 
       Text(todo!.name!, style: _getTextStyle(false)),
 
-        *//*   MaterialButton(
+        */ /*   MaterialButton(
           onPressed: () {},
           color: Colors.blue,
           textColor: Colors.white,
@@ -381,7 +365,7 @@ class TodoItem extends StatelessWidget {
           ),
 
           shape: CircleBorder(),
-        ),*//*
+        ),*/ /*
         Expanded(
 
           child: Text(todo!.value!, style: _getTextStyle(false)),
@@ -404,9 +388,9 @@ class TodoItem extends StatelessWidget {
             color: Colors.deepPurple,
           ),
           alignment: Alignment.centerRight,
-          *//*onPressed: () {
+          */ /*onPressed: () {
             removeTodo!(todo);
-          },*//*
+          },*/ /*
         ),*/
       //  ]
       // ),

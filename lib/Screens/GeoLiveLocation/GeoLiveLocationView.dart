@@ -13,11 +13,11 @@ import 'package:shimmer/shimmer.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
 class GeoLiveLocationView extends StatelessWidget {
-  GeoLiveLocationViewModel  viewModel = Get.put(GeoLiveLocationViewModel());
+  GeoLiveLocationViewModel viewModel = Get.put(GeoLiveLocationViewModel());
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
- /* Widget _textField({
+  /* Widget _textField({
     required TextEditingController controller,
     required FocusNode focusNode,
     required String label,
@@ -74,7 +74,6 @@ class GeoLiveLocationView extends StatelessWidget {
 
   // Create the polylines for showing the route between two places
 
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -85,13 +84,14 @@ class GeoLiveLocationView extends StatelessWidget {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: const Text("Geo live Location",style: TextStyle(color: Colors.white)),
+          title: const Text("Geo live Location",
+              style: TextStyle(color: Colors.white)),
           backgroundColor: AppColor.primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.white,// or MenuOutlined
+            color: Colors.white, // or MenuOutlined
             onPressed: () {
               Navigator.pop(context);
               print("call in app ");
@@ -103,126 +103,143 @@ class GeoLiveLocationView extends StatelessWidget {
             },
           ),
           actions: [
-            Obx(()=>
-            (viewModel.imageFile.value.path.isNotEmpty)?
-            IconButton(
-              icon:const Icon(Icons.share,color: Colors.white,)
-              ,
+            Obx(
+              () => (viewModel.imageFile.value.path.isNotEmpty)
+                  ? IconButton(
+                      icon: const Icon(
+                        Icons.share,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final bytes = await viewModel.controller.capture();
 
-              onPressed: () async {
-                final bytes = await viewModel.controller.capture();
+                        viewModel.bytes = bytes;
+                        File file = File.fromRawPath(bytes!);
+                        print('path is heree:' +
+                            File.fromRawPath(bytes!).toString());
 
-                viewModel.bytes = bytes;
-                File file=File.fromRawPath(bytes!);
-                print('path is heree:'+ File.fromRawPath(bytes!).toString());
-
-                final tempDir = await getTemporaryDirectory();
-                File file1 = await File('${tempDir.path}/image.png').create();
-                file1.writeAsBytesSync(bytes);
-                // store unit8list image here ;
-                // String s = new String.fromCharCodes(bytes!);
-                await Share.shareFiles([file1.path]);
-              },
-            ):SizedBox(),),
-           ],
-
-
+                        final tempDir = await getTemporaryDirectory();
+                        File file1 =
+                            await File('${tempDir.path}/image.png').create();
+                        file1.writeAsBytesSync(bytes);
+                        // store unit8list image here ;
+                        // String s = new String.fromCharCodes(bytes!);
+                        await Share.shareFiles([file1.path]);
+                      },
+                    )
+                  : SizedBox(),
+            ),
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 8,
-              child:WidgetsToImage(
+              child: WidgetsToImage(
                 controller: viewModel.controller,
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-
                     Container(
-
-                      child:  Obx(()=>
-                  (viewModel.imageFile.value.path.isNotEmpty)?Image.file(viewModel.imageFile.value): Container(
-                    width: double.infinity,
-                    height: 60,
-                    child: GestureDetector(
-                      onTap: () async {
-                        viewModel.imgFromCamera();
-
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-                        //color: todo_controller.cardBackgroundColor,
-                        decoration: BoxDecoration(
-                          color: AppColor.yellowColor,
-                          borderRadius: BorderRadius.circular(15),
-                          // Adjust the radius as needed
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Text(
-                            'Capture Image from Image',
-                            style:
-                            TextStyle(fontSize: 22.0, color: Colors.white),
-                          ),
-                        ),
+                      child: Obx(
+                        () => (viewModel.imageFile.value.path.isNotEmpty)
+                            ? Image.file(viewModel.imageFile.value)
+                            : Container(
+                                width: double.infinity,
+                                height: 60,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    viewModel.imgFromCamera();
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 40.0, right: 40.0),
+                                    //color: todo_controller.cardBackgroundColor,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.yellowColor,
+                                      borderRadius: BorderRadius.circular(15),
+                                      // Adjust the radius as needed
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: const Text(
+                                        'Capture Image from Image',
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                     ),
-                  ),),
-                    ),
-      Obx(()=>
-      (viewModel.imageFile.value.path.isNotEmpty)?Positioned(
-        bottom: 100, // Align to the bottom of the Stack
-        left: 10, // Align to the left of the Stack
-        right: 10,
+                    Obx(
+                      () => (viewModel.imageFile.value.path.isNotEmpty)
+                          ? Positioned(
+                              bottom: 100, // Align to the bottom of the Stack
+                              left: 10, // Align to the left of the Stack
+                              right: 10,
 
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white70,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20.0),
-              ),
-            ),
-            width: width * 0.9,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Obx(()=>  Text(
-                    viewModel.currentAddress.value,
-                    style: TextStyle(fontSize: 20.0,color: AppColor.primaryColor),
-                  ),
-                  ),
-                  Obx(()=>  Text("Date :"+
-                      viewModel.actualDate.value,
-                    // textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 20.0,color: AppColor.primaryColor),
-                  ),
-                  ),
-                  Obx(()=>  Text("Time :"+
-                      viewModel.actualTime.value,
-                    // textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 20.0,color: AppColor.primaryColor),
-                  ),
-                  ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white70,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                  ),
+                                  width: width * 0.9,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      // mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Obx(
+                                          () => Text(
+                                            viewModel.currentAddress.value,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                color: AppColor.primaryColor),
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => Text(
+                                            "Date :" +
+                                                viewModel.actualDate.value,
+                                            // textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                color: AppColor.primaryColor),
+                                          ),
+                                        ),
+                                        Obx(
+                                          () => Text(
+                                            "Time :" +
+                                                viewModel.actualTime.value,
+                                            // textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                color: AppColor.primaryColor),
+                                          ),
+                                        ),
 
-                  SizedBox(height: 10),
+                                        SizedBox(height: 10),
 
-                  // SizedBox(height: 5),
-                  /* Container(
+                                        // SizedBox(height: 5),
+                                        /* Container(
                                   margin: EdgeInsets.all(25),
                                   child: MaterialButton(
                                     child: Text('Share', style: TextStyle(fontSize: 20.0),),
@@ -251,23 +268,20 @@ class GeoLiveLocationView extends StatelessWidget {
                                   ),
 
                                 ),*/
-
-                ],
-              ),
-            ),
-          ),
-        ),
-      ):
-          SizedBox(),
-
-                 )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
+                    )
                     // Show current location button
-
                   ],
                 ),
               ),
             ),
-           /* Expanded(
+            /* Expanded(
               flex: 2,
               child: Column(
                 children: [
@@ -320,22 +334,21 @@ class GeoLiveLocationView extends StatelessWidget {
             ),*/
             Expanded(
               flex: 2,
-              child:  Column(
+              child: Column(
                 children: [
-                  Expanded(
-                      flex: 4,
-                      child:Container()),
+                  Expanded(flex: 4, child: Container()),
                   Expanded(
                       flex: 6,
                       child: Container(
-
                           margin: EdgeInsets.only(top: 5.0),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Color(0xFFe8f0fe),
                             borderRadius: BorderRadius.circular(3),
                             border: Border(
-                              top: BorderSide(color: Color(0xFFD6D6D6), width: 3),
-                              bottom: BorderSide(color: Color(0xFFD6D6D6), width: 3),
+                              top: BorderSide(
+                                  color: Color(0xFFD6D6D6), width: 3),
+                              bottom: BorderSide(
+                                  color: Color(0xFFD6D6D6), width: 3),
                               // You can remove the left and right borders by commenting them out
                               // left: BorderSide(color: Color(0xFFD6D6D6), width: 3),
                               // right: BorderSide(color: Color(0xFFD6D6D6), width: 3),
@@ -349,34 +362,42 @@ class GeoLiveLocationView extends StatelessWidget {
                                 offset: Offset(0, 3),
                               ),
                             ],
-                          ),child:Container(
-                          margin: EdgeInsets.only(top: 5.0,bottom: 5.0),
-                          child: Obx(()=>
-                          (viewModel.admob_helper.isBannerLoaded.value && !Constent.isOpenAppAdShowing.value && !Constent.isInterstialAdShowing.value && !Constent.adspurchase)?
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SafeArea(
-                              child: SizedBox(
-                                width:viewModel.admob_helper.anchoredAdaptiveAd!.size.width.toDouble(),
-                                height:viewModel.admob_helper.anchoredAdaptiveAd!.size.height.toDouble(),
-                                child: AdWidget(ad: viewModel.admob_helper.anchoredAdaptiveAd!),
-                              ),
-                            ),
-                          )
-                              :(!Constent.adspurchase)?
-
-                          SizedBox(
-                              width:double.infinity,
-                              height: 30,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  color: Colors.grey,
-                                ),
-                              )
-                          ):SizedBox()
-                          )))),
+                          ),
+                          child: Container(
+                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                              child: Obx(() => (viewModel
+                                          .admob_helper.isBannerLoaded.value &&
+                                      !Constent.isOpenAppAdShowing.value &&
+                                      !Constent.isInterstialAdShowing.value &&
+                                      !Constent.adspurchase)
+                                  ? Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: SafeArea(
+                                        child: SizedBox(
+                                          width: viewModel.admob_helper
+                                              .anchoredAdaptiveAd!.size.width
+                                              .toDouble(),
+                                          height: viewModel.admob_helper
+                                              .anchoredAdaptiveAd!.size.height
+                                              .toDouble(),
+                                          child: AdWidget(
+                                              ad: viewModel.admob_helper
+                                                  .anchoredAdaptiveAd!),
+                                        ),
+                                      ),
+                                    )
+                                  : (!Constent.adspurchase)
+                                      ? SizedBox(
+                                          width: double.infinity,
+                                          height: 30,
+                                          child: Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.white,
+                                            child: Container(
+                                              color: Colors.grey,
+                                            ),
+                                          ))
+                                      : SizedBox())))),
                 ],
               ),
             )
@@ -385,5 +406,6 @@ class GeoLiveLocationView extends StatelessWidget {
       ),
     );
   }
+
   Widget buildImage(Uint8List bytes) => Image.memory(bytes);
 }

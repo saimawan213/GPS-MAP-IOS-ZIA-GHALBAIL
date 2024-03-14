@@ -7,9 +7,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart' as lotti;
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
@@ -58,41 +60,12 @@ class RouteScreenViewModel extends GetxController {
   bool ptts1 = true;
   bool ptts2 = true;
 
+  BannerAd? bannerAd;
+
+  RxBool isBannerAdLoaded = false.obs;
+
   @override
   Future<void> onInit() async {
-    print('**** onInit *****');
-
-    /* if(sourcepath == ''){
-
-      print("i am in current location");
-      getCurrentLocation();
-    }
-    else{
-     */ /* Future.delayed(Duration(seconds: 2), (){
-        mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(sourcelath!, sourcelog!),
-              zoom: 18.0,
-            ),
-          ),
-        );*/ /*
-        //  final double souclog=sourcelog!;
-
-        markers: Set<Marker>.from(markers);
-        initialCameraPosition: initialLocation;
-        currentAddress=sourcepath!;
-        startAddressController.text = currentAddress;
-        startAddress.value = currentAddress;
-        destinationAddress.value=destinationpath!;
-        destinationAddressController.text=destinationpath!;
-        performSearch('');
-        // Your code over here
-     // });
-
-    }*/
-    //getCurrentLocation();
-    // FlutterNativeSplash.remove();
     super.onInit();
   }
 
@@ -102,15 +75,15 @@ class RouteScreenViewModel extends GetxController {
     activateSpeechRecognizer();
     getCurrentLocation();
     admob_helper.loadInterstitalAd();
-    admob_helper.loadNativeAdSmall();
-    print("is native ad loaded:"+Constent.isNativeAdLoaded.value.toString());
-    print("is native ad loaded122:"+admob_helper.nativeAd.toString());
-    print("is open ad loaded122:"+Constent.isOpenAppAdShowing.value.toString());
-    print("is isInterstialAdShowing ad loaded122:"+Constent.isInterstialAdShowing.value.toString());
+    loadBannerAd();
+    print("is native ad loaded:" + Constent.isNativeAdLoaded.value.toString());
+    print("is native ad loaded122:" + admob_helper.nativeAd.toString());
+    print(
+        "is open ad loaded122:" + Constent.isOpenAppAdShowing.value.toString());
+    print("is isInterstialAdShowing ad loaded122:" +
+        Constent.isInterstialAdShowing.value.toString());
 
-
-
-   // admob_helper.loadInterstitalAd();
+    // admob_helper.loadInterstitalAd();
     //admob_helper.loadsmallBannerAd();
 
     ///Load Ads Here
@@ -118,12 +91,46 @@ class RouteScreenViewModel extends GetxController {
     super.onReady();
   }
 
+  /// Loads a banner ad.
+  Future<void> loadBannerAd() async {
+    if (!Constent.adspurchase) {
+      final AnchoredAdaptiveBannerAdSize? size =
+          await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+              Get.width.truncate());
+
+      if (size == null) {
+        print('Unable to get height of anchored banner.');
+        return;
+      }
+      BannerAd(
+        adUnitId: Constent.bannerAdID,
+        request: const AdRequest(),
+        size: size,
+        listener: BannerAdListener(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            bannerAd = ad as BannerAd;
+            isBannerAdLoaded.value = true;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (ad, err) {
+            debugPrint('BannerAd failed to load: $err');
+            // Dispose the ad here to free resources.
+            bannerAd?.dispose();
+            isBannerAdLoaded.value = false;
+            ad.dispose();
+          },
+        ),
+      )..load();
+    }
+  }
+
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    Constent.isNativeAdLoaded.value=false;
-    Constent.isNativeAdSmallLoaded.value=false;
+    Constent.isNativeAdLoaded.value = false;
+    Constent.isNativeAdSmallLoaded.value = false;
   }
 
   getCurrentLocation() async {
@@ -164,17 +171,17 @@ class RouteScreenViewModel extends GetxController {
       if (permission == LocationPermission.deniedForever) {
         return;
       }
-     /* LocationPermission c=await Geolocator.checkPermission();
+      /* LocationPermission c=await Geolocator.checkPermission();
       if(c==LocationPermission.always) {*/
-        await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
-            .then((Position position) async {
-          // setState(() {
-          currentPosition = position;
-          Constent.splashcurrentPosition = currentPosition;
-          print('CURRENT POS: $currentPosition');
-          //  if (sourcepath == '') {
-          /*if (Constent.splashcurrentAddress != "") {
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) async {
+        // setState(() {
+        currentPosition = position;
+        Constent.splashcurrentPosition = currentPosition;
+        print('CURRENT POS: $currentPosition');
+        //  if (sourcepath == '') {
+        /*if (Constent.splashcurrentAddress != "") {
             // Constent.Splashcurrentlath=position.latitude;
             //Constent.Splashcurrentlog=position.longitude;
             mapController.animateCamera(
@@ -194,9 +201,9 @@ class RouteScreenViewModel extends GetxController {
           }
           else {*/
 
-          // });
-          await getAddress();
-          /*}
+        // });
+        await getAddress();
+        /*}
        // }
         else {
           mapController.animateCamera(
@@ -218,11 +225,11 @@ class RouteScreenViewModel extends GetxController {
           destinationAddressController.text = destinationpath!;
           performSearch('');
         }*/
-        }).catchError((e) {
-          print(e);
-        });
-   //   }
-    /*  else{
+      }).catchError((e) {
+        print(e);
+      });
+      //   }
+      /*  else{
 
     LocationPermission p=await Geolocator.requestPermission();
     if(p==LocationPermission.always) {
@@ -234,7 +241,7 @@ class RouteScreenViewModel extends GetxController {
         Constent.splashcurrentPosition = currentPosition;
         print('CURRENT POS: $currentPosition');
         //  if (sourcepath == '') {
-        *//*if (Constent.splashcurrentAddress != "") {
+        */ /*if (Constent.splashcurrentAddress != "") {
             // Constent.Splashcurrentlath=position.latitude;
             //Constent.Splashcurrentlog=position.longitude;
             mapController.animateCamera(
@@ -252,11 +259,11 @@ class RouteScreenViewModel extends GetxController {
             startAddress.value = Constent.splashcurrentAddress;
             ;
           }
-          else {*//*
+          else {*/ /*
 
         // });
         await getAddress();
-        *//*}
+        */ /*}
        // }
         else {
           mapController.animateCamera(
@@ -277,7 +284,7 @@ class RouteScreenViewModel extends GetxController {
           destinationAddress.value = destinationpath!;
           destinationAddressController.text = destinationpath!;
           performSearch('');
-        }*//*
+        }*/ /*
       }).catchError((e) {
         print(e);
       });
@@ -873,7 +880,7 @@ class RouteScreenViewModel extends GetxController {
 //    FocusScope.of(context).requestFocus(FocusNode());
   }
 
-  void callerrormassage(){
+  void callerrormassage() {
     if (startAddressController.text == "") {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Current location Cannot be Empty")));
@@ -915,17 +922,16 @@ class RouteScreenViewModel extends GetxController {
       destinationLatitude = destinationPlacemark[0].latitude;
       destinationLongitude = destinationPlacemark[0].longitude;
 
-     // admob_helper.showInterstitialAd(callback: () {
-        Get.to(() => NavigationScreenView(), arguments: {
-          "source": startAddressController.text,
-          "destination": destinationAddressController.text,
-          "Sourcelath": startLatitude,
-          "Sourcelog": startLongitude,
-          "destinationlath": destinationLatitude,
-          "destinationlog": destinationLongitude
-       // });
-      }
-      );
+      // admob_helper.showInterstitialAd(callback: () {
+      Get.to(() => NavigationScreenView(), arguments: {
+        "source": startAddressController.text,
+        "destination": destinationAddressController.text,
+        "Sourcelath": startLatitude,
+        "Sourcelog": startLongitude,
+        "destinationlath": destinationLatitude,
+        "destinationlog": destinationLongitude
+        // });
+      });
 
       // }
       /* else{
@@ -1070,8 +1076,8 @@ class RouteScreenViewModel extends GetxController {
 
       // return true;
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("No address found for given location")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("No address found for given location")));
       print(e);
     }
     // return false;

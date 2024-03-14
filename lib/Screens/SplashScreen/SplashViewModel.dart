@@ -3,19 +3,17 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-
 
 class SplashViewModel extends GetxController {
   RxDouble progressValue = 0.0.obs;
 
   Admob_Helper admob_helper = Admob_Helper();
-RxString currentlocation=''.obs;
+  RxString currentlocation = ''.obs;
 
   RxBool showProgressBar = true.obs;
-
 
   @override
   Future<void> onInit() async {
@@ -26,54 +24,54 @@ RxString currentlocation=''.obs;
   }
 
   @override
-  void onReady() async{
+  void onReady() async {
     print('**** onReady *****');
+
     ///Load Ads Here
     final box = GetStorage();
     // box.write('ispurchase', false);
-    bool purchasevalue = box.read('ispurchase')??false;
-    print("check purchase value"+purchasevalue.toString());
- //   if(await checkPermission()){
-      getCurrentLocation();
-   // }
+    bool purchasevalue = box.read('ispurchase') ?? false;
+    print("check purchase value" + purchasevalue.toString());
+    //   if(await checkPermission()){
+    getCurrentLocation();
+    // }
     //checkPermission();
     startLoading();
-    if(!purchasevalue) {
-      Constent.purchaseads.value=false;
-      Constent.adspurchase=false;
-
-    }
-    else{
+    if (!purchasevalue) {
+      Constent.purchaseads.value = false;
+      Constent.adspurchase = false;
+    } else {
       print("ads  purchase");
 
-      admob_helper.appOpenAd=null;
-      Constent.isOpenAppAdShowing.value=false;
+      admob_helper.appOpenAd = null;
+      Constent.isOpenAppAdShowing.value = false;
       Constent.isAlternativeInterstitial = true;
-      Constent.appopencheck=true;
-      admob_helper.bannerAd=null;
-      admob_helper.issmallBannerLoaded.value=false;
-      Constent.purchaseads.value=true;
-      Constent.adspurchase=true;
+      Constent.appopencheck = true;
+      admob_helper.bannerAd = null;
+      admob_helper.issmallBannerLoaded.value = false;
+      Constent.purchaseads.value = true;
+      Constent.adspurchase = true;
     }
     admob_helper.loadInterstitalAd();
     admob_helper.loadsmallBannerAd();
-  //  startTimer();
+    //  startTimer();
 
     super.onReady();
   }
+
   @override
   void onClose() {
-
     // TODO: implement onClose
     super.onClose();
   }
+
   void startTimer() {
     Future.delayed(Duration(seconds: 4), () {
       //  print("Show progress bar value");
       showProgressBar.value = false;
-
     });
   }
+
 /*  Future<bool> checkPermission() async {
     if (Platform.isAndroid) {
       Map<Permission, PermissionStatus> statues =
@@ -122,7 +120,8 @@ RxString currentlocation=''.obs;
     const totalDuration = Duration(seconds: 5); // Adjust the duration as needed
     const updateFrequency = Duration(milliseconds: 100);
 
-    final totalSteps = totalDuration.inMilliseconds ~/ updateFrequency.inMilliseconds;
+    final totalSteps =
+        totalDuration.inMilliseconds ~/ updateFrequency.inMilliseconds;
 
     int currentStep = 0;
 
@@ -131,17 +130,18 @@ RxString currentlocation=''.obs;
         //setState(() {
         progressValue.value = 100.0;
 
-      //  });
+        //  });
         timer.cancel();
         showProgressBar.value = false;
       } else {
-     //   setState(() {
-          progressValue.value = (currentStep / totalSteps) * 100;
-       // });
+        //   setState(() {
+        progressValue.value = (currentStep / totalSteps) * 100;
+        // });
         currentStep++;
       }
     });
   }
+
 /*  getCurrentLocation() async {
 
 
@@ -155,14 +155,14 @@ if(p==LocationPermission.always){
     print('CURRENT POS: $Constent.splashcurrentPosition');
     Constent.Splashcurrentlath=position.latitude;
     Constent.Splashcurrentlog=position.longitude;
-    *//*   mapController.animateCamera(
+    */ /*   mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(position.latitude, position.longitude),
               zoom: 18.0,
             ),
           ),
-        );*//*
+        );*/ /*
     // });
     await getAddress();
 
@@ -176,23 +176,26 @@ if(p==LocationPermission.always){
   getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
-          Constent.splashcurrentPosition.latitude, Constent.splashcurrentPosition.longitude);
+          Constent.splashcurrentPosition.latitude,
+          Constent.splashcurrentPosition.longitude);
 
       Placemark place = p[0];
 
       //  setState(() {
       Constent.splashcurrentAddress =
-      "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
-      Constent.splashcurrentAddress= Constent.splashcurrentAddress.replaceAll(RegExp(r'^,+,'), '');
-      currentlocation.value=  Constent.splashcurrentAddress;
+          "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+      Constent.splashcurrentAddress =
+          Constent.splashcurrentAddress.replaceAll(RegExp(r'^,+,'), '');
+      currentlocation.value = Constent.splashcurrentAddress;
       // currentlocation.value=Constent.splashcurrentAddress;
-    /*  startAddressController.text = currentAddress;
+      /*  startAddressController.text = currentAddress;
       startAddress.value = currentAddress;*/
       //  });
     } catch (e) {
       print(e);
     }
   }
+
   getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -220,8 +223,8 @@ if(p==LocationPermission.always){
       // setState(() {
       Constent.splashcurrentPosition = position;
       print('CURRENT POS: $Constent.splashcurrentPosition');
-      Constent.Splashcurrentlath=position.latitude;
-      Constent.Splashcurrentlog=position.longitude;
+      Constent.Splashcurrentlath = position.latitude;
+      Constent.Splashcurrentlog = position.longitude;
       /*   mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -232,8 +235,6 @@ if(p==LocationPermission.always){
         );*/
       // });
       await getAddress();
-
-
     }).catchError((e) {
       print(e);
     });

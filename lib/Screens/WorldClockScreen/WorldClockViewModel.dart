@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-
-
 
 class WorldClockViewModel extends GetxController {
   List<String> stringList = [];
@@ -20,8 +18,7 @@ class WorldClockViewModel extends GetxController {
   RxString humidity = ''.obs;
   RxString clouds = ''.obs;
 
-
- Admob_Helper admob_helper = Admob_Helper();
+  Admob_Helper admob_helper = Admob_Helper();
 
   @override
   Future<void> onInit() async {
@@ -45,8 +42,8 @@ class WorldClockViewModel extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    admob_helper.isBannerLoaded.value=false;
-    admob_helper.anchoredAdaptiveAd=null;
+    admob_helper.isBannerLoaded.value = false;
+    admob_helper.anchoredAdaptiveAd = null;
   }
 
   void setData(weatherData) {
@@ -84,14 +81,12 @@ class WorldClockViewModel extends GetxController {
   Future setupWorldTime() async {
     if (await Constent.checkIntenetConnection()) {
       // final prefs = await SharedPreferences.getInstance();
-      Constent instance =
-      Constent(flag: 'germany.png', location: '', url: '');
+      Constent instance = Constent(flag: 'germany.png', location: '', url: '');
       await instance.getTimebyip();
       await instance.getWeather();
 
       //final location = prefs.getString('location') ?? instance.location;
       //  final url = prefs.getString('url') ?? instance.url;
-
 
       /*  stringList.add(instance.location);
       stringList.add(instance.flag!);
@@ -170,7 +165,9 @@ stringList.add(instance.url!);*/
 
   ) ?? false;
 }*/
-  void showDialog({required BuildContext context, required AlertDialog Function(BuildContext context) builder}) {
+  void showDialog(
+      {required BuildContext context,
+      required AlertDialog Function(BuildContext context) builder}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

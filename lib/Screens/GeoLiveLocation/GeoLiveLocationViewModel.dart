@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -7,26 +6,24 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper.dart';
+import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 import 'package:widgets_to_image/widgets_to_image.dart';
 
-
 class GeoLiveLocationViewModel extends GetxController {
-
   final picker = ImagePicker();
 
   Admob_Helper admob_helper = Admob_Helper();
-   Rx<File> imageFile=File('').obs;
+  Rx<File> imageFile = File('').obs;
   RxString currentAddress = ''.obs;
   WidgetsToImageController controller = WidgetsToImageController();
-Image? image;
-File? file;
-String? imagepath;
- Uint8List? bytes;
-   RxString actualDate=''.obs;
-  RxString actualTime=''.obs;
+  Image? image;
+  File? file;
+  String? imagepath;
+  Uint8List? bytes;
+  RxString actualDate = ''.obs;
+  RxString actualTime = ''.obs;
   late Position currentPosition;
   @override
   Future<void> onInit() async {
@@ -39,28 +36,30 @@ String? imagepath;
   @override
   void onReady() {
     print('**** onReady *****');
+
     ///Load Ads Here
-   // checkPermission();
+    // checkPermission();
     admob_helper.adaptiveloadAd();
-  // admob_helper.loadsmallBannerAd();
+    // admob_helper.loadsmallBannerAd();
     imgFromCamera();
     var now = DateTime.now();
     var formatterDate = DateFormat("EEEE, MM-dd-yyyy");
     var formatterTime = DateFormat("hh:mm a");
-     actualDate.value = formatterDate.format(now);
-     actualTime.value = formatterTime.format(now);
-    print("Date :"+actualDate.value);
-    print("Time :"+actualTime.value);
-   // DateTime now = DateTime.now();
-   // print(now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString());
+    actualDate.value = formatterDate.format(now);
+    actualTime.value = formatterTime.format(now);
+    print("Date :" + actualDate.value);
+    print("Time :" + actualTime.value);
+    // DateTime now = DateTime.now();
+    // print(now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString());
     super.onReady();
   }
+
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    admob_helper.isBannerLoaded.value=false;
-    admob_helper.anchoredAdaptiveAd=null;
+    admob_helper.isBannerLoaded.value = false;
+    admob_helper.anchoredAdaptiveAd = null;
   }
 
 /*  Future<bool?> checkPermission() async {
@@ -106,16 +105,15 @@ String? imagepath;
     }
   }*/
   imgFromCamera() async {
-
     print("Present  imgFromCamera");
     await picker
         .pickImage(source: ImageSource.camera, imageQuality: 50)
         .then((value) {
       if (value != null) {
         Future.delayed(Duration.zero, () {
-          imageFile.value=(File(value.path));
-          print('image value:'+imageFile.value.toString());
-        //  _cropImage(File(value.path));
+          imageFile.value = (File(value.path));
+          print('image value:' + imageFile.value.toString());
+          //  _cropImage(File(value.path));
         });
       }
     });
@@ -142,8 +140,7 @@ String? imagepath;
     if (permission == LocationPermission.deniedForever) {
       return;
     }
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       //  setState(() {
       currentPosition = position;
@@ -162,7 +159,7 @@ String? imagepath;
     }).catchError((e) {
       print(e);
     });
-  /*  LocationPermission  c=await Geolocator.checkPermission();
+    /*  LocationPermission  c=await Geolocator.checkPermission();
     if(c==LocationPermission.always) {
       await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high)
@@ -170,14 +167,14 @@ String? imagepath;
         //  setState(() {
         currentPosition = position;
         print('CURRENT POS: $currentPosition');
-        *//*    mapController.animateCamera(
+        */ /*    mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(position.latitude, position.longitude),
             zoom: 18.0,
           ),
         ),
-      );*//*
+      );*/ /*
         //}
         // );
         await getAddress();
@@ -185,7 +182,7 @@ String? imagepath;
         print(e);
       });
     }*/
- /*   else {
+    /*   else {
       LocationPermission p=await Geolocator.requestPermission();
       if(p==LocationPermission.always){
         await Geolocator.getCurrentPosition(
@@ -194,14 +191,14 @@ String? imagepath;
           //  setState(() {
           currentPosition = position;
           print('CURRENT POS: $currentPosition');
-          *//*    mapController.animateCamera(
+          */ /*    mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(position.latitude, position.longitude),
             zoom: 18.0,
           ),
         ),
-      );*//*
+      );*/ /*
           //}
           // );
           await getAddress();
@@ -222,14 +219,13 @@ String? imagepath;
 
       //  setState(() {
       currentAddress.value =
-      "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
-      print("current location:"+currentAddress.toString());
-     // startAddressController.text = currentAddress;
-     // startAddress.value = currentAddress;
+          "${place.street},${place.subLocality},${place.locality}, ${place.administrativeArea}, ${place.country}";
+      print("current location:" + currentAddress.toString());
+      // startAddressController.text = currentAddress;
+      // startAddress.value = currentAddress;
       //  });
     } catch (e) {
       print(e);
     }
   }
 }
-

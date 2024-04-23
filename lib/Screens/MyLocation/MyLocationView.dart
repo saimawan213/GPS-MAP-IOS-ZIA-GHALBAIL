@@ -1,11 +1,8 @@
-import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/MyLocation/MyLocationViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/location/domain/usecase/location_permission_usecase.dart';
 import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
 import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';

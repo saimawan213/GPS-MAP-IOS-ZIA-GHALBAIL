@@ -4,7 +4,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/AppLifecycleReactor.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 class SplashViewModel extends GetxController {

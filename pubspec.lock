@@ -475,12 +475,11 @@ packages:
   google_mobile_ads:
     dependency: "direct main"
     description:
-      path: "packages/google_mobile_ads"
-      ref: main
-      resolved-ref: b1fb58d862ad2796aeaa0606758483af34e702e5
-      url: "https://github.com/googleads/googleads-mobile-flutter"
-    source: git
-    version: "4.0.0"
+      name: google_mobile_ads
+      sha256: f07d4e2ebf56181e8dd18ee810607e84aeac8add5251bb44c1c886af47ff021a
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   html:
     dependency: transitive
     description:
@@ -586,7 +585,7 @@ packages:
     source: hosted
     version: "3.1.13"
   in_app_purchase_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: in_app_purchase_android
       sha256: c94aebe986723b6f4e4d8551d160c6602e73d0b38bf86a59fb054dfeb44bc1e5
@@ -602,7 +601,7 @@ packages:
     source: hosted
     version: "1.3.7"
   in_app_purchase_storekit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: in_app_purchase_storekit
       sha256: e0f860e760488dbd666e0f27e239d128cba744607fc62434dc76c19d1c292439
@@ -722,7 +721,7 @@ packages:
     source: hosted
     version: "2.0.1"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"

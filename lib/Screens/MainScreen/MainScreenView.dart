@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/CompassScreen/CompassScreenView.dart';
 
@@ -13,17 +11,14 @@ import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/GeoLiveLocation/GeoLiveLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryView.dart';
 import 'package:mapsandnavigationflutter/Screens/InAppPurchase/InAppPurchaseViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/InAppPurchase/inAppPurchase.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/CardView.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/MyLocation/MyLocationView.dart';
-import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/NearbyLocation/NearbyLocationView.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightView.dart';
 
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockView.dart';
-import 'package:shimmer/shimmer.dart';
 
 class MainScreen_View extends StatelessWidget {
   MainScreenViewModel  viewModel = Get.put(MainScreenViewModel());

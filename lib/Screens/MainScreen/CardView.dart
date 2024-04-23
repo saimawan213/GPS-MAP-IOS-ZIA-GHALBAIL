@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 
 class CardView extends StatelessWidget {
   final String imageUrl;

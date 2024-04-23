@@ -1,17 +1,10 @@
 import 'dart:async';
-import 'dart:math' show cos, sqrt, asin;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:mapsandnavigationflutter/Screens/NavigationScreen/NavigationScreenViewModel.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 

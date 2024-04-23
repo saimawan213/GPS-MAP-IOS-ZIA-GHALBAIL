@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/SelectLocationViewModel.dart';
-import 'package:shimmer/shimmer.dart';
 
 
 

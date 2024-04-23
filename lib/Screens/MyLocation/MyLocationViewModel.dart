@@ -3,9 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:math' show cos, sqrt, asin;
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mapsandnavigationflutter/Screens/HistoryScreen/HistoryViewModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Constents/Constent.dart';

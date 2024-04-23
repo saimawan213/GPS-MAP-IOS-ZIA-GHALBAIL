@@ -37,8 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.0.6
   geolocator: ^9.0.2
- # geolocator: ^7.0.3
- #geocoding: ^2.0.0
   geocoding: ^2.1.1
   package_info_plus: ^4.1.0
   speech_to_text: ^6.3.0
@@ -46,23 +44,17 @@ dependencies:
   sqflite: ^2.2.8+4
   shimmer: ^3.0.0
   in_app_purchase: ^3.1.10
- # permission_handler: ^6.0.1
   sensors:
   lottie: ^2.6.0
   get_storage: ^2.1.1
   flutter_compass:
   url_launcher: ^6.1.14
-  #camera: ^0.10.5+2
   image_picker: ^1.0.1
   firebase_core: ^2.17.0
   firebase_crashlytics: ^3.4.9
   flutter_share: ^2.0.0
   firebase_analytics: ^10.5.1
-  google_mobile_ads:
-    git:
-      url: https://github.com/googleads/googleads-mobile-flutter
-      ref: main
-      path: packages/google_mobile_ads
+  google_mobile_ads: ^5.0.0
   http: ^1.1.0
   #readmore: ^2.2.0
   intl: ^0.18.1
@@ -78,6 +70,9 @@ dependencies:
   fluttertoast: ^8.2.4
  # shared_preferences: ^2.2.2
 
+  path: any
+  in_app_purchase_android: any
+  in_app_purchase_storekit: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

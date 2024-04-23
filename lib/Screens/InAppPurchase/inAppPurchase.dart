@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:mapsandnavigationflutter/Screens/InAppPurchase/InAppPurchaseViewModel.dart';
 
 class inAppPurchase extends StatelessWidget {

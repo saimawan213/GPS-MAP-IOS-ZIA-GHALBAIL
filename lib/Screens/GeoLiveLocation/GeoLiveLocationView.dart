@@ -116,7 +116,7 @@ class GeoLiveLocationView extends StatelessWidget {
                         viewModel.bytes = bytes;
                         File file = File.fromRawPath(bytes!);
                         print('path is heree:' +
-                            File.fromRawPath(bytes!).toString());
+                            File.fromRawPath(bytes).toString());
 
                         final tempDir = await getTemporaryDirectory();
                         File file1 =

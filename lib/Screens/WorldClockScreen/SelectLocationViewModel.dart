@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 
 class SelectLocationViewModel extends GetxController {

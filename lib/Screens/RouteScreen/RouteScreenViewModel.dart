@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:io' as plat;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:math' show cos, sqrt, asin;
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart' as lotti;

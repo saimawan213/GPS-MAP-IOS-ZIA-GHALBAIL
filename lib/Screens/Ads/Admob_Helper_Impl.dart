@@ -577,7 +577,6 @@ class Admob_Helper {
   loadopenupad() {
     AppOpenAd.load(
       adUnitId: Constent.openupAdID,
-      orientation: AppOpenAd.orientationPortrait,
       request: AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {

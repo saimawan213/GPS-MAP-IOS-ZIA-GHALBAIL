@@ -1,9 +1,7 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Admob_Helper_Impl.dart';
-import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/DatabaseHandler.dart';
 import 'package:mapsandnavigationflutter/Screens/HistoryScreen/locationService.dart';
 

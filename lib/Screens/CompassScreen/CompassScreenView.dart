@@ -10,7 +10,6 @@ import 'package:mapsandnavigationflutter/location/domain/usecase/location_permis
 import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
 import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';
 import 'package:mapsandnavigationflutter/utils/toast/toast.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CompassScreenView extends StatelessWidget {

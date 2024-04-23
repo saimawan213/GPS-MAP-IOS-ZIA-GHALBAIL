@@ -5,7 +5,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/RouteScreen/RouteScreenViewModel.dart';
-import 'package:mapsandnavigationflutter/Screens/RouteScreen/SmallNativeAdSkeleton.dart';
 import 'package:mapsandnavigationflutter/location/domain/usecase/location_permission_usecase.dart';
 import 'package:mapsandnavigationflutter/location/domain/usecase/location_service_usecase.dart';
 import 'package:mapsandnavigationflutter/location/presentation/popups/location_permission_popup.dart';

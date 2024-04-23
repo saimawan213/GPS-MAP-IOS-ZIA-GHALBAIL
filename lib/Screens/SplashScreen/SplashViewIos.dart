@@ -2,15 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/gdpr/gdpr_helper.dart'
     as gdpr;
-import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
-import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenViewIos.dart';
 import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashViewModel.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SplashViewIos extends StatefulWidget {
   @override

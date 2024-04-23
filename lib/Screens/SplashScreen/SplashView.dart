@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mapsandnavigationflutter/Screens/Ads/Colors.dart';
-import 'package:mapsandnavigationflutter/Screens/Constents/Constent.dart';
 import 'package:mapsandnavigationflutter/Screens/MainScreen/MainScreenView.dart';
 import 'package:mapsandnavigationflutter/Screens/SplashScreen/SplashViewModel.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SplashView extends StatelessWidget {
   final SplashViewModel viewModel = Get.put(SplashViewModel());

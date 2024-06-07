@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -17,6 +19,10 @@ import 'package:mapsandnavigationflutter/Screens/TrafficLight/TrafficLightView.d
 import 'package:mapsandnavigationflutter/Screens/WorldClockScreen/WorldClockIos.dart';
 
 import 'package:shimmer/shimmer.dart';
+
+import '../InAppPurchase/InAppPurchaseIosViewModel.dart';
+import '../InAppPurchase/InAppPurchaseViewModel.dart';
+import '../InAppPurchase/inAppPurchase.dart';
 
 class MainScreen_ViewIos extends StatelessWidget {
   MainScreenViewModel viewModel = Get.put(MainScreenViewModel());
@@ -48,6 +54,26 @@ class MainScreen_ViewIos extends StatelessWidget {
               // Open the drawer here
             },
           ),
+          actions: [
+            IconButton(
+              icon: Image.asset(
+                "assets/images/noads.png",
+                width: 30,
+                height: 30,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                if (Platform.isAndroid) {
+                  Get.to(() => inAppPurchase());
+                }
+                /* else{
+                  Get.to(() => MyInApp());
+                }*/
+
+                // Handle your icon tap here
+              },
+            )
+          ],
         ),
 
         body: Center(

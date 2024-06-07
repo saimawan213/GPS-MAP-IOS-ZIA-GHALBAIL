@@ -124,7 +124,7 @@ class GeoLiveLocationView extends StatelessWidget {
                         file1.writeAsBytesSync(bytes);
                         // store unit8list image here ;
                         // String s = new String.fromCharCodes(bytes!);
-                        await Share.shareFiles([file1.path]);
+                        await Share.shareXFiles([XFile(file1.path)]);
                       },
                     )
                   : SizedBox(),
